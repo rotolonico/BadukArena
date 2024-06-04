@@ -1,11 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
-import Button from '@mui/material/Button';
+import AuthComponent from "./AuthComponent";
 
 
 function App() {
   return (
-      <Button variant="contained">Hello world</Button>
+      <AuthComponent></AuthComponent>
   );
 }
 
