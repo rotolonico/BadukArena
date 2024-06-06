@@ -1,9 +1,12 @@
 import AuthComponent from "./AuthComponent";
+import ChatComponent from "./ChatComponent";
 
 
 function App() {
-  return (
+  return (<>
       <AuthComponent></AuthComponent>
+      <ChatComponent></ChatComponent>
+    </>
   );
 }
 
