@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Message from "./MessageComponent.js";
 import { io } from "socket.io-client";
+import {joinRoom} from "./api";
 import {TextField, Button, Container, List, ListItem, Box, Typography} from "@mui/material";
 
 const Chat = () => {
@@ -27,12 +28,18 @@ const Chat = () => {
         socket.emit("chat-message", message, room);
     };
 
-    const handleJoin = (e) => {
-        const form = e.target.form;
-        const room = form.elements.room.value;
-        socket.emit("join-room", room, (msg) => {
-            setMessages((prevMessages) => [...prevMessages, msg]);
-        });
+    const handleJoin = async (e) => {
+        try {
+            const room = e.target.form.elements.room.value;
+            const res = await joinRoom(room);
+            if (res.status === 200 || res.status === 201) {
+                socket.emit("join-room", room, (msg) => {
+                    setMessages((prevMessages) => [...prevMessages, msg]);
+                });
+            }
+        }catch (error) {
+            setMessages((prevMessages) => [...prevMessages, `Error joining room: ${error.message}`]);
+        }
     };
 
     return (
