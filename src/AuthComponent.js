@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { register, login, logout, getProtectedData } from './api';
-import {TextField,Button,Typography,Box, Container} from "@mui/material";
+import theme from './theme';
+import {TextField, Button, Typography, Box, Container, ThemeProvider} from "@mui/material";
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
+import { useSpring, animated } from 'react-spring';
 const AuthComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [message, setMessage] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const springProps = useSpring({
+        from: { opacity: 0, transform: "translateY(100%)" },
+        to: { opacity: 1, transform: "translateY(0)" },
+        config: { duration: 900 },
+    });
+
 
     const handleRegister = async () => {
         try {
@@ -48,6 +56,8 @@ const AuthComponent = () => {
     };
 
         return (
+            <ThemeProvider theme={theme}>
+            <animated.div style={springProps}>
             <Container maxWidth="sm">
                 <Box mt={5} display="flex" flexDirection="column" alignItems="center" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid #ccc`} borderRadius={10}>
                     <Typography variant="h4" component="h2" gutterBottom color="secondary">Login</Typography>
@@ -131,6 +141,8 @@ const AuthComponent = () => {
                     {message && <Typography variant="body1" mt={2}>{message}</Typography>}
                 </Box>
             </Container>
+            </animated.div>
+            </ThemeProvider>
         );
 };
 

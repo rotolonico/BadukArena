@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Message from "./MessageComponent.js";
+import theme from "./theme";
 import { io } from "socket.io-client";
-import {TextField, Button, Container, List, ListItem, Box, Typography} from "@mui/material";
-
+import {TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider} from "@mui/material";
+import { animated, useSpring } from "react-spring";
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
+
+    const springProps = useSpring({
+        from: { opacity: 0, transform: "translateY(100%)" },
+        to: { opacity: 1, transform: "translateY(0)" },
+        config: { duration: 900 },
+    });
 
     useEffect(() => {
         const newSocket= io("http://localhost:1234");
@@ -36,6 +43,8 @@ const Chat = () => {
     };
 
     return (
+        <ThemeProvider theme={theme}>
+        <animated.div style={springProps}>
        <Container maxWidth="sm">
            <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`}  borderRadius={10}>
                <Typography variant="h4" component="h2" gutterBottom color="secondary" >Chat</Typography>
@@ -91,6 +100,8 @@ const Chat = () => {
                 </List>
            </Box>
          </Container>
+        </animated.div>
+        </ThemeProvider>
     );
 };
 
