@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Message from "./MessageComponent.js";
 import { io } from "socket.io-client";
+import {TextField, Button, Container, List, ListItem, Box, Typography} from "@mui/material";
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
@@ -35,21 +36,61 @@ const Chat = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                <li key="messagekey">
-                    <input type="text" name="message" placeholder="Enter your message" />
-                    <button type="submit">Send</button>
-                </li>
-                <li key="roomkey">
-                    <input type="text" name="room" placeholder="Enter your room" />
-                    <button type="button" onClick={handleJoin}>Join</button>
-                </li>
-                {messages.map((message, index) => (
-                    <Message key={index} msg={message} />
-                ))}
-            </ul>
-        </form>
+       <Container maxWidth="sm">
+           <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`}  borderRadius={10}>
+               <Typography variant="h4" component="h2" gutterBottom color="secondary" >Chat</Typography>
+               <form onSubmit={handleSubmit}>
+                     <TextField
+                         name="room"
+                         label="Room"
+                         variant="outlined"
+                         fullWidth
+                         margin="normal"
+                         InputLabelProps={{
+                             style: { color: 'white' },
+                         }}
+                         InputProps={{
+                             style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                             classes: {
+                                 root: 'textfield-root',
+                                 focused: 'textfield-focused',
+                             },
+                             className: 'chat-textfield',
+                         }}
+
+                     />
+                     <TextField
+                         name="message"
+                         label="Message"
+                         variant="outlined"
+                         fullWidth
+                         margin="normal"
+                         InputLabelProps={{
+                             style: { color: 'white' },
+                         }}
+                         InputProps={{
+                             style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                             classes: {
+                                 root: 'textfield-root',
+                                 focused: 'textfield-focused',
+                             },
+                             className: 'chat-textfield',
+                         }}
+                     />
+                   <Box mt={2}>
+                     <Button type="submit" variant="contained" color="secondary">Invia</Button>
+                       <Button type="button" onClick={handleJoin} variant="contained" color="secondary" style={{ marginLeft: '10px' }}>Entra nella stanza</Button>
+                   </Box>
+                   </form>
+               <List>
+                     {messages.map((message, index) => (
+                          <ListItem key={index}>
+                            <Message message={message} />
+                          </ListItem>
+                     ))}
+                </List>
+           </Box>
+         </Container>
     );
 };
 

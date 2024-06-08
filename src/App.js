@@ -5,21 +5,27 @@ import { Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
 
 function App() {
   return (<Router>
-          <Container>
+          <div style={{ backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <AppBar position="static">
-              <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  Baduk Arena
-                </Typography>
-                <Button color="inherit" href="/auth">Login</Button>
-                <Button color="inherit" href="/chat">Chat</Button>
-              </Toolbar>
-            </AppBar>
-              <Routes>
-                <Route path="/auth" element={<AuthComponent />} />
-                <Route path="/chat" element={<ChatComponent />} />
-              </Routes>
-            </Container>
+                  <Toolbar>
+                      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                          Baduk Arena
+                      </Typography>
+                      <Button color="inherit" href="/auth">
+                          Login
+                      </Button>
+                      <Button color="inherit" href="/chat">
+                          Chat
+                      </Button>
+                  </Toolbar>
+              </AppBar>
+              <Container sx={{ flexGrow: 1, marginTop: '64px' }}>
+                  <Routes>
+                      <Route path="/auth" element={<AuthComponent />} />
+                      <Route path="/chat" element={<ChatComponent />} />
+                  </Routes>
+              </Container>
+          </div>
       </Router>
   );
 };
