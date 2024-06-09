@@ -103,7 +103,7 @@ const Chat = () => {
                <List>
                      {messages.map((message, index) => (
                           <ListItem key={index}>
-                            <Message message={message} />
+                            <Message msg={message} />
                           </ListItem>
                      ))}
                 </List>
