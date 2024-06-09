@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Board from './BoardComponent';
 import theme from "./theme";
-import { socketGameMove } from "./socket";
+import { socketGameMove, socketListenMove, socketListenIllegalMove} from "./socket";
 import ChatComponent from "./ChatComponent";
 
 const GameComponent = () => {
@@ -21,6 +21,25 @@ const GameComponent = () => {
     const [currentPlayer, setCurrentPlayer] = useState('B');
 
     useEffect(() => {
+        socketListenMove((move) => {
+            const [x, y] = move.split('-');
+            const newBoard = board.map((row, i) =>
+                row.map((cell, j) => {
+                    if (i === parseInt(x) && j === parseInt(y)) {
+                        return currentPlayer;
+                    }
+                    return cell;
+                })
+            );
+            setBoard(newBoard);
+            console.log(newBoard);
+            console.log(currentPlayer);
+            setCurrentPlayer(currentPlayer === 'B' ? 'W' : 'B');
+        });
+
+        socketListenIllegalMove((error) => {
+            alert(error);
+        });
 
     }, []);
 
