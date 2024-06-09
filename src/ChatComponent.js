@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Message from "./MessageComponent.js";
 import theme from "./theme";
-import { io } from "socket.io-client";
+import { socketListenChat, socketSendMessage, socketJoinRoom, socketLeaveRoom} from "./socket";
 import {TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider} from "@mui/material";
 import { animated, useSpring } from "react-spring";
 import {joinRoom} from "./api";
@@ -9,7 +9,6 @@ import {joinRoom} from "./api";
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
-    const [socket, setSocket] = useState(null);
 
     const springProps = useSpring({
         from: { opacity: 0, transform: "translateY(100%)" },
@@ -18,23 +17,18 @@ const Chat = () => {
     });
 
     useEffect(() => {
-        const newSocket= io("http://localhost:1234");
-        setSocket(newSocket);
-
-        newSocket.on("chat-message", (message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
-        });
-
-        return () => newSocket.close();
+        
+        return () => {
+            socketLeaveRoom();
+        }
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const input = e.target.elements.message;
         const message = input.value;
-        const room = e.target.elements.room.value;
         input.value = "";
-        socket.emit("chat-message", message, room);
+        socketSendMessage(message);
     };
 
     const handleJoin = async (e) => {
@@ -42,7 +36,12 @@ const Chat = () => {
             const room = e.target.form.elements.room.value;
             const res = await joinRoom(room);
             if (res.status === 200 || res.status === 201) {
-                socket.emit("join-room", room, (msg) => {
+                
+                socketJoinRoom(room, (msg) => {
+                    setMessages((prevMessages) => [...prevMessages, msg]);
+                });
+                
+                socketListenChat((msg) => {
                     setMessages((prevMessages) => [...prevMessages, msg]);
                 });
             }
