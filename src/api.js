@@ -12,3 +12,4 @@ export const logout = () => API.get('/api/users/logout');
 export const getProtectedData = () => API.get('/api/users/protected');
 
 export const joinRoom = (roomNumber) => API.post('/api/rooms/joinRoom', {roomNumber});
+export const getRooms = () => API.get('/api/rooms/getRooms');
