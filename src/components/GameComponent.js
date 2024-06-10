@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Board from './BoardComponent';
-import theme from "../utils/theme";
+//import theme from "../utils/theme";
 import { socketGameMove, socketListenMove, socketListenIllegalMove} from "../utils/socket";
 import ChatComponent from "./ChatComponent";
 
