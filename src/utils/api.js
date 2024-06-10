@@ -12,4 +12,6 @@ export const logout = () => API.get('/api/users/logout');
 export const getProtectedData = () => API.get('/api/users/protected');
 
 export const joinRoom = (roomNumber) => API.post('/api/rooms/joinRoom', {roomNumber});
+export const createRoom = () => API.post('/api/rooms/createRoom');
 export const getRooms = () => API.get('/api/rooms/getRooms');
+export const deleteRoom = (roomNumber) => API.delete('/api/rooms/deleteRoom', {data: {roomNumber}});

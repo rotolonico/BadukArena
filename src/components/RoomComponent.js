@@ -1,10 +1,9 @@
-const RoomComponent = ({ number, roomCreator }) => {
+const RoomComponent = ({ number, roomCreator, handleJoin }) => {
     return (
-        <tr>
-            <td>{number}<input type="hidden" name="number" value={number}/></td>
-            <td>{roomCreator}</td>
-            <td><input type="submit" value="Join"/></td>
-        </tr>
+        <li>{number} -
+            {roomCreator}
+            <button type="button" onClick={() => handleJoin(number)}>Join</button>
+        </li>
     );
 }
 

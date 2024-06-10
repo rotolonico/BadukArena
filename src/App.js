@@ -7,7 +7,7 @@ import GameComponent from "./components/GameComponent";
 
 function App() {
   return (<Router>
-          <div style={{ backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ backgroundColor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <AppBar position="static">
                   <Toolbar>
                       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
