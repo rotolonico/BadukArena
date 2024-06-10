@@ -14,8 +14,8 @@ const socketJoinRoom = (room, cb) => {
     currentRoom = room;
 }
 
-const socketLeaveRoom = (room) => {
-    socket.emit("leave-room", room);
+const socketLeaveRoom = (cb) => {
+    socket.emit("leave-room", currentRoom, cb);
     currentRoom = "";
 }
 
