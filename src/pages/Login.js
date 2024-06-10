@@ -1,11 +1,11 @@
 import React, { useState} from 'react';
-import { register, login, logout, getProtectedData } from './api';
-import theme from './theme';
+import { register, login, logout, getProtectedData } from '../utils/api';
+import theme from '../utils/theme';
 import {TextField, Button, Typography, Box, Container, ThemeProvider} from "@mui/material";
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useSpring, animated } from 'react-spring';
-const AuthComponent = () => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
@@ -146,4 +146,4 @@ const AuthComponent = () => {
         );
 };
 
-export default AuthComponent;
+export default Login;

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Message from "./MessageComponent.js";
-import theme from "./theme";
-import { socketListenChat, socketSendMessage, socketJoinRoom, socketLeaveRoom} from "./socket";
+import theme from "../utils/theme";
+import { socketListenChat, socketSendMessage, socketJoinRoom, socketLeaveRoom} from "../utils/socket";
 import {TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider} from "@mui/material";
 import { animated, useSpring } from "react-spring";
-import {joinRoom} from "./api";
+import {joinRoom} from "../utils/api";
 
 
 const Chat = () => {

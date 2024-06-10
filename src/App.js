@@ -1,9 +1,9 @@
-import AuthComponent from "./AuthComponent";
-import ChatComponent from "./ChatComponent";
-import Play from "./Play";
+import Login from "./pages/Login";
+import ChatComponent from "./components/ChatComponent";
+import Play from "./pages/Play";
 import  { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
-import GameComponent from "./GameComponent";
+import GameComponent from "./components/GameComponent";
 
 function App() {
   return (<Router>
@@ -29,7 +29,7 @@ function App() {
               </AppBar>
               <Container sx={{ flexGrow: 1, marginTop: '64px' }}>
                   <Routes>
-                      <Route path="/auth" element={<AuthComponent />} />
+                      <Route path="/auth" element={<Login />} />
                       <Route path="/chat" element={<ChatComponent />} />
                       <Route path="/game" element={<GameComponent />} />
                       <Route path="/play" element={<Play />} />

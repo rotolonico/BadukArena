@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Board from './BoardComponent';
-import theme from "./theme";
-import { socketGameMove, socketListenMove, socketListenIllegalMove} from "./socket";
+import theme from "../utils/theme";
+import { socketGameMove, socketListenMove, socketListenIllegalMove} from "../utils/socket";
 import ChatComponent from "./ChatComponent";
 
 const GameComponent = () => {

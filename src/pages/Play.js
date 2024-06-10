@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {getRooms} from "./api";
-import RoomComponent from "./RoomComponent";
+import {getRooms} from "../utils/api";
+import RoomComponent from "../components/RoomComponent";
 
 const Play = () => {
 
