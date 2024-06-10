@@ -12,7 +12,7 @@ import { Picker } from 'emoji-mart';
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-    const [username, setUsername] = useState("User"); // Hardcoded username for example
+    const [username, setUsername] = useState("");
     const [messageText, setMessageText] = useState("");
 
     const springProps = useSpring({
@@ -31,11 +31,11 @@ const Chat = () => {
         e.preventDefault();
         const message = {
             text: messageText,
-            user: username,
+            user: username || "Anonimo",
             timestamp: new Date().toLocaleString()
         };
         socketSendMessage(message);
-        setMessageText(""); // Pulisci il campo di input dopo l'invio
+        setMessageText("");
     };
 
     const handleJoin = async (e) => {
@@ -68,6 +68,26 @@ const Chat = () => {
                     <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10}>
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
                         <form onSubmit={handleSubmit}>
+                            <TextField
+                                name="username"
+                                label="Nome Utente"
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                InputLabelProps={{
+                                    style: { color: 'white' },
+                                }}
+                                InputProps={{
+                                    style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                                    classes: {
+                                        root: 'textfield-root',
+                                        focused: 'textfield-focused',
+                                    },
+                                    className: 'chat-textfield',
+                                }}
+                            />
                             <TextField
                                 name="room"
                                 label="Stanza"
