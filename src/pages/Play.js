@@ -10,6 +10,13 @@ const Play = () => {
     const [createdRoom, setCreatedRoom] = useState(null);
 
     useEffect(() => {
+        getRooms()
+            .then(roomsList => {
+                setRooms(roomsList.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
         const intervalId = setInterval(() => {
             getRooms()
                 .then(roomsList => {
