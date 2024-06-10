@@ -13,6 +13,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [username, setUsername] = useState("User"); // Hardcoded username for example
+    const [messageText, setMessageText] = useState("");
 
     const springProps = useSpring({
         from: { opacity: 0, transform: "translateY(100%)" },
@@ -28,14 +29,13 @@ const Chat = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const input = e.target.elements.message;
         const message = {
-            text: input.value,
+            text: messageText,
             user: username,
             timestamp: new Date().toLocaleString()
         };
-        input.value = "";
         socketSendMessage(message);
+        setMessageText(""); // Pulisci il campo di input dopo l'invio
     };
 
     const handleJoin = async (e) => {
@@ -56,8 +56,8 @@ const Chat = () => {
     };
 
     const addEmoji = (emoji) => {
-        const input = document.querySelector('input[name="message"]');
-        input.value += emoji.native;
+        const emojiNative = emoji.native || "";
+        setMessageText(prevMessageText => prevMessageText + emojiNative);
         setShowEmojiPicker(false);
     };
 
@@ -95,6 +95,8 @@ const Chat = () => {
                                     multiline
                                     rows={4}
                                     margin="normal"
+                                    value={messageText}
+                                    onChange={(e) => setMessageText(e.target.value)}
                                     InputLabelProps={{
                                         style: { color: 'white' },
                                     }}
