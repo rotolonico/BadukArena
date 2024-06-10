@@ -5,9 +5,10 @@ import { socketListenChat, socketSendMessage, socketJoinRoom, socketLeaveRoom } 
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
-import { joinRoom } from "../utils/api";
-import 'emoji-mart/css/emoji-mart.css';
-import { Picker } from 'emoji-mart';
+import data from '@emoji-mart/data';
+import  Picker  from '@emoji-mart/react';
+import {joinRoom} from "../utils/api"; // Importa il componente Picker da emoji-mart
+
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
@@ -30,12 +31,12 @@ const Chat = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const message = {
-            text: messageText,
+            text: messageText, // Invia solo il testo del messaggio
             user: username || "Anonimo",
             timestamp: new Date().toLocaleString()
         };
         socketSendMessage(message);
-        setMessageText("");
+        setMessageText(""); // Resetta il campo di input dopo l'invio del messaggio
     };
 
     const handleJoin = async (e) => {
@@ -56,8 +57,7 @@ const Chat = () => {
     };
 
     const addEmoji = (emoji) => {
-        const emojiNative = emoji.native || "";
-        setMessageText(prevMessageText => prevMessageText + emojiNative);
+        setMessageText(prevMessageText => prevMessageText + emoji.native);
         setShowEmojiPicker(false);
     };
 
@@ -135,6 +135,7 @@ const Chat = () => {
                             </Box>
                             {showEmojiPicker && (
                                 <Picker
+                                    data={data}
                                     onSelect={addEmoji}
                                     style={{ position: 'absolute', bottom: '50px', right: '10px', zIndex: 1000 }}
                                 />
