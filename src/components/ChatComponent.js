@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Message from "./MessageComponent.js";
+import Message from "./MessageComponent";
 import theme from "../utils/theme";
 import { socketListenChat, socketSendMessage, socketJoinRoom, socketLeaveRoom } from "../utils/socket";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
-import  Picker  from '@emoji-mart/react';
-import {joinRoom} from "../utils/api"; // Importa il componente Picker da emoji-mart
-
+import Picker from '@emoji-mart/react';
+import { joinRoom } from "../utils/api"; // Importa il componente Picker da emoji-mart
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
@@ -31,17 +30,18 @@ const Chat = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const message = {
-            text: messageText, // Invia solo il testo del messaggio
+            text: messageText,
             user: username || "Anonimo",
             timestamp: new Date().toLocaleString()
         };
         socketSendMessage(message);
-        setMessageText(""); // Resetta il campo di input dopo l'invio del messaggio
+        setMessageText("");
     };
 
     const handleJoin = async (e) => {
+        e.preventDefault();
         try {
-            const room = e.target.form.elements.room.value;
+            const room = e.target.elements.room.value;
             const res = await joinRoom(room);
             if (res.status === 200 || res.status === 201) {
                 socketJoinRoom(room, (msg) => {
@@ -67,7 +67,7 @@ const Chat = () => {
                 <Container maxWidth="sm">
                     <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10}>
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleJoin}>
                             <TextField
                                 name="username"
                                 label="Nome Utente"
@@ -81,11 +81,6 @@ const Chat = () => {
                                 }}
                                 InputProps={{
                                     style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                                    classes: {
-                                        root: 'textfield-root',
-                                        focused: 'textfield-focused',
-                                    },
-                                    className: 'chat-textfield',
                                 }}
                             />
                             <TextField
@@ -99,14 +94,12 @@ const Chat = () => {
                                 }}
                                 InputProps={{
                                     style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                                    classes: {
-                                        root: 'textfield-root',
-                                        focused: 'textfield-focused',
-                                    },
-                                    className: 'chat-textfield',
                                 }}
                             />
-                            <Box display="flex" alignItems="center">
+                            <Button type="submit" variant="contained" color="secondary">Entra nella stanza</Button>
+                        </form>
+                        <form onSubmit={handleSubmit}>
+                            <Box display="flex" alignItems="center" position="relative">
                                 <TextField
                                     name="message"
                                     label="Messaggio"
@@ -122,27 +115,21 @@ const Chat = () => {
                                     }}
                                     InputProps={{
                                         style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                                        classes: {
-                                            root: 'textfield-root',
-                                            focused: 'textfield-focused',
-                                        },
-                                        className: 'chat-textfield',
                                     }}
                                 />
-                                <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ marginLeft: '10px' }}>
-                                    <InsertEmoticonIcon style={{ color: 'white' }} />
-                                </IconButton>
+                                <Box position="relative">
+                                    <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ marginLeft: '10px' }}>
+                                        <InsertEmoticonIcon style={{ color: 'white' }} />
+                                    </IconButton>
+                                    {showEmojiPicker && (
+                                        <Box position="absolute" right="100%" bottom="100%" zIndex={1000}>
+                                            <Picker data={data} onEmojiSelect={addEmoji} />
+                                        </Box>
+                                    )}
+                                </Box>
                             </Box>
-                            {showEmojiPicker && (
-                                <Picker
-                                    data={data}
-                                    onSelect={addEmoji}
-                                    style={{ position: 'absolute', bottom: '50px', right: '10px', zIndex: 1000 }}
-                                />
-                            )}
                             <Box mt={2}>
                                 <Button type="submit" variant="contained" color="secondary">Invia</Button>
-                                <Button type="button" onClick={handleJoin} variant="contained" color="secondary" style={{ marginLeft: '10px' }}>Entra nella stanza</Button>
                             </Box>
                         </form>
                         <List>
