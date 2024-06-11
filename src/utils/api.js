@@ -5,13 +5,62 @@ const API = axios.create({
     withCredentials: true
 });
 
-export const register = (username, email, password) => API.post('/api/users/register', { username, email, password });
-export const login = (email, password) => API.post('/api/users/login', {email, password });
-export const logout = () => API.get('/api/users/logout');
+let isAuth = document.cookie.includes('auth=true');
 
-export const getProtectedData = () => API.get('/api/users/protected');
+const handleRequest = async (apiCall) => {
+    try {
+        const response = await apiCall();
+        return {
+            data: response.data,
+            status: response.status,
+            success: true,
+        };
+    } catch (error) {
+        if (error.response) {
+            return {
+                data: error.response.data,
+                status: error.response.status,
+                success: false,
+            };
+        } else if (error.request) {
+            return {
+                data: null,
+                status: null,
+                success: false,
+                message: 'No response received from server',
+            };
+        } else {
+            return {
+                data: null,
+                status: null,
+                success: false,
+                message: error.message,
+            };
+        }
+    }
+};
 
-export const joinRoom = (roomNumber) => API.post('/api/rooms/joinRoom', {roomNumber});
-export const createRoom = () => API.post('/api/rooms/createRoom');
-export const getRooms = () => API.get('/api/rooms/getRooms');
-export const deleteRoom = (roomNumber) => API.delete('/api/rooms/deleteRoom', {data: {roomNumber}});
+export const register = (username, email, password) => handleRequest(() => API.post('/api/users/register', { username, email, password }));
+export const login = async (email, password) => {
+    let loginResponse = await handleRequest(() => API.post('/api/users/login', {email, password}));
+    isAuth = loginResponse.success;
+    return loginResponse;
+};
+export const logout = async () => {
+    let logoutResponse = await handleRequest(() => API.get('/api/users/logout'));
+    if (logoutResponse.success) {
+        isAuth = false;
+    }
+    
+    return logoutResponse;
+};
+
+export const isAuthenticated = async () => {
+    let isAuth = await handleRequest(() => API.get('/api/users/auth'));
+    return isAuth.success;
+};
+
+export const joinRoom = (roomNumber) => handleRequest(() => API.post('/api/rooms/joinRoom', { roomNumber }));
+export const createRoom = () => handleRequest(() => API.post('/api/rooms/createRoom'));
+export const getRooms = () => handleRequest(() => API.get('/api/rooms/getRooms'));
+export const deleteRoom = (roomNumber) => handleRequest(() => API.delete('/api/rooms/deleteRoom', { data: { roomNumber } }));

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
 import RoomComponent from "../components/RoomComponent";
 import {socketJoinRoom, socketLeaveRoom} from "../utils/socket";
+import withAuth from "../withAuth";
 
 const Play = () => {
 
@@ -89,4 +90,4 @@ const Play = () => {
     );
 }
 
-export default Play;
+export default withAuth(Play);

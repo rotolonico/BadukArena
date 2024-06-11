@@ -5,17 +5,7 @@ import { socketGameMove, socketListenMove, socketListenIllegalMove} from "../uti
 import ChatComponent from "./ChatComponent";
 
 const GameComponent = () => {
-    const [board, setBoard] = useState([
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', 'W', 'B', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', 'B', 'W', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-    ]);
+    const [board, setBoard] = useState(initialBoardState());
 
 
     const [currentPlayer, setCurrentPlayer] = useState('B');
@@ -57,5 +47,19 @@ const GameComponent = () => {
         </div>
     );
 };
+
+function initialBoardState(){
+    return [
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', 'W', 'B', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', 'B', 'W', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    ];
+}
 
 export default GameComponent;
