@@ -20,6 +20,7 @@ const Play = () => {
         const intervalId = setInterval(() => {
             getRooms()
                 .then(roomsList => {
+                    console.log("Refreshed rooms");
                     setRooms(roomsList.data);
                 })
                 .catch(error => {
@@ -81,7 +82,7 @@ const Play = () => {
                     <button type="button" onClick={handleDelete} disabled={!isCreateDisabled}>Delete Room</button>
                 </li>}
                 {rooms?.map((r, i) => (
-                    <RoomComponent key={i} number={r.number} roomCreator={r.roomCreator.username} handleJoin={handleJoin} />
+                    <RoomComponent key={i} number={r.number} roomCreator={r.roomCreator.username} handleJoin={handleJoin} disabled={isCreateDisabled}/>
                 ))}
             </ul>
         </>
