@@ -7,7 +7,7 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { joinRoom } from "../utils/api"; // Importa il componente Picker da emoji-mart
+import { joinRoom } from "../utils/api";
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);

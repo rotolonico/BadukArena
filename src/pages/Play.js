@@ -82,7 +82,7 @@ const Play = () => {
                     <button type="button" onClick={handleDelete} disabled={!isCreateDisabled}>Delete Room</button>
                 </li>}
                 {rooms?.map((r, i) => (
-                    <RoomComponent key={i} number={r.number} roomCreator={r.roomCreator.username} handleJoin={handleJoin} disabled={isCreateDisabled}/>
+                    <RoomComponent key={i} number={r.number} roomCreator={r.roomCreator.username} handleJoin={handleJoin} disabledCondition={isCreateDisabled}/>
                 ))}
             </ul>
         </>
