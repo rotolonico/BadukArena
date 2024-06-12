@@ -40,10 +40,10 @@ const GameComponent = () => {
 
     return (
         <div>
-            <ChatComponent></ChatComponent>
             <h1>Go Game</h1>
             <p>Current Player: {currentPlayer}</p>
             <Board board={board} onCellClick={handleCellClick} />
+            <ChatComponent></ChatComponent>
         </div>
     );
 };

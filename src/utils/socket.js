@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import {io} from "socket.io-client";
 
 let socket;
 let currentRoom = "";
@@ -35,10 +35,25 @@ const socketListenIllegalMove = (onIllegalMove) => {
     });
 }
 
+const socketListenStart = (onStart) => {
+    socket.on("game-start", (color) => {
+        onStart(color);
+    });
+}
+
 const socketListenMove = (onMove) => {
     socket.on("game-move", (move) => {
         onMove(move);
     });
 }
 
-export { socketSendMessage, socketJoinRoom, socketGameMove, socketListenChat, socketLeaveRoom,socketListenIllegalMove ,socketListenMove};
+export {
+    socketSendMessage,
+    socketJoinRoom,
+    socketGameMove,
+    socketListenChat,
+    socketLeaveRoom,
+    socketListenIllegalMove,
+    socketListenMove,
+    socketListenStart
+};
