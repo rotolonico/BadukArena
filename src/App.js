@@ -1,12 +1,10 @@
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ChatComponent from "./components/ChatComponent";
 import Play from "./pages/Play";
 import User from "./pages/User";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import {Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
-import GameComponent from "./components/GameComponent";
 import {getUsername, isAuthenticated, logout} from "./utils/api";
 
 const handleLogout = async () => {
@@ -52,12 +50,6 @@ function App() {
                             Login
                         </Button>}
                         {authStatus && <div>
-                            <Button color="inherit" href="/chat">
-                                Chat
-                            </Button>
-                            <Button color="inherit" href="/game">
-                                Game
-                            </Button>
                             <Button color="inherit" href="/play">
                                 Play
                             </Button>
@@ -74,10 +66,9 @@ function App() {
                     <Routes>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
-                        <Route path="/chat" element={<ChatComponent/>}/>
-                        <Route path="/game" element={<GameComponent/>}/>
                         <Route path="/play" element={<Play/>}/>
                         <Route path="/user" element={<User/>}/>
+                        <Route path="*" element={<Navigate to='/play' replace />} />
                     </Routes>
                 </Container>
             </div>
