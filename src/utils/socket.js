@@ -20,6 +20,7 @@ const socketLeaveRoom = (cb) => {
 }
 
 const socketGameMove = (data) => {
+    console.log("Sending game move", data);
     socket.emit("game-move", data, currentRoom);
 }
 
@@ -47,6 +48,19 @@ const socketListenMove = (onMove) => {
     });
 }
 
+const socketListenGameOver = (onGameOver) => {
+    socket.on("game-over", (result) => {
+        onGameOver(result);
+    });
+}
+
+const socketListenGameAborted = (onGameAborted) => {
+    socket.on("game-aborted", () => {
+        onGameAborted();
+    });
+
+}
+
 export {
     socketSendMessage,
     socketJoinRoom,
@@ -55,5 +69,7 @@ export {
     socketLeaveRoom,
     socketListenIllegalMove,
     socketListenMove,
-    socketListenStart
+    socketListenStart,
+    socketListenGameOver,
+    socketListenGameAborted
 };

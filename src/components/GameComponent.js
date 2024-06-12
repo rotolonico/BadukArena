@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Board from './BoardComponent';
 //import theme from "../utils/theme";
-import { socketGameMove, socketListenMove, socketListenIllegalMove} from "../utils/socket";
+import {
+    socketGameMove,
+    socketListenMove,
+    socketListenIllegalMove,
+    socketListenGameOver,
+    socketListenGameAborted
+} from "../utils/socket";
 import ChatComponent from "./ChatComponent";
 
-const GameComponent = () => {
+const GameComponent = ({yourColor}) => {
     const [board, setBoard] = useState(initialBoardState());
-
-
+    
     const [currentPlayer, setCurrentPlayer] = useState('B');
 
     useEffect(() => {
@@ -22,16 +27,25 @@ const GameComponent = () => {
                 })
             );
             setBoard(newBoard);
-            console.log(newBoard);
-            console.log(currentPlayer);
             setCurrentPlayer(currentPlayer === 'B' ? 'W' : 'B');
         });
 
         socketListenIllegalMove((error) => {
-            alert(error);
+            console.log(error);
         });
 
-    }, []);
+        socketListenGameOver((result) => {
+            window.location.reload();
+            alert(result === "B" ? "Black wins" : "White wins")
+        });
+        
+        socketListenGameAborted(() => {
+            window.location.reload();
+            alert("Game Aborted")
+        });
+        
+
+    }, [board, currentPlayer]);
 
     const handleCellClick = (x, y) => {
         const move = `${x}-${y}`;
@@ -41,7 +55,7 @@ const GameComponent = () => {
     return (
         <div>
             <h1>Go Game</h1>
-            <p>Current Player: {currentPlayer}</p>
+            <p>You are {yourColor}. It is {currentPlayer === "B" ? "black" : "white"}'s turn</p>
             <Board board={board} onCellClick={handleCellClick} />
             <ChatComponent></ChatComponent>
         </div>

@@ -12,6 +12,7 @@ const Play = () => {
     const [isCreateDisabled, setIsCreateDisabled] = useState(false);
     const [createdRoom, setCreatedRoom] = useState(null);
     const [inGame, setInGame] = useState(false);
+    const [yourColor, setYourColor] = useState('B');
 
     useEffect(() => {
         
@@ -37,11 +38,12 @@ const Play = () => {
         
         socketListenStart((color) => {
             setInGame(true);
+            setYourColor(color);
         });
 
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [inGame]);
 
     const handleJoin = async (number) => {
         try {
@@ -101,7 +103,7 @@ const Play = () => {
                     ))}
                 </ul>
             </>}
-            {inGame && <GameComponent></GameComponent>}
+            {inGame && <GameComponent color={yourColor}></GameComponent>}
         </>
     );
 }

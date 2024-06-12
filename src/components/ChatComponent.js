@@ -21,12 +21,6 @@ const Chat = () => {
         config: { duration: 900 },
     });
 
-    useEffect(() => {
-        return () => {
-            socketLeaveRoom(() => {});
-        };
-    }, []);
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const message = {
