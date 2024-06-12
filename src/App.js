@@ -2,11 +2,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ChatComponent from "./components/ChatComponent";
 import Play from "./pages/Play";
+import User from "./pages/User";
 import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import {Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
 import GameComponent from "./components/GameComponent";
-import {isAuthenticated, logout} from "./utils/api";
+import {getUsername, isAuthenticated, logout} from "./utils/api";
 
 const handleLogout = async () => {
     try {
@@ -17,19 +18,28 @@ const handleLogout = async () => {
     }
 };
 
-
 function App() {
 
     const [authStatus, setAuthStatus] = useState(false);
+    const [username, setUsername] = useState('');
 
-    useEffect( () => {
-        async function fetchAuth(){
-            let isAuth = await isAuthenticated();
+    useEffect(() => {
+        isAuthenticated().then(isAuth => {
             setAuthStatus(isAuth);
-        }
-        fetchAuth();
-        
+        }).catch(error => {
+            console.error(error);
+        });
     }, []);
+
+    useEffect(() => {
+        if (authStatus) {
+            getUsername().then((response) => {
+                setUsername(response.data);
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+    },[authStatus]);
 
     return (<Router>
             <div style={{backgroundColor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
@@ -51,6 +61,9 @@ function App() {
                             <Button color="inherit" href="/play">
                                 Play
                             </Button>
+                            <Button color="inherit" href="/user">
+                                {username? username:'User'}
+                            </Button>
                             <Button color="inherit" onClick={handleLogout}>
                                 Logout
                             </Button>
@@ -64,6 +77,7 @@ function App() {
                         <Route path="/chat" element={<ChatComponent/>}/>
                         <Route path="/game" element={<GameComponent/>}/>
                         <Route path="/play" element={<Play/>}/>
+                        <Route path="/user" element={<User/>}/>
                     </Routes>
                 </Container>
             </div>

@@ -60,6 +60,9 @@ export const isAuthenticated = async () => {
     return isAuth.success;
 };
 
+export const getGames = () => handleRequest(() => API.get('/api/users/games'));
+export const getUsername = () => handleRequest(() => API.get('/api/users/username'));
+
 export const joinRoom = (roomNumber) => handleRequest(() => API.post('/api/rooms/joinRoom', { roomNumber }));
 export const createRoom = () => handleRequest(() => API.post('/api/rooms/createRoom'));
 export const getRooms = () => handleRequest(() => API.get('/api/rooms/getRooms'));

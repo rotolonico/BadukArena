@@ -77,6 +77,7 @@ const Play = () => {
     return (
         <>
             <button type="button" onClick={handleCreate} disabled={isCreateDisabled}>Create Room</button>
+            <h2>Available Rooms</h2>
             <ul>
                 {createdRoom && <li>
                     {createdRoom.username}

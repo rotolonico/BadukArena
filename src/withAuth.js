@@ -5,15 +5,15 @@ import {isAuthenticated} from './utils/api';
 const withAuth = (Component) => {
     return (props) => {
         useEffect(() => {
-
-            async function fetchAuth() {
-                let isAuth = await isAuthenticated();
-                if (!isAuth) {
-                    window.location.href = '/login';
-                }
-            }
-
-            fetchAuth();
+            isAuthenticated()
+                .then(isAuth => {
+                    if (!isAuth) {
+                        window.location.href = '/login';
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         },);
 
         return <Component {...props} />;

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {register, login} from '../utils/api';
+import {login} from '../utils/api';
 import theme from '../utils/theme';
 import {TextField, Button, Typography, Box, Container, ThemeProvider} from "@mui/material";
 import {IconButton, InputAdornment} from '@mui/material';
