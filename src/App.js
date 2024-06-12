@@ -3,7 +3,7 @@ import Register from "./pages/Register";
 import ChatComponent from "./components/ChatComponent";
 import Play from "./pages/Play";
 import User from "./pages/User";
-import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import {Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
 import GameComponent from "./components/GameComponent";

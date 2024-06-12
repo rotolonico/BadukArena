@@ -1,14 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {isAuthenticated} from './utils/api';
 
 
 const withAuth = (Component) => {
+
     return (props) => {
+
+        const [isAuth, setIsAuth] = useState(false);
+
         useEffect(() => {
             isAuthenticated()
-                .then(isAuth => {
-                    if (!isAuth) {
+                .then(isAuthResponse => {
+                    if (!isAuthResponse) {
                         window.location.href = '/login';
+                        setIsAuth(isAuthResponse);
                     }
                 })
                 .catch(err => {
@@ -16,7 +21,7 @@ const withAuth = (Component) => {
                 });
         },);
 
-        return <Component {...props} />;
+        return isAuth ? <Component {...props} /> : null;
     };
 };
 
