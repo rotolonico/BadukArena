@@ -23,7 +23,7 @@ const Chat = () => {
 
     useEffect(() => {
         return () => {
-            socketLeaveRoom();
+            socketLeaveRoom(() => {});
         };
     }, []);
 
