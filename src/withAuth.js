@@ -13,8 +13,8 @@ const withAuth = (Component) => {
                 .then(isAuthResponse => {
                     if (!isAuthResponse) {
                         window.location.href = '/login';
-                        setIsAuth(isAuthResponse);
                     }
+                    setIsAuth(isAuthResponse);
                 })
                 .catch(err => {
                     console.error(err);
