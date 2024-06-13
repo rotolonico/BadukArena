@@ -21,7 +21,7 @@ const User = () => {
             ) : (
                 <ul>
                     {games?.map((g, i) => (
-                        <li key={i}>{g.black} {g.result === "B" ? "1-0" : "0-1"} {g.white}</li>
+                        <li key={i}>{g.black.username} {g.result === "B" ? "1-0" : "0-1"} {g.white.username}</li>
                     ))}
                 </ul>
             )}
