@@ -7,19 +7,26 @@ import SocketClient from "../utils/SocketClient";
 import ChatComponent from "../components/ChatComponent";
 
 const Play = () => {
+    
+    const GameState = {
+        NOT_STARTED: 0,
+        STARTED: 1,
+        FINISHED: 2
+    }
 
     const [rooms, setRooms] = useState([]);
     const [isCreateDisabled, setIsCreateDisabled] = useState(false);
     const [createdRoom, setCreatedRoom] = useState(null);
-    const [inGame, setInGame] = useState(false);
+    const [gameState, setGameState] = useState(false);
     const [yourColor, setYourColor] = useState('B');
+    const [result, setResult] = useState(null);
 
-    const inGameRef = useRef(inGame);
+    const gameStateRef = useRef(gameState);
     const socketRef = useRef(null);
 
     useEffect(() => {
-        inGameRef.current = inGame;
-    }, [inGame]);
+        gameStateRef.current = gameState;
+    }, [gameState]);
 
     useEffect(() => {
 
@@ -38,13 +45,21 @@ const Play = () => {
         refreshRooms();
 
         const intervalId = setInterval(() => {
-            if (inGameRef.current) return;
+            if (gameStateRef.current !== GameState.STARTED) return;
             refreshRooms();
         }, 5000);
 
-        socketRef.current.socketListenStart((color) => {
-            setInGame(true);
+        socketRef.current.socketListenGameStart((color) => {
+            setGameState(GameState.STARTED);
             setYourColor(color);
+        });
+
+        socketRef.current.socketListenGameOver((rst) => {
+            setResult(rst);
+        });
+        
+        socketRef.current.socketListenGameAborted(() => {
+            window.location.reload();
         });
 
         return () => {
@@ -94,10 +109,14 @@ const Play = () => {
             console.log(`Error deleting room: ${error.message}`);
         }
     }
+    
+    const handleNewGame = () => {
+        window.location.reload();
+    }
 
     return (
         <>
-            {!inGame && <>
+            {gameStateRef.current === GameState.NOT_STARTED && <>
                 <button type="button" onClick={handleCreate} disabled={isCreateDisabled}>Create Room</button>
                 <h2>Available Rooms</h2>
                 <ul>
@@ -111,10 +130,16 @@ const Play = () => {
                     ))}
                 </ul>
             </>}
-            {inGame &&
+            {gameStateRef.current !== GameState.NOT_STARTED &&
                 <>
-                <GameComponent yourColor={yourColor} socketRef={socketRef}></GameComponent>
-                <ChatComponent socketRef={socketRef}></ChatComponent>
+                <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef}></GameComponent>
+                <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef}></ChatComponent>
+                </>}
+            {gameStateRef.current === GameState.FINISHED &&
+                <>
+                    {result.isQuit && <p>{result.winner} won because the other player aborted the game</p>}
+                    {!result.isQuit && <p>{result.winner} won</p>}
+                    <button type="button" onClick={handleNewGame}>New Game</button>
                 </>}
         </>
     );

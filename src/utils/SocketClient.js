@@ -41,9 +41,21 @@ class SocketClient {
         });
     }
 
-    socketListenStart(onStart) {
+    socketListenGameStart(onStart) {
         this.socket.on("game-start", (color) => {
             onStart(color);
+        });
+    }
+    
+    socketListenGameOver(onGameOver) {
+        this.socket.on("game-over", (result) => {
+            onGameOver(result);
+        });
+    }
+
+    socketListenGameAborted(onGameAborted) {
+        this.socket.on("game-aborted", () => {
+            onGameAborted();
         });
     }
 
@@ -63,18 +75,6 @@ class SocketClient {
 
     socketRemoveChatListener() {
         this.socket.removeAllListeners("chat-message");
-    }
-
-    socketListenGameOver(onGameOver) {
-        this.socket.on("game-over", (result) => {
-            onGameOver(result);
-        });
-    }
-
-    socketListenGameAborted(onGameAborted) {
-        this.socket.on("game-aborted", () => {
-            onGameAborted();
-        });
     }
 }
 

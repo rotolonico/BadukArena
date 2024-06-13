@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Board from './BoardComponent';
 //import theme from "../utils/theme";
 
-const GameComponent = ({yourColor, socketRef}) => {
+const GameComponent = ({yourColor, socketRef, gameStateRef}) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
     
@@ -51,6 +51,9 @@ const GameComponent = ({yourColor, socketRef}) => {
     }, []);
 
     const handleCellClick = (x, y) => {
+        
+        if (gameStateRef.current !== 1) return;
+        
         const move = `${x}-${y}`;
         socketRef.current.socketGameMove(move);
     };
