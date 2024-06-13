@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Typography, Paper, Box } from '@mui/material';
 import Board from './BoardComponent';
-//import theme from "../utils/theme";
+import ChatComponent from '../components/ChatComponent';
 
-const GameComponent = ({yourColor, socketRef, gameStateRef}) => {
+const GameComponent = ({ yourColor, socketRef, gameStateRef }) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
-    
+
     const boardRef = useRef(board);
     const currentPlayerRef = useRef(currentPlayer);
 
@@ -16,7 +17,6 @@ const GameComponent = ({yourColor, socketRef, gameStateRef}) => {
     useEffect(() => {
         currentPlayerRef.current = currentPlayer;
     }, [currentPlayer]);
-
 
     useEffect(() => {
         socketRef.current.socketListenMove((move) => {
@@ -36,27 +36,36 @@ const GameComponent = ({yourColor, socketRef, gameStateRef}) => {
         socketRef.current.socketListenIllegalMove((error) => {
             console.log(error);
         });
-        
+
     }, []);
 
     const handleCellClick = (x, y) => {
-        
         if (gameStateRef.current !== 1) return;
-        
         const move = `${x}-${y}`;
         socketRef.current.socketGameMove(move);
     };
-    
+
     return (
-        <div>
-            <h1>Go Game</h1>
-            <p>You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn</p>
-            <Board board={board} onCellClick={handleCellClick} />
-        </div>
+        <Paper elevation={3} style={{ padding: '20px', margin: '20px auto', display: 'flex', justifyContent: 'space-between' }}>
+            <Box style={{ flex: 1, paddingRight: '20px' }}>
+                <Typography variant="h4" component="h1" gutterBottom>
+                    Go Game
+                </Typography>
+                <Typography variant="body1" component="p">
+                    You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn
+                </Typography>
+                <Box mt={2}>
+                    <Board board={board} onCellClick={handleCellClick} />
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, paddingLeft: '20px' }}>
+                <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef} />
+            </Box>
+        </Paper>
     );
 };
 
-function initialBoardState(){
+function initialBoardState() {
     return [
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
         [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
