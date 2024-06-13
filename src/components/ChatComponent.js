@@ -30,7 +30,6 @@ const Chat = ({socketRef, gameStateRef}) => {
         socketRef.current.socketListenChat((message) => {
             setMessages((prevMessages) => [...prevMessages, message])
         });
-        return () => {socketRef.current.socketRemoveChatListener()};
     }, []);
 
     const handleSubmit = (e) => {

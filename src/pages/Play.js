@@ -69,6 +69,7 @@ const Play = () => {
         return () => {
             clearInterval(intervalId);
             socketRef.current.socketRemoveAllGameListeners();
+            socketRef.current.socketRemoveChatListener()
             socketRef.current.disconnect();
         };
     }, []);
@@ -79,7 +80,7 @@ const Play = () => {
             const res = await joinRoom(number);
             if (res.status === 200) {
                 socketRef.current.socketJoinRoom(number, (msg) => {
-                    console.log(msg)
+                    console.log(msg);
                 });
             }
         } catch (error) {
@@ -93,7 +94,7 @@ const Play = () => {
             if (res.status === 201) {
                 setCreatedRoom({number: res.data.roomNumber, username: res.data.username});
                 socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
-                    console.log(msg)
+                    console.log(msg);
                 });
                 setIsCreateDisabled(true);
             }
