@@ -17,7 +17,7 @@ const Play = () => {
     const [rooms, setRooms] = useState([]);
     const [isCreateDisabled, setIsCreateDisabled] = useState(false);
     const [createdRoom, setCreatedRoom] = useState(null);
-    const [gameState, setGameState] = useState(false);
+    const [gameState, setGameState] = useState(GameState.NOT_STARTED);
     const [yourColor, setYourColor] = useState('B');
     const [result, setResult] = useState(null);
 
