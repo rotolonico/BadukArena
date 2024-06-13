@@ -1,17 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import Board from './BoardComponent';
 //import theme from "../utils/theme";
-import {
-    socketGameMove,
-    socketListenMove,
-    socketListenIllegalMove,
-    socketListenGameOver,
-    socketListenGameAborted,
-    socketRemoveAllGameListeners
-} from "../utils/socket";
-import ChatComponent from "./ChatComponent";
 
-const GameComponent = ({yourColor}) => {
+const GameComponent = ({yourColor, socketRef}) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
     
@@ -28,7 +19,8 @@ const GameComponent = ({yourColor}) => {
 
 
     useEffect(() => {
-        socketListenMove((move) => {
+        console.log("GameComponent useEffect",socketRef.current);
+        socketRef.current.socketListenMove((move) => {  console.log("SONO NEL LISTEN MOVE");
             const [x, y] = move.split('-');
             const newBoard = boardRef.current.map((row, i) =>
                 row.map((cell, j) => {
@@ -42,26 +34,26 @@ const GameComponent = ({yourColor}) => {
             setCurrentPlayer(currentPlayerRef.current === 'B' ? 'W' : 'B');
         });
 
-        socketListenIllegalMove((error) => {
+        socketRef.current.socketListenIllegalMove((error) => {
             console.log(error);
         });
 
-        socketListenGameOver((result) => {
+        socketRef.current.socketListenGameOver((result) => {
             window.location.reload();
             alert(result === "B" ? "Black wins" : "White wins")
         });
-        
-        socketListenGameAborted(() => {
+
+        socketRef.current.socketListenGameAborted(() => {
             window.location.reload();
             alert("Game Aborted")
         });
         
-        return socketRemoveAllGameListeners;
+        return () => {socketRef.current.socketRemoveAllGameListeners()};
     }, []);
 
     const handleCellClick = (x, y) => {
         const move = `${x}-${y}`;
-        socketGameMove(move);
+        socketRef.current.socketGameMove(move);
     };
     
     return (
@@ -69,7 +61,6 @@ const GameComponent = ({yourColor}) => {
             <h1>Go Game</h1>
             <p>You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn</p>
             <Board board={board} onCellClick={handleCellClick} />
-            <ChatComponent></ChatComponent>
         </div>
     );
 };

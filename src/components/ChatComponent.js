@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Message from "./MessageComponent";
 import theme from "../utils/theme";
-import { socketListenChat, socketSendMessage, socketJoinRoom, socketLeaveRoom } from "../utils/socket";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
@@ -9,7 +8,7 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { joinRoom } from "../utils/api";
 
-const Chat = () => {
+const Chat = ({socketRef}) => {
     const [messages, setMessages] = useState([]);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [username, setUsername] = useState("");
@@ -28,7 +27,7 @@ const Chat = () => {
             user: username || "Anonimo",
             timestamp: new Date().toLocaleString()
         };
-        socketSendMessage(message);
+        socketRef.current.socketSendMessage(message);
         setMessageText("");
     };
 
@@ -38,10 +37,10 @@ const Chat = () => {
             const room = e.target.elements.room.value;
             const res = await joinRoom(room);
             if (res.status === 200 || res.status === 201) {
-                socketJoinRoom(room, (msg) => {
+                socketRef.current.socketJoinRoom(room, (msg) => {
                     setMessages((prevMessages) => [...prevMessages, msg]);
                 });
-                socketListenChat((msg) => {
+                socketRef.current.socketListenChat((msg) => {
                     setMessages((prevMessages) => [...prevMessages, msg]);
                 });
             }

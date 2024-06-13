@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
 import RoomComponent from "../components/RoomComponent";
-import {socketJoinRoom, socketLeaveRoom} from "../utils/socket";
 import withAuth from "../withAuth";
-import {socketListenStart} from "../utils/socket";
 import GameComponent from "../components/GameComponent";
+import SocketClient from "../utils/SocketClient";
+import ChatComponent from "../components/ChatComponent";
 
 const Play = () => {
 
@@ -15,12 +15,16 @@ const Play = () => {
     const [yourColor, setYourColor] = useState('B');
 
     const inGameRef = useRef(inGame);
+    const socketRef = useRef(null);
 
     useEffect(() => {
         inGameRef.current = inGame;
     }, [inGame]);
 
     useEffect(() => {
+
+        socketRef.current = new SocketClient();
+
         function refreshRooms() {
             getRooms()
                 .then(roomsList => {
@@ -38,13 +42,14 @@ const Play = () => {
             refreshRooms();
         }, 5000);
 
-        socketListenStart((color) => {
+        socketRef.current.socketListenStart((color) => {
             setInGame(true);
             setYourColor(color);
         });
 
         return () => {
             clearInterval(intervalId);
+            socketRef.current.disconnect();
         };
     }, []);
 
@@ -53,7 +58,7 @@ const Play = () => {
         try {
             const res = await joinRoom(number);
             if (res.status === 200) {
-                socketJoinRoom(number, (msg) => {
+                socketRef.current.socketJoinRoom(number, (msg) => {
                     console.log(msg)
                 });
             }
@@ -67,7 +72,7 @@ const Play = () => {
             const res = await createRoom();
             if (res.status === 201) {
                 setCreatedRoom({number: res.data.roomNumber, username: res.data.username});
-                socketJoinRoom(res.data.roomNumber, (msg) => {
+                socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                     console.log(msg)
                 });
                 setIsCreateDisabled(true);
@@ -81,7 +86,7 @@ const Play = () => {
         try {
             const res = await deleteRoom(createdRoom.number);
             if (res.status === 200) {
-                socketLeaveRoom((msg) => console.log(msg));
+                socketRef.current.socketLeaveRoom((msg) => console.log(msg));
                 setIsCreateDisabled(false);
                 setCreatedRoom(null);
             }
@@ -106,7 +111,11 @@ const Play = () => {
                     ))}
                 </ul>
             </>}
-            {inGame && <GameComponent yourColor={yourColor}></GameComponent>}
+            {inGame &&
+                <>
+                <GameComponent yourColor={yourColor} socketRef={socketRef}></GameComponent>
+                <ChatComponent></ChatComponent>
+                </>}
         </>
     );
 }
