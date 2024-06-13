@@ -26,11 +26,9 @@ const Play = () => {
                     console.error(error);
                 });
         }
-        
-        refreshRooms()
+        refreshRooms();
         
         const intervalId = setInterval(() => {
-
             if (inGame) return;
             refreshRooms();
             
@@ -40,7 +38,6 @@ const Play = () => {
             setInGame(true);
             setYourColor(color);
         });
-
 
         return () => clearInterval(intervalId);
     }, [inGame]);
@@ -58,8 +55,7 @@ const Play = () => {
         }
     };
 
-    const handleCreate = async (e) => {
-        e.preventDefault()
+    const handleCreate = async () => {
         try {
             const res = await createRoom();
             if (res.status === 201) {
@@ -103,7 +99,7 @@ const Play = () => {
                     ))}
                 </ul>
             </>}
-            {inGame && <GameComponent color={yourColor}></GameComponent>}
+            {inGame && <GameComponent yourColor={yourColor}></GameComponent>}
         </>
     );
 }
