@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
 import RoomComponent from "../components/RoomComponent";
 import {socketJoinRoom, socketLeaveRoom} from "../utils/socket";
@@ -14,8 +14,13 @@ const Play = () => {
     const [inGame, setInGame] = useState(false);
     const [yourColor, setYourColor] = useState('B');
 
+    const inGameRef = useRef(inGame);
+
     useEffect(() => {
-        
+        inGameRef.current = inGame;
+    }, [inGame]);
+
+    useEffect(() => {
         function refreshRooms() {
             getRooms()
                 .then(roomsList => {
@@ -27,20 +32,22 @@ const Play = () => {
                 });
         }
         refreshRooms();
-        
+
         const intervalId = setInterval(() => {
-            if (inGame) return;
+            if (inGameRef.current) return;
             refreshRooms();
-            
         }, 5000);
-        
+
         socketListenStart((color) => {
             setInGame(true);
             setYourColor(color);
         });
 
-        return () => clearInterval(intervalId);
-    }, [inGame]);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
+
 
     const handleJoin = async (number) => {
         try {
