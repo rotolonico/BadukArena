@@ -2,6 +2,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Play from "./pages/Play";
 import User from "./pages/User";
+import logo from './logo.jpeg';
 import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import {Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
@@ -43,8 +44,9 @@ function App() {
             <div style={{backgroundColor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
                 <AppBar position="static">
                     <Toolbar>
+                        <img src={logo} alt="Logo" style={{marginRight: '10px', width: '50px', height: '50px'}}/>
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            Baduk Arena
+                        Baduk Arena
                         </Typography>
                         {!authStatus && <Button color="inherit" href="/login">
                             Login
