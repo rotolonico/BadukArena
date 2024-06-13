@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Board from './BoardComponent';
 //import theme from "../utils/theme";
 import {
@@ -6,28 +6,41 @@ import {
     socketListenMove,
     socketListenIllegalMove,
     socketListenGameOver,
-    socketListenGameAborted
+    socketListenGameAborted,
+    socketRemoveAllGameListeners
 } from "../utils/socket";
 import ChatComponent from "./ChatComponent";
 
 const GameComponent = ({yourColor}) => {
     const [board, setBoard] = useState(initialBoardState());
-    
     const [currentPlayer, setCurrentPlayer] = useState('B');
+    
+    const boardRef = useRef(board);
+    const currentPlayerRef = useRef(currentPlayer);
 
     useEffect(() => {
+        boardRef.current = board;
+    }, [board]);
+
+    useEffect(() => {
+        currentPlayerRef.current = currentPlayer;
+    }, [currentPlayer]);
+
+
+    useEffect(() => {
+        console.log("CIAOO")
         socketListenMove((move) => {
             const [x, y] = move.split('-');
-            const newBoard = board.map((row, i) =>
+            const newBoard = boardRef.current.map((row, i) =>
                 row.map((cell, j) => {
                     if (i === parseInt(x) && j === parseInt(y)) {
-                        return currentPlayer;
+                        return currentPlayerRef.current;
                     }
                     return cell;
                 })
             );
             setBoard(newBoard);
-            setCurrentPlayer(currentPlayer === 'B' ? 'W' : 'B');
+            setCurrentPlayer(currentPlayerRef.current === 'B' ? 'W' : 'B');
         });
 
         socketListenIllegalMove((error) => {
@@ -44,18 +57,18 @@ const GameComponent = ({yourColor}) => {
             alert("Game Aborted")
         });
         
-
-    }, [board, currentPlayer]);
+        return socketRemoveAllGameListeners;
+    }, []);
 
     const handleCellClick = (x, y) => {
         const move = `${x}-${y}`;
         socketGameMove(move);
     };
-
+    
     return (
         <div>
             <h1>Go Game</h1>
-            <p>You are {yourColor}. It is {currentPlayer === "B" ? "black" : "white"}'s turn</p>
+            <p>You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn</p>
             <Board board={board} onCellClick={handleCellClick} />
             <ChatComponent></ChatComponent>
         </div>

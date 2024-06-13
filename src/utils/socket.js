@@ -48,6 +48,14 @@ const socketListenMove = (onMove) => {
     });
 }
 
+const socketRemoveAllGameListeners = () => {
+    socket.removeAllListeners("game-move");
+    socket.removeAllListeners("game-invalid-move");
+    socket.removeAllListeners("game-start");
+    socket.removeAllListeners("game-over");
+    socket.removeAllListeners("game-aborted");
+}
+
 const socketListenGameOver = (onGameOver) => {
     socket.on("game-over", (result) => {
         onGameOver(result);
@@ -71,5 +79,6 @@ export {
     socketListenMove,
     socketListenStart,
     socketListenGameOver,
-    socketListenGameAborted
+    socketListenGameAborted,
+    socketRemoveAllGameListeners
 };

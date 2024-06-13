@@ -82,6 +82,8 @@ const Play = () => {
             console.log(`Error deleting room: ${error.message}`);
         }
     }
+    
+    console.log("Colorr " + yourColor);
 
     return (
         <>
