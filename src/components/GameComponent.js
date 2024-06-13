@@ -28,7 +28,6 @@ const GameComponent = ({yourColor}) => {
 
 
     useEffect(() => {
-        console.log("CIAOO")
         socketListenMove((move) => {
             const [x, y] = move.split('-');
             const newBoard = boardRef.current.map((row, i) =>
