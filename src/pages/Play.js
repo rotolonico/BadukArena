@@ -138,7 +138,7 @@ const Play = () => {
             {gameState !== GameState.NOT_STARTED &&
                 <>
                 <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef}></GameComponent>
-                <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef}></ChatComponent>
+
                 </>}
             {gameState === GameState.FINISHED &&
                 <>

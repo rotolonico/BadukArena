@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Typography, Paper, Box } from '@mui/material';
 import Board from './BoardComponent';
+import ChatComponent from '../components/ChatComponent';
 
 const GameComponent = ({ yourColor, socketRef, gameStateRef }) => {
     const [board, setBoard] = useState(initialBoardState());
@@ -45,15 +46,20 @@ const GameComponent = ({ yourColor, socketRef, gameStateRef }) => {
     };
 
     return (
-        <Paper elevation={3} style={{ padding: '20px', maxWidth: '800px', margin: '20px auto' }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Go Game
-            </Typography>
-            <Typography variant="body1" component="p">
-                You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn
-            </Typography>
-            <Box mt={2}>
-                <Board board={board} onCellClick={handleCellClick} />
+        <Paper elevation={3} style={{ padding: '20px', margin: '20px auto', display: 'flex', justifyContent: 'space-between' }}>
+            <Box style={{ flex: 1, paddingRight: '20px' }}>
+                <Typography variant="h4" component="h1" gutterBottom>
+                    Go Game
+                </Typography>
+                <Typography variant="body1" component="p">
+                    You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn
+                </Typography>
+                <Box mt={2}>
+                    <Board board={board} onCellClick={handleCellClick} />
+                </Box>
+            </Box>
+            <Box style={{ flex: 1, paddingLeft: '20px' }}>
+                <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef} />
             </Box>
         </Paper>
     );
