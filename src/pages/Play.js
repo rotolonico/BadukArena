@@ -42,10 +42,11 @@ const Play = () => {
                     console.error(error);
                 });
         }
+        
         refreshRooms();
 
         const intervalId = setInterval(() => {
-            if (gameStateRef.current !== GameState.STARTED) return;
+            if (gameStateRef.current !== GameState.NOT_STARTED) return;
             refreshRooms();
         }, 5000);
 
@@ -55,6 +56,9 @@ const Play = () => {
         });
 
         socketRef.current.socketListenGameOver((rst) => {
+            console.log("Game endend: " + rst.winner)
+            console.log("Game endend: " + rst.isQuit)
+            setGameState(GameState.FINISHED);
             setResult(rst);
         });
         
@@ -64,6 +68,7 @@ const Play = () => {
 
         return () => {
             clearInterval(intervalId);
+            socketRef.current.socketRemoveAllGameListeners();
             socketRef.current.disconnect();
         };
     }, []);
@@ -116,7 +121,7 @@ const Play = () => {
 
     return (
         <>
-            {gameStateRef.current === GameState.NOT_STARTED && <>
+            {gameState === GameState.NOT_STARTED && <>
                 <button type="button" onClick={handleCreate} disabled={isCreateDisabled}>Create Room</button>
                 <h2>Available Rooms</h2>
                 <ul>
@@ -130,15 +135,15 @@ const Play = () => {
                     ))}
                 </ul>
             </>}
-            {gameStateRef.current !== GameState.NOT_STARTED &&
+            {gameState !== GameState.NOT_STARTED &&
                 <>
                 <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef}></GameComponent>
                 <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef}></ChatComponent>
                 </>}
-            {gameStateRef.current === GameState.FINISHED &&
+            {gameState === GameState.FINISHED &&
                 <>
-                    {result.isQuit && <p>{result.winner} won because the other player aborted the game</p>}
-                    {!result.isQuit && <p>{result.winner} won</p>}
+                    {result.isQuit && <p>{result.winner === "B" ? "black" : "white"} won because the other player aborted the game</p>}
+                    {!result.isQuit && <p>{result.winner === "B" ? "black" : "white"} won</p>}
                     <button type="button" onClick={handleNewGame}>New Game</button>
                 </>}
         </>

@@ -36,18 +36,7 @@ const GameComponent = ({yourColor, socketRef, gameStateRef}) => {
         socketRef.current.socketListenIllegalMove((error) => {
             console.log(error);
         });
-
-        socketRef.current.socketListenGameOver((result) => {
-            window.location.reload();
-            alert(result === "B" ? "Black wins" : "White wins")
-        });
-
-        socketRef.current.socketListenGameAborted(() => {
-            window.location.reload();
-            alert("Game Aborted")
-        });
-
-        return () => {socketRef.current.socketRemoveAllGameListeners()};
+        
     }, []);
 
     const handleCellClick = (x, y) => {
