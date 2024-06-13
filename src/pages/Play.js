@@ -114,7 +114,7 @@ const Play = () => {
             {inGame &&
                 <>
                 <GameComponent yourColor={yourColor} socketRef={socketRef}></GameComponent>
-                <ChatComponent></ChatComponent>
+                <ChatComponent socketRef={socketRef}></ChatComponent>
                 </>}
         </>
     );

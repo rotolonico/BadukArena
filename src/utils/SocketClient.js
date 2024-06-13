@@ -61,6 +61,10 @@ class SocketClient {
         this.socket.removeAllListeners("game-aborted");
     }
 
+    socketRemoveChatListener() {
+        this.socket.removeAllListeners("chat-message");
+    }
+
     socketListenGameOver(onGameOver) {
         this.socket.on("game-over", (result) => {
             onGameOver(result);

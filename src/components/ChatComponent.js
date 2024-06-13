@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Message from "./MessageComponent";
 import theme from "../utils/theme";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
@@ -6,7 +6,7 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { joinRoom } from "../utils/api";
+import {getUsername} from "../utils/api";
 
 const Chat = ({socketRef}) => {
     const [messages, setMessages] = useState([]);
@@ -20,6 +20,19 @@ const Chat = ({socketRef}) => {
         config: { duration: 900 },
     });
 
+    useEffect(() => {
+        getUsername().then((response) => {
+            setUsername(response.data);
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        socketRef.current.socketListenChat((message) => {
+            setMessages((prevMessages) => [...prevMessages, message])
+        });
+        return () => {socketRef.current.socketRemoveChatListener()};
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const message = {
@@ -29,24 +42,6 @@ const Chat = ({socketRef}) => {
         };
         socketRef.current.socketSendMessage(message);
         setMessageText("");
-    };
-
-    const handleJoin = async (e) => {
-        e.preventDefault();
-        try {
-            const room = e.target.elements.room.value;
-            const res = await joinRoom(room);
-            if (res.status === 200 || res.status === 201) {
-                socketRef.current.socketJoinRoom(room, (msg) => {
-                    setMessages((prevMessages) => [...prevMessages, msg]);
-                });
-                socketRef.current.socketListenChat((msg) => {
-                    setMessages((prevMessages) => [...prevMessages, msg]);
-                });
-            }
-        } catch (error) {
-            setMessages((prevMessages) => [...prevMessages, { text: `Error joining room: ${error.message}`, user: 'System', timestamp: new Date().toLocaleString() }]);
-        }
     };
 
     const addEmoji = (emoji) => {
@@ -60,37 +55,6 @@ const Chat = ({socketRef}) => {
                 <Container maxWidth="sm">
                     <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10}>
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
-                        <form onSubmit={handleJoin}>
-                            <TextField
-                                name="username"
-                                label="Nome Utente"
-                                variant="outlined"
-                                fullWidth
-                                margin="normal"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                InputLabelProps={{
-                                    style: { color: 'white' },
-                                }}
-                                InputProps={{
-                                    style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                                }}
-                            />
-                            <TextField
-                                name="room"
-                                label="Stanza"
-                                variant="outlined"
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                    style: { color: 'white' },
-                                }}
-                                InputProps={{
-                                    style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                                }}
-                            />
-                            <Button type="submit" variant="contained" color="secondary">Entra nella stanza</Button>
-                        </form>
                         <form onSubmit={handleSubmit}>
                             <Box display="flex" alignItems="center" position="relative">
                                 <TextField

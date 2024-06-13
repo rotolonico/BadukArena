@@ -19,8 +19,7 @@ const GameComponent = ({yourColor, socketRef}) => {
 
 
     useEffect(() => {
-        console.log("GameComponent useEffect",socketRef.current);
-        socketRef.current.socketListenMove((move) => {  console.log("SONO NEL LISTEN MOVE");
+        socketRef.current.socketListenMove((move) => {
             const [x, y] = move.split('-');
             const newBoard = boardRef.current.map((row, i) =>
                 row.map((cell, j) => {
@@ -47,7 +46,7 @@ const GameComponent = ({yourColor, socketRef}) => {
             window.location.reload();
             alert("Game Aborted")
         });
-        
+
         return () => {socketRef.current.socketRemoveAllGameListeners()};
     }, []);
 
