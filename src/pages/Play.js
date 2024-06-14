@@ -1,19 +1,57 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
+import React, { useEffect, useState, useRef } from 'react';
+import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
 import RoomComponent from "../components/RoomComponent";
 import withAuth from "../withAuth";
 import GameComponent from "../components/GameComponent";
 import SocketClient from "../utils/SocketClient";
 import ChatComponent from "../components/ChatComponent";
+import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
+import {ListItem} from "@mui/material";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        maxWidth: 600,
+        backgroundColor: theme.palette.background.paper,
+        margin: '0 auto',
+        padding: '20px',
+    },
+    createButton: {
+        marginBottom: '20px',
+    },
+    roomList: {
+        listStyle: 'none',
+        padding: 0,
+    },
+    roomItem: {
+        marginBottom: '10px',
+    },
+}));
+
+const theme = createTheme({
+    typography: {
+        fontFamily: [
+            'Roboto',
+            'Arial',
+            'sans-serif',
+        ].join(','),
+    },
+    palette: {
+        primary: {
+            main: '#262424',
+        },
+    },
+});
 
 const Play = () => {
-    
+
     const GameState = {
         NOT_STARTED: 0,
         STARTED: 1,
         FINISHED: 2
     }
 
+    const classes = useStyles();
     const [rooms, setRooms] = useState([]);
     const [isCreateDisabled, setIsCreateDisabled] = useState(false);
     const [createdRoom, setCreatedRoom] = useState(null);
@@ -42,7 +80,7 @@ const Play = () => {
                     console.error(error);
                 });
         }
-        
+
         refreshRooms();
 
         const intervalId = setInterval(() => {
@@ -61,7 +99,7 @@ const Play = () => {
             setGameState(GameState.FINISHED);
             setResult(rst);
         });
-        
+
         socketRef.current.socketListenGameAborted(() => {
             window.location.reload();
         });
@@ -92,7 +130,7 @@ const Play = () => {
         try {
             const res = await createRoom();
             if (res.status === 201) {
-                setCreatedRoom({number: res.data.roomNumber, username: res.data.username});
+                setCreatedRoom({ number: res.data.roomNumber, username: res.data.username });
                 socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                     console.log(msg);
                 });
@@ -115,39 +153,65 @@ const Play = () => {
             console.log(`Error deleting room: ${error.message}`);
         }
     }
-    
+
     const handleNewGame = () => {
         window.location.reload();
     }
 
     return (
-        <>
-            {gameState === GameState.NOT_STARTED && <>
-                <button type="button" onClick={handleCreate} disabled={isCreateDisabled}>Create Room</button>
-                <h2>Available Rooms</h2>
-                <ul>
-                    {createdRoom && <li>
-                        {createdRoom.username}
-                        <button type="button" onClick={handleDelete} disabled={!isCreateDisabled}>Delete Room</button>
-                    </li>}
-                    {rooms?.map((r, i) => (
-                        <RoomComponent key={i} number={r.number} roomCreator={r.roomCreator.username}
-                                       handleJoin={handleJoin} disabledCondition={isCreateDisabled}/>
-                    ))}
-                </ul>
-            </>}
-            {gameState !== GameState.NOT_STARTED &&
-                <>
-                <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef}></GameComponent>
-
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <div className={classes.root}>
+                {gameState === GameState.NOT_STARTED && <>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleCreate}
+                        disabled={isCreateDisabled}
+                        className={classes.createButton}
+                    >
+                        Create Room
+                    </Button>
+                    <Typography variant="h6" gutterBottom>
+                        Available Rooms
+                    </Typography>
+                    <List className={classes.roomList}>
+                        {createdRoom && (
+                            <ListItem className={classes.roomItem}>
+                                {createdRoom.username}
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={handleDelete}
+                                    disabled={!isCreateDisabled}
+                                >
+                                    Delete Room
+                                </Button>
+                            </ListItem>
+                        )}
+                        {rooms?.map((r, i) => (
+                            <RoomComponent
+                                key={i}
+                                number={r.number}
+                                roomCreator={r.roomCreator.username}
+                                handleJoin={handleJoin}
+                                disabledCondition={isCreateDisabled}
+                            />
+                        ))}
+                    </List>
                 </>}
-            {gameState === GameState.FINISHED &&
-                <>
-                    {result.isQuit && <p>{result.winner === "B" ? "black" : "white"} won because the other player aborted the game</p>}
-                    {!result.isQuit && <p>{result.winner === "B" ? "black" : "white"} won</p>}
-                    <button type="button" onClick={handleNewGame}>New Game</button>
-                </>}
-        </>
+                {gameState !== GameState.NOT_STARTED &&
+                    <>
+                        <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
+                    </>}
+                {gameState === GameState.FINISHED &&
+                    <>
+                        {result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won because the other player aborted the game</Typography>}
+                        {!result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won</Typography>}
+                        <Button type="button" onClick={handleNewGame}>New Game</Button>
+                    </>}
+            </div>
+        </ThemeProvider>
     );
 }
 
