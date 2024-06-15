@@ -6,7 +6,7 @@ import GameComponent from "../components/GameComponent";
 import SocketClient from "../utils/SocketClient";
 import ChatComponent from "../components/ChatComponent";
 import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
-import {ListItem} from "@mui/material";
+import {Box, ListItem} from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -203,6 +203,9 @@ const Play = () => {
                 {gameState !== GameState.NOT_STARTED &&
                     <>
                         <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
+                        <Box style={{ flex: 1, paddingLeft: '20px' }}>
+                            <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef} />
+                        </Box>
                     </>}
                 {gameState === GameState.FINISHED &&
                     <>

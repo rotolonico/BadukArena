@@ -58,9 +58,6 @@ const GameComponent = ({ yourColor, socketRef, gameStateRef }) => {
                     <Board board={board} onCellClick={handleCellClick} />
                 </Box>
             </Box>
-            <Box style={{ flex: 1, paddingLeft: '20px' }}>
-                <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef} />
-            </Box>
         </Paper>
     );
 };
