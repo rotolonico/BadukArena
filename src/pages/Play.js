@@ -6,12 +6,12 @@ import GameComponent from "../components/GameComponent";
 import SocketClient from "../utils/SocketClient";
 import ChatComponent from "../components/ChatComponent";
 import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
-import {Box, ListItem} from "@mui/material";
+import { Box, ListItem } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 600,
+        maxWidth: 1200,
         backgroundColor: theme.palette.background.paper,
         margin: '0 auto',
         padding: '20px',
@@ -67,7 +67,6 @@ const Play = () => {
     }, [gameState]);
 
     useEffect(() => {
-
         socketRef.current = new SocketClient();
 
         function refreshRooms() {
@@ -94,8 +93,8 @@ const Play = () => {
         });
 
         socketRef.current.socketListenGameOver((rst) => {
-            console.log("Game endend: " + rst.winner)
-            console.log("Game endend: " + rst.isQuit)
+            console.log("Game ended: " + rst.winner)
+            console.log("Game ended: " + rst.isQuit)
             setGameState(GameState.FINISHED);
             setResult(rst);
         });
@@ -111,7 +110,6 @@ const Play = () => {
             socketRef.current.disconnect();
         };
     }, []);
-
 
     const handleJoin = async (number) => {
         try {
@@ -201,12 +199,14 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <>
-                        <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
-                        <Box style={{ flex: 1, paddingLeft: '20px' }}>
+                    <Box display="flex" height="80vh">
+                        <Box flex={2} pr={2} style={{ minWidth: '60%' }}>
+                            <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
+                        </Box>
+                        <Box flex={1} pl={2} style={{ minWidth: '30%' }}>
                             <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef} />
                         </Box>
-                    </>}
+                    </Box>}
                 {gameState === GameState.FINISHED &&
                     <>
                         {result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won because the other player aborted the game</Typography>}

@@ -56,7 +56,7 @@ const Chat = ({socketRef, gameStateRef}) => {
         <ThemeProvider theme={theme}>
             <animated.div style={springProps}>
                 <Container maxWidth="sm">
-                    <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="80vh">
+                    <Box mt={2} textAlign="left" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="80vh">
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
                         <Box flex={1} overflow="auto" mb={2} style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #555' }}>
                             <List>
@@ -72,10 +72,10 @@ const Chat = ({socketRef, gameStateRef}) => {
                                 <TextField
                                     name="message"
                                     label="Messaggio"
-                                    variant="outlined"
+                                    variant="filled"
                                     fullWidth
                                     multiline
-                                    rows={4}
+                                    rows={3}
                                     margin="normal"
                                     value={messageText}
                                     onChange={(e) => setMessageText(e.target.value)}
