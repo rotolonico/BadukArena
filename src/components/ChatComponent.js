@@ -28,13 +28,12 @@ const Chat = ({socketRef, gameStateRef}) => {
         });
 
         socketRef.current.socketListenChat((message) => {
-            setMessages((prevMessages) => [...prevMessages, message])
+            setMessages((prevMessages) => [...prevMessages, message]);
         });
-        
+
         return () => {
             socketRef.current.socketRemoveChatListener();
         };
-            
     }, []);
 
     const handleSubmit = (e) => {
@@ -57,8 +56,17 @@ const Chat = ({socketRef, gameStateRef}) => {
         <ThemeProvider theme={theme}>
             <animated.div style={springProps}>
                 <Container maxWidth="sm">
-                    <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10}>
+                    <Box mt={5} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="80vh">
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
+                        <Box flex={1} overflow="auto" mb={2} style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #555' }}>
+                            <List>
+                                {messages.map((message, index) => (
+                                    <ListItem key={index}>
+                                        <Message msg={message} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Box>
                         <form onSubmit={handleSubmit}>
                             <Box display="flex" alignItems="center" position="relative">
                                 <TextField
@@ -93,13 +101,6 @@ const Chat = ({socketRef, gameStateRef}) => {
                                 <Button type="submit" variant="contained" color="secondary" disabled={gameStateRef.current !== 1}>Invia</Button>
                             </Box>
                         </form>
-                        <List>
-                            {messages.map((message, index) => (
-                                <ListItem key={index}>
-                                    <Message msg={message} />
-                                </ListItem>
-                            ))}
-                        </List>
                     </Box>
                 </Container>
             </animated.div>
