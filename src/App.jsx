@@ -2,11 +2,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Play from "./pages/Play";
 import User from "./pages/User";
-import logo from './logo.jpeg';
 import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import {Container, AppBar, Toolbar, Typography, Button} from "@mui/material";
+import {Container} from "@mui/material";
 import {getUsername, isAuthenticated, logout} from "./utils/api";
+import Navbar from "./components/Navbar";
 
 const handleLogout = async () => {
     try {
@@ -41,29 +41,8 @@ function App() {
     },[authStatus]);
 
     return (<Router>
-            <div style={{backgroundColor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <img src={logo} alt="Logo" style={{marginRight: '10px', width: '50px', height: '50px'}}/>
-                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Baduk Arena
-                        </Typography>
-                        {!authStatus && <Button color="inherit" href="/login">
-                            Login
-                        </Button>}
-                        {authStatus && <div>
-                            <Button color="inherit" href="/play">
-                                Play
-                            </Button>
-                            <Button color="inherit" href="/user">
-                                {username? username:'User'}
-                            </Button>
-                            <Button color="inherit" onClick={handleLogout}>
-                                Logout
-                            </Button>
-                        </div>}
-                    </Toolbar>
-                </AppBar>
+            <main style={{backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
+                <Navbar authStatus={authStatus} username={username} handleLogout={handleLogout} />
                 <Container sx={{flexGrow: 1, marginTop: '64px'}}>
                     <Routes>
                         <Route path="/login" element={<Login/>}/>
@@ -73,7 +52,7 @@ function App() {
                         <Route path="*" element={<Navigate to='/play' replace />} />
                     </Routes>
                 </Container>
-            </div>
+            </main>
         </Router>
     );
 }

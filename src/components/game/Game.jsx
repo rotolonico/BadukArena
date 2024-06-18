@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Typography, Paper, Box } from '@mui/material';
-import Board from './BoardComponent';
-import ChatComponent from '../components/ChatComponent';
+import Board from './Board';
 
 const GameComponent = ({ yourColor, socketRef, gameStateRef }) => {
     const [board, setBoard] = useState(initialBoardState());

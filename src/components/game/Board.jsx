@@ -1,6 +1,5 @@
-// src/components/Board.js
 import React from 'react';
-import Cell from './CellComponent';
+import Cell from './Cell';
 
 const Board = ({ board, onCellClick }) => {
     return (

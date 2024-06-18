@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
-import RoomComponent from "../components/RoomComponent";
+import RoomComponent from "../components/room/Room";
 import withAuth from "../withAuth";
-import GameComponent from "../components/GameComponent";
+import GameComponent from "../components/game/Game";
 import SocketClient from "../utils/SocketClient";
-import ChatComponent from "../components/ChatComponent";
+import ChatComponent from "../components/chat/Chat";
 import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
 import { Box, ListItem } from "@mui/material";
 

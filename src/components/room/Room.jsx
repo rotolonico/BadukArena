@@ -4,7 +4,6 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
-// Iniettare il font
 const injectFont = () => {
     const link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap';

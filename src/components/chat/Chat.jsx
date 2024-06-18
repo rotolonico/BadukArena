@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import Message from "./MessageComponent";
-import theme from "../utils/theme";
+import Message from "./Message";
+import theme from "../../utils/theme";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import {getUsername} from "../utils/api";
+import {getUsername} from "../../utils/api";
 
 const Chat = ({socketRef, gameStateRef}) => {
     const [messages, setMessages] = useState([]);

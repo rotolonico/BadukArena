@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {isAuthenticated} from './utils/api';
 
-
 const withAuth = (Component) => {
 
     return (props) => {
