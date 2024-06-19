@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Typography, Paper, Box } from '@mui/material';
 import Board from './Board';
 
-const GameComponent = ({ yourColor, socketRef, gameStateRef }) => {
+const Game = ({ yourColor, socketRef, gameStateRef }) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
 
@@ -75,4 +75,4 @@ function initialBoardState() {
     ];
 }
 
-export default GameComponent;
+export default Game;

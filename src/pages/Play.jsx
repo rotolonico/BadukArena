@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
 import RoomComponent from "../components/room/Room";
 import withAuth from "../withAuth";
-import GameComponent from "../components/game/Game";
+import Game from "../components/game/Game";
 import SocketClient from "../utils/SocketClient";
-import ChatComponent from "../components/chat/Chat";
+import Chat from "../components/chat/Chat";
 import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
 import { Box, ListItem } from "@mui/material";
 
@@ -201,10 +201,10 @@ const Play = () => {
                 {gameState !== GameState.NOT_STARTED &&
                     <Box display="flex" height="80vh">
                         <Box flex={2} pr={2} style={{ minWidth: '60%' }}>
-                            <GameComponent yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
+                            <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
                         </Box>
                         <Box flex={1} pl={2} style={{ minWidth: '30%' }}>
-                            <ChatComponent socketRef={socketRef} gameStateRef={gameStateRef} />
+                            <Chat socketRef={socketRef} gameStateRef={gameStateRef} />
                         </Box>
                     </Box>}
                 {gameState === GameState.FINISHED &&

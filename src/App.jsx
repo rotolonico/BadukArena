@@ -1,12 +1,12 @@
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Navbar from "./components/Navbar";
 import Play from "./pages/Play";
 import User from "./pages/User";
-import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
+import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import {Container} from "@mui/material";
 import {getUsername, isAuthenticated, logout} from "./utils/api";
-import Navbar from "./components/Navbar";
 
 const handleLogout = async () => {
     try {
@@ -40,8 +40,8 @@ function App() {
         }
     },[authStatus]);
 
-    return (<Router>
-            <main style={{backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
+    return (<BrowserRouter>
+            <div style={{backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
                 <Navbar authStatus={authStatus} username={username} handleLogout={handleLogout} />
                 <Container sx={{flexGrow: 1, marginTop: '64px'}}>
                     <Routes>
@@ -52,8 +52,8 @@ function App() {
                         <Route path="*" element={<Navigate to='/play' replace />} />
                     </Routes>
                 </Container>
-            </main>
-        </Router>
+            </div>
+        </BrowserRouter>
     );
 }
 
