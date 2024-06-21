@@ -3,6 +3,8 @@ import { ListItem, Button, makeStyles, Typography, Avatar } from '@material-ui/c
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
+import logo from '../../static/images/logo.png';
+
 
 const injectFont = () => {
     const link = document.createElement('link');
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     joinButton: {
         marginLeft: theme.spacing(2),
     },
+    deleteButton: {
+        marginLeft: theme.spacing(2),
+    },
     roomInfo: {
         fontSize: '1.2rem',
         display: 'flex',
@@ -49,11 +54,11 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         marginRight: theme.spacing(2),
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main
     },
 }));
 
-const RoomComponent = ({ number, roomCreator, handleJoin, disabledCondition }) => {
+const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabledCondition, isOwn }) => {
     const classes = useStyles();
 
     return (
@@ -61,22 +66,36 @@ const RoomComponent = ({ number, roomCreator, handleJoin, disabledCondition }) =
             <CssBaseline />
             <ListItem className={classes.listItem}>
                 <div className={classes.roomInfo}>
-                    <Avatar className={classes.avatar}>
+                    <Avatar className={classes.avatar} src={logo} >
                         <PersonIcon />
                     </Avatar>
                     <Typography variant="h6">
-                        {`${number} - ${roomCreator}`}
+                        {isOwn ? `${roomCreator} (You)` : `${roomCreator}`}
                     </Typography>
                 </div>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleJoin(number)}
-                    disabled={disabledCondition}
-                    className={classes.joinButton}
-                >
-                    Join
-                </Button>
+                {isOwn &&
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleDelete}
+                        disabled={disabledCondition}
+                        className={classes.deleteButton}
+                    >
+                        Delete Room
+                    </Button>
+                }
+                {!isOwn &&
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleJoin(number)}
+                        disabled={disabledCondition}
+                        className={classes.joinButton}
+                    >
+                        Join
+                    </Button>
+                }
+                
             </ListItem>
         </ThemeProvider>
     );

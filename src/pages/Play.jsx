@@ -175,17 +175,12 @@ const Play = () => {
                     </Typography>
                     <List className={classes.roomList}>
                         {createdRoom && (
-                            <ListItem className={classes.roomItem}>
-                                {createdRoom.username}
-                                <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={handleDelete}
-                                    disabled={!isCreateDisabled}
-                                >
-                                    Delete Room
-                                </Button>
-                            </ListItem>
+                            <RoomComponent
+                                isOwn={true}
+                                roomCreator={createdRoom.username}
+                                handleDelete={handleDelete}
+                                disabledCondition={!isCreateDisabled}
+                            />
                         )}
                         {rooms?.map((r, i) => (
                             <RoomComponent
