@@ -46,7 +46,7 @@ const Game = ({ yourColor, socketRef, gameStateRef }) => {
 
     return (
         <Paper elevation={3} style={{ padding: '20px', margin: '20px auto', display: 'flex', justifyContent: 'space-between' }}>
-            <Box style={{ flex: 1, paddingRight: '20px' }}>
+            <Box style={{ flex: 1 }}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Go Game
                 </Typography>
