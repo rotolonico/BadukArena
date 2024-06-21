@@ -2,11 +2,12 @@ import React from 'react';
 import { Box, Typography } from "@mui/material";
 
 const PlayerBox = ({username, color, marginRight}) => {
-    const gradientColor = color === 'B' ? 'black' : 'white';
+    const backgroundColor = color === 'B' ? '#262424' : 'white';
+    const textColor = color === 'B' ? 'white' : 'black';
 
     return (
-        <Box marginRight={marginRight} sx={{ width: 200, height: 200, borderRadius: '10%', background: `linear-gradient(0deg, ${gradientColor} 0%, rgba(255,255,255,0) 100%)` }}>
-            <Typography variant='h6'>{username}</Typography>
+        <Box marginRight={marginRight} sx={{ width: 200, height: 100, borderRadius: '5%', background: backgroundColor, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <Typography variant='h6' color={textColor}>{username}</Typography>
         </Box>
     );
 }
