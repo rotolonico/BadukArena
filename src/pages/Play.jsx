@@ -7,6 +7,7 @@ import SocketClient from "../utils/SocketClient";
 import Chat from "../components/chat/Chat";
 import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { Box, ListItem } from "@mui/material";
+import theme from "../utils/theme";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,20 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const theme = createTheme({
-    typography: {
-        fontFamily: [
-            'Roboto',
-            'Arial',
-            'sans-serif',
-        ].join(','),
-    },
-    palette: {
-        primary: {
-            main: '#262424',
-        },
-    },
-});
+
 
 const Play = () => {
 
