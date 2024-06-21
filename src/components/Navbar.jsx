@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import logo from '../static/images/logo.png';
 import { Link } from 'react-router-dom';
+import '../styles.css';
 
 const Navbar = ({ authStatus, username, handleLogout }) => {
     return (
@@ -11,17 +12,18 @@ const Navbar = ({ authStatus, username, handleLogout }) => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Baduk Arena
                 </Typography>
-                {!authStatus && <Button color="inherit" component={Link} to="/login">
-                    Login
-                </Button>}
+                {!authStatus &&
+                    <Button color="inherit" component={Link} to="/login" className="nav-link">
+                        Login
+                    </Button>}
                 {authStatus && <>
-                    <Button color="inherit" component={Link} to="/play">
+                    <Button color="inherit" component={Link} to="/play" className="nav-link">
                         Play
                     </Button>
-                    <Button color="inherit" component={Link} to="/user">
+                    <Button color="inherit" component={Link} to="/user" className="nav-link">
                         {"Your profile (" + (username ? username : 'User') + ")"}
                     </Button>
-                    <Button color="inherit" onClick={handleLogout}>
+                    <Button color="inherit" onClick={handleLogout} className="nav-link">
                         Logout
                     </Button>
                 </>}

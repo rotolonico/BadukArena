@@ -33,3 +33,52 @@ option {
     color: #ffffff;
     margin: 0 10px;
 }
+/* styles.css */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+.MuiAppBar-root {
+    background-color: #262424 !important; /* Colore primario definito nel tema */
+    color: #fff; /* Colore del testo */
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+option {
+    color: #000; /* Colore del testo delle opzioni */
+}
+
+.footer {
+    background-color: #262424;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: #ffffff;
+    margin: 0 10px;
+}
+
+/* Stili di illuminazione per i link */
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-link:hover {
+    color: #00bfff; /* Cambia il colore del testo al passaggio del mouse a blu */
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5); /* Effetto di illuminazione blu */
+}
