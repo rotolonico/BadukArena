@@ -40,8 +40,7 @@ const Chat = ({socketRef, gameStateRef}) => {
         e.preventDefault();
         const message = {
             text: messageText,
-            user: username || "Anonimo",
-            timestamp: new Date().toLocaleString()
+            user: username || "Anonimo"
         };
         socketRef.current.socketSendMessage(message);
         setMessageText("");
