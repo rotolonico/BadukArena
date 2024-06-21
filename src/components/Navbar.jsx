@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppBar, Toolbar, Typography, Button} from "@mui/material";
-import logo from '../images/logo.jpeg';
+import logo from '../images/logo.png';
 
 const Navbar = ({authStatus, username, handleLogout}) => {
     return (
