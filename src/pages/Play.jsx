@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
-import RoomComponent from "../components/room/Room";
+import Room from "../components/room/Room";
 import withAuth from "../withAuth";
 import Game from "../components/game/Game";
 import SocketClient from "../utils/SocketClient";
@@ -175,7 +175,7 @@ const Play = () => {
                     </Typography>
                     <List className={classes.roomList}>
                         {createdRoom && (
-                            <RoomComponent
+                            <Room
                                 isOwn={true}
                                 roomCreator={createdRoom.username}
                                 handleDelete={handleDelete}
@@ -183,7 +183,7 @@ const Play = () => {
                             />
                         )}
                         {rooms?.map((r, i) => (
-                            <RoomComponent
+                            <Room
                                 key={i}
                                 number={r.number}
                                 roomCreator={r.roomCreator.username}
