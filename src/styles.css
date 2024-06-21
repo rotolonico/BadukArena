@@ -19,3 +19,17 @@ select {
 option {
     color: #000; /* Colore del testo delle opzioni */
 }
+.footer {
+    background-color: #262424;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer a {
+    color: #ffffff;
+    margin: 0 10px;
+}

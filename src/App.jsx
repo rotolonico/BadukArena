@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Play from "./pages/Play";
 import User from "./pages/User";
+import Footer from "../src/Footer";
 import { Container } from "@mui/material";
 import { getUsername, isAuthenticated, logout } from "./utils/api";
 
@@ -52,6 +53,7 @@ function App() {
                         <Route path="*" element={<Navigate to='/play' replace />} />
                     </Routes>
                 </Container>
+                <Footer /> {/* Aggiungi il Footer qui */}
             </div>
         </BrowserRouter>
     );
