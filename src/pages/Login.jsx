@@ -38,7 +38,7 @@ const Login = () => {
                 <Container maxWidth="sm">
                     <Box mt={5} display="flex" flexDirection="column" alignItems="center" p={3} bgcolor="#262424"
                          boxShadow={3} border={`3px solid #ccc`} borderRadius={10}>
-                        <Typography variant="h4" component="h2" gutterBottom color="secondary">Login</Typography>
+                        <Typography variant="h4" component="h2" gutterBottom color="white">Login</Typography>
                         <Box mt={2} style={{alignContent: 'center'}}>
                             <Button variant="text" color="secondary" href="/register">Create an account</Button>
                         </Box>
