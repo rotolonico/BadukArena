@@ -191,8 +191,8 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <Box display="flex" height="80vh">
-                        <Box flex={2} pr={2} style={{ minWidth: '60%' }}>
+                    <Box display="flex" justifyContent="center" alignItems="center">
+                        <Box flex={1} pr={2} style={{ minWidth: '60%' }}>
                             <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
                         </Box>
                         <Box flex={1} pl={2} style={{ minWidth: '30%' }}>

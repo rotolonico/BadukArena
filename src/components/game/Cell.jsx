@@ -4,8 +4,8 @@ import blackStone from '../../static/images/black-stone.png';
 import whiteStone from '../../static/images/white-stone.png';
 
 const StyledCell = styled('div')(({ theme, hasStone }) => ({
-    width: 30,
-    height: 30,
+    width: '100%',
+    aspectRatio: '1 / 1',
     cursor: hasStone ? 'default' : 'pointer',
     backgroundColor: 'transparent',
     position: 'relative',
@@ -47,8 +47,8 @@ const Crosshair = styled('div')({
 });
 
 const Stone = styled('img')({
-    width: 28,
-    height: 28,
+    width: '80%',
+    height: '80%',
     position: 'relative',
     zIndex: 1
 });
