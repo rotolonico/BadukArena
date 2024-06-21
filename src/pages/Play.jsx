@@ -72,7 +72,6 @@ const Play = () => {
         function refreshRooms() {
             getRooms()
                 .then(roomsList => {
-                    console.log("Refreshed rooms");
                     setRooms(roomsList.data);
                 })
                 .catch(error => {
@@ -93,8 +92,6 @@ const Play = () => {
         });
 
         socketRef.current.socketListenGameOver((rst) => {
-            console.log("Game ended: " + rst.winner)
-            console.log("Game ended: " + rst.isQuit)
             setGameState(GameState.FINISHED);
             setResult(rst);
         });
