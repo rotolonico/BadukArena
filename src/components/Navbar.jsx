@@ -11,14 +11,14 @@ const Navbar = ({ authStatus, username, handleLogout }) => {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Baduk Arena
                 </Typography>
-                {!authStatus && <Button color="inherit" href="/login">
+                {!authStatus && <Button color="inherit" component={Link} to="/login">
                     Login
                 </Button>}
                 {authStatus && <>
-                    <Button color="inherit" href="/play">
+                    <Button color="inherit" component={Link} to="/play">
                         Play
                     </Button>
-                    <Button color="inherit" href="/user">
+                    <Button color="inherit" component={Link} to="/user">
                         {"Your profile (" + (username ? username : 'User') + ")"}
                     </Button>
                     <Button color="inherit" onClick={handleLogout}>

@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+.MuiAppBar-root {
+    background-color: #262424 !important; /* Colore primario definito nel tema */
+    color: #fff; /* Colore del testo */
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+option {
+    color: #000; /* Colore del testo delle opzioni */
+}

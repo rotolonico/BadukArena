@@ -4,6 +4,7 @@ import App from './App';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './utils/theme';
+import './styles.css';
 
 const globalStyles = `
   body {

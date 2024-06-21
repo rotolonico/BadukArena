@@ -18,7 +18,6 @@ const handleLogout = async () => {
 };
 
 function App() {
-
     const [authStatus, setAuthStatus] = useState(false);
     const [username, setUsername] = useState('');
 
