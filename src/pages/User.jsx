@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {getGames} from "../utils/api";
 import withAuth from "../withAuth";
+import moment from "moment";
 import {
     Table, TableBody, TableCell, TableContainer, TableHead,
     TableRow, Paper, Typography, CircularProgress, Box
@@ -51,6 +52,11 @@ const User = () => {
     useEffect(() => {
         getGames().then((response) => {
             setGames(response.data);
+            const gameList = response.data.map((g) => {
+                g.date=moment(g.date).format('DD-MM-YYYY');
+                return g;
+            });
+            setGames(gameList);
             setLoading(false);
         }).catch((error) => {
             console.error(error);
@@ -94,7 +100,7 @@ const User = () => {
                                     {games.map((game, index) => (
                                         <TableRow key={index}>
                                             <TableCell align="center" sx={{fontSize: '1rem'}}>
-                                                {new Date(game.date).toLocaleDateString()}
+                                                {game.date}
                                             </TableCell>
                                             <TableCell align="center" sx={{
                                                 fontSize: '1rem',
