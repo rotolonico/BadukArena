@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
-import Room from "../components/room/Room";
+import Room from "../components/Room";
 import withAuth from "../withAuth";
 import Game from "../components/game/Game";
 import SocketClient from "../utils/SocketClient";
 import Chat from "../components/chat/Chat";
-import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
-import { Box, ListItem } from "@mui/material";
+import PlayerBox from "../components/PlayerBox";
+import { Button, Typography, List, makeStyles, ThemeProvider, CssBaseline, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import theme from "../utils/theme";
+import { Box } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,8 +30,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
-
 const Play = () => {
 
     const GameState = {
@@ -45,6 +44,8 @@ const Play = () => {
     const [createdRoom, setCreatedRoom] = useState(null);
     const [gameState, setGameState] = useState(GameState.NOT_STARTED);
     const [yourColor, setYourColor] = useState('B');
+    const [opponentUsername, setOpponentUsername] = useState('');
+    const [yourUsername, setYourUsername] = useState('');
     const [result, setResult] = useState(null);
     const [selectedColor, setSelectedColor] = useState(' ');
 
@@ -61,7 +62,6 @@ const Play = () => {
         function refreshRooms() {
             getRooms()
                 .then(roomsList => {
-                    console.log(JSON.stringify(roomsList.data))
                     setRooms(roomsList.data);
                 })
                 .catch(error => {
@@ -76,9 +76,11 @@ const Play = () => {
             refreshRooms();
         }, 5000);
 
-        socketRef.current.socketListenGameStart((color) => {
+        socketRef.current.socketListenGameStart((data) => {
             setGameState(GameState.STARTED);
-            setYourColor(color);
+            setYourColor(data.color);
+            setOpponentUsername(data.opponentUsername);
+            setYourUsername(data.playerUsername);
         });
 
         socketRef.current.socketListenGameOver((rst) => {
@@ -202,14 +204,21 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <Box flex={1} pr={2} style={{ minWidth: '60%' }}>
+                    <Box display="flex" flexDirection="row" alignItems="center">
+                        <Box sx={{ flex: 1, pr: 2, minWidth: '60%' }}>
                             <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
                         </Box>
-                        <Box flex={1} pl={2} style={{ minWidth: '30%' }}>
-                            <Chat socketRef={socketRef} gameStateRef={gameStateRef} />
+                        <Box display="flex" flexDirection="column">
+                            <Box display="flex" flexDirection="row" sx={{ flex: 1, pl: 2, minWidth: '30%' }}>
+                                <PlayerBox username={yourUsername} color={yourColor} marginRight={2}/>
+                                <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'} />
+                            </Box>
+                            <Box sx={{ flex: 1, pl: 2, minWidth: '30%' }}>
+                                <Chat socketRef={socketRef} gameStateRef={gameStateRef} />
+                            </Box>
                         </Box>
-                    </Box>}
+                    </Box>
+                }
                 {gameState === GameState.FINISHED &&
                     <>
                         {result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won because the other player aborted the game</Typography>}
