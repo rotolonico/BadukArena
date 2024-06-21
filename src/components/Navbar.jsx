@@ -18,7 +18,7 @@ const Navbar = ({authStatus, username, handleLogout}) => {
                         Play
                     </Button>
                     <Button color="inherit" href="/user">
-                        {username? username:'User'}
+                        {"Your profile (" + (username? username:'User') + ")"}
                     </Button>
                     <Button color="inherit" onClick={handleLogout}>
                         Logout
