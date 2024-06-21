@@ -3,7 +3,10 @@ import { ListItem, Button, makeStyles, Typography, Avatar } from '@material-ui/c
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
-import logo from '../../static/images/logo.png';
+
+import randomStone from '../../static/images/black-white-stone.png';
+import whiteStone from '../../static/images/white-stone.png';
+import blackStone from '../../static/images/black-stone.png';
 
 
 const injectFont = () => {
@@ -58,7 +61,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabledCondition, isOwn }) => {
+const getImageFromColor = (color) => {
+    switch (color) {
+        case 'B':
+            return blackStone;
+        case 'W':
+            return whiteStone;
+        default:
+            return randomStone;
+    }
+};
+
+const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabledCondition, isOwn, color }) => {
     const classes = useStyles();
 
     return (
@@ -66,7 +80,7 @@ const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabled
             <CssBaseline />
             <ListItem className={classes.listItem}>
                 <div className={classes.roomInfo}>
-                    <Avatar className={classes.avatar} src={logo} >
+                    <Avatar className={classes.avatar} src={getImageFromColor(color)} >
                         <PersonIcon />
                     </Avatar>
                     <Typography variant="h6">

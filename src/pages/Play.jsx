@@ -5,7 +5,7 @@ import withAuth from "../withAuth";
 import Game from "../components/game/Game";
 import SocketClient from "../utils/SocketClient";
 import Chat from "../components/chat/Chat";
-import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
+import { Button, Typography, List, makeStyles, ThemeProvider, createTheme, CssBaseline, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { Box, ListItem } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +58,7 @@ const Play = () => {
     const [gameState, setGameState] = useState(GameState.NOT_STARTED);
     const [yourColor, setYourColor] = useState('B');
     const [result, setResult] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(' ');
 
     const gameStateRef = useRef(gameState);
     const socketRef = useRef(null);
@@ -72,6 +73,7 @@ const Play = () => {
         function refreshRooms() {
             getRooms()
                 .then(roomsList => {
+                    console.log(JSON.stringify(roomsList.data))
                     setRooms(roomsList.data);
                 })
                 .catch(error => {
@@ -108,6 +110,10 @@ const Play = () => {
         };
     }, []);
 
+    const handleColorChange = (event) => {
+        setSelectedColor(event.target.value);
+    };
+
     const handleJoin = async (number) => {
         try {
             const res = await joinRoom(number);
@@ -123,9 +129,9 @@ const Play = () => {
 
     const handleCreate = async () => {
         try {
-            const res = await createRoom();
+            const res = await createRoom(selectedColor);
             if (res.status === 201) {
-                setCreatedRoom({ number: res.data.roomNumber, username: res.data.username });
+                setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor});
                 socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                     console.log(msg);
                 });
@@ -158,15 +164,30 @@ const Play = () => {
             <CssBaseline />
             <div className={classes.root}>
                 {gameState === GameState.NOT_STARTED && <>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCreate}
-                        disabled={isCreateDisabled}
-                        className={classes.createButton}
-                    >
-                        Create Room
-                    </Button>
+                    <Box display="flex" justifyContent="right" alignItems="center" gap='20px'>
+                        <FormControl variant="outlined" style={{ marginBottom: '16px', minWidth: 120 }}>
+                            <InputLabel id="color-select-label">Color</InputLabel>
+                            <Select
+                                labelId="color-select-label"
+                                value={selectedColor}
+                                onChange={handleColorChange}
+                                label="Color"
+                            >
+                                <MenuItem value=" ">Random</MenuItem>
+                                <MenuItem value="B">Black</MenuItem>
+                                <MenuItem value="W">White</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleCreate}
+                            disabled={isCreateDisabled}
+                            className={classes.createButton}
+                        >
+                            Create Room
+                        </Button>
+                    </Box>
                     <Typography variant="h6" gutterBottom>
                         Available Rooms
                     </Typography>
@@ -177,6 +198,7 @@ const Play = () => {
                                 roomCreator={createdRoom.username}
                                 handleDelete={handleDelete}
                                 disabledCondition={!isCreateDisabled}
+                                color={createdRoom.color}
                             />
                         )}
                         {rooms?.map((r, i) => (
@@ -186,6 +208,7 @@ const Play = () => {
                                 roomCreator={r.roomCreator.username}
                                 handleJoin={handleJoin}
                                 disabledCondition={isCreateDisabled}
+                                color={r.creatorWantedColor}
                             />
                         ))}
                     </List>
