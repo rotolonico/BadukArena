@@ -33,13 +33,6 @@ option {
     color: #ffffff;
     margin: 0 10px;
 }
-/* styles.css */
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
-}
 
 .MuiAppBar-root {
     background-color: #262424 !important; /* Colore primario definito nel tema */
