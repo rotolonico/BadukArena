@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Typography, Paper, Box } from '@mui/material';
+import { Typography, Box, useTheme } from '@mui/material';
 import Board from './Board';
 
 const Game = ({ yourColor, socketRef, gameStateRef }) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
+    const theme = useTheme();
 
     const boardRef = useRef(board);
     const currentPlayerRef = useRef(currentPlayer);
@@ -45,19 +46,17 @@ const Game = ({ yourColor, socketRef, gameStateRef }) => {
     };
 
     return (
-        <Paper elevation={3} style={{ padding: '20px', margin: '20px auto', display: 'flex', justifyContent: 'space-between' }}>
-            <Box style={{ flex: 1 }}>
-                <Typography variant="h4" component="h1" gutterBottom>
-                    Go Game
-                </Typography>
-                <Typography variant="body1" component="p">
-                    You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn
-                </Typography>
-                <Box mt={2}>
-                    <Board board={board} onCellClick={handleCellClick} />
-                </Box>
+        <Box sx={{ flex: 2, backgroundColor: '#262424', color: 'white', padding: 4, borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ color: 'white' }}>
+                Go Game
+            </Typography>
+            <Typography variant="body1" component="p" sx={{ color: 'white', mb: 2 }}>
+                You are {yourColor === "B" ? "black" : "white"}. It is {currentPlayer === "B" ? "black" : "white"}'s turn
+            </Typography>
+            <Box mt={2} sx={{ backgroundColor: 'white', padding: 2, borderRadius: 2 }}>
+                <Board board={board} onCellClick={handleCellClick} />
             </Box>
-        </Paper>
+        </Box>
     );
 };
 
