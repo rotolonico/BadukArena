@@ -4,7 +4,7 @@ import blackStone from '../../static/images/black-stone.png';
 import whiteStone from '../../static/images/white-stone.png';
 
 const StyledCell = styled('div')(({ theme, hasStone }) => ({
-    width: '100%',
+    width: '102%',
     aspectRatio: '1 / 1',
     cursor: hasStone ? 'default' : 'pointer',
     backgroundColor: 'transparent',
@@ -32,7 +32,7 @@ const Crosshair = styled('div')({
         left: '50%',
         transform: 'translateX(-50%)',
         width: '2px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 1)',
     },
     '::after': {
         content: '""',
@@ -42,7 +42,7 @@ const Crosshair = styled('div')({
         top: '50%',
         transform: 'translateY(-50%)',
         height: '2px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 1)',
     },
 });
 

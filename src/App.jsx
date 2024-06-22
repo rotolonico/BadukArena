@@ -44,7 +44,7 @@ function App() {
         <BrowserRouter>
             <div style={{ backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 <Navbar authStatus={authStatus} username={username} handleLogout={handleLogout} />
-                <Container sx={{ flexGrow: 1, marginTop: '64px' }}>
+                <Container sx={{ flexGrow: 1, marginTop: '64px'}}>
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
@@ -53,7 +53,7 @@ function App() {
                         <Route path="*" element={<Navigate to='/play' replace />} />
                     </Routes>
                 </Container>
-                <Footer /> {/* Aggiungi il Footer qui */}
+                <Footer />
             </div>
         </BrowserRouter>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography } from "@mui/material";
 
 const PlayerBox = ({username, color, marginRight}) => {
+    console.log("A " + username + " " + color + " " + marginRight);
     const backgroundColor = color === 'B' ? '#262424' : 'white';
     const textColor = color === 'B' ? 'white' : 'black';
 

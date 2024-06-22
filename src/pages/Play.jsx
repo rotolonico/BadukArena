@@ -1,14 +1,29 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
+import React, {useEffect, useState, useRef} from 'react';
+import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
 import Room from "../components/Room";
 import withAuth from "../withAuth";
 import Game from "../components/game/Game";
 import SocketClient from "../utils/SocketClient";
 import Chat from "../components/chat/Chat";
 import PlayerBox from "../components/PlayerBox";
-import { Button, Typography, List, makeStyles, ThemeProvider, CssBaseline, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import {
+    Button,
+    Typography,
+    List,
+    makeStyles,
+    ThemeProvider,
+    CssBaseline,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel
+} from '@material-ui/core';
 import theme from "../utils/theme";
-import { Box } from "@mui/material";
+import {Box, IconButton, ListItem, TextField} from "@mui/material";
+import Message from "../components/chat/Message";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import Picker from "@emoji-mart/react";
+import data from "@emoji-mart/data";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,10 +66,20 @@ const Play = () => {
 
     const gameStateRef = useRef(gameState);
     const socketRef = useRef(null);
+    const opponentUsernameRef = useRef(opponentUsername);
+    const yourUsernameRef = useRef(yourUsername);
 
     useEffect(() => {
         gameStateRef.current = gameState;
     }, [gameState]);
+    
+    useEffect(() => {
+        opponentUsernameRef.current = opponentUsername;
+    }, [opponentUsername]);
+
+    useEffect(() => {
+        yourUsernameRef.current = yourUsername;
+    }, [yourUsername]);
 
     useEffect(() => {
         socketRef.current = new SocketClient();
@@ -120,7 +145,7 @@ const Play = () => {
         try {
             const res = await createRoom(selectedColor);
             if (res.status === 201) {
-                setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor});
+                setCreatedRoom({number: res.data.roomNumber, username: res.data.username, color: selectedColor});
                 socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                     console.log(msg);
                 });
@@ -150,11 +175,11 @@ const Play = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <div className={classes.root}>
                 {gameState === GameState.NOT_STARTED && <>
                     <Box display="flex" justifyContent="right" alignItems="center" gap='20px'>
-                        <FormControl variant="outlined" style={{ marginBottom: '16px', minWidth: 120 }}>
+                        <FormControl variant="outlined" style={{marginBottom: '16px', minWidth: 120}}>
                             <InputLabel id="color-select-label">Color</InputLabel>
                             <Select
                                 labelId="color-select-label"
@@ -203,24 +228,13 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <Box display="flex" flexDirection="row" alignItems="center">
-                        <Box sx={{ flex: 1, pr: 2, minWidth: '60%' }}>
-                            <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} />
-                        </Box>
-                        <Box display="flex" flexDirection="column">
-                            <Box display="flex" flexDirection="row" sx={{ flex: 1, pl: 2, minWidth: '30%' }}>
-                                <PlayerBox username={yourUsername} color={yourColor} marginRight={2}/>
-                                <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'} />
-                            </Box>
-                            <Box sx={{ flex: 1, pl: 2, minWidth: '30%' }}>
-                                <Chat socketRef={socketRef} gameStateRef={gameStateRef} />
-                            </Box>
-                        </Box>
-                    </Box>
+                    <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} opponentUsernameRef={opponentUsernameRef} yourUsernameRef={yourUsernameRef}/>
                 }
                 {gameState === GameState.FINISHED &&
                     <>
-                        {result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won because the other player aborted the game</Typography>}
+                        {result.isQuit &&
+                            <Typography>{result.winner === "B" ? "Black" : "White"} won because the other player aborted
+                                the game</Typography>}
                         {!result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won</Typography>}
                         <Button type="button" onClick={handleNewGame}>New Game</Button>
                     </>}

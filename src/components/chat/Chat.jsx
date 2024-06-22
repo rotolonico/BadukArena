@@ -57,7 +57,7 @@ const Chat = ({ socketRef, gameStateRef }) => {
         <ThemeProvider theme={theme}>
             <animated.div style={springProps}>
                 <Container maxWidth="sm">
-                    <Box mt={2} textAlign="left" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="80vh">
+                    <Box mt={2} textAlign="left" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="40vh">
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
                         <Box flex={1} overflow="auto" mb={2} className="scrollbar">
                             <List>
