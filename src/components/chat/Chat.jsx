@@ -74,7 +74,7 @@ const Chat = ({socketRef, gameStateRef}) => {
                                     variant="filled"
                                     fullWidth
                                     multiline
-                                    rows={3}
+                                    rows={1.2}
                                     margin="normal"
                                     value={messageText}
                                     onChange={(e) => setMessageText(e.target.value)}

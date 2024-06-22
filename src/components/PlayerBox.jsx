@@ -6,7 +6,7 @@ const PlayerBox = ({username, color, marginRight}) => {
     const textColor = color === 'B' ? 'white' : 'black';
 
     return (
-        <Box marginRight={marginRight} sx={{ width: 200, height: 100, borderRadius: '5%', background: backgroundColor, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <Box marginRight={marginRight} sx={{ width: '100%', height: 100, borderRadius: '5%', background: backgroundColor, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
             <Typography variant='h6' color={textColor}>{username}</Typography>
         </Box>
     );
