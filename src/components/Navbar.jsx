@@ -2,7 +2,7 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import logo from '../static/images/logo.png';
 import { Link } from 'react-router-dom';
-import '../styles.css';
+import '../static/styles.css';
 
 const Navbar = ({ authStatus, username, handleLogout }) => {
     return (

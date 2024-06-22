@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Message from "./Message";
 import theme from "../../utils/theme";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
@@ -6,9 +6,9 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import {getUsername} from "../../utils/api";
+import { getUsername } from "../../utils/api";
 
-const Chat = ({socketRef, gameStateRef}) => {
+const Chat = ({ socketRef, gameStateRef }) => {
     const [messages, setMessages] = useState([]);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [username, setUsername] = useState("");
@@ -33,7 +33,7 @@ const Chat = ({socketRef, gameStateRef}) => {
 
         return () => {
             socketRef.current.socketRemoveChatListener();
-        };
+        }
     }, []);
 
     const handleSubmit = (e) => {
@@ -85,6 +85,7 @@ const Chat = ({socketRef, gameStateRef}) => {
                                     InputProps={{
                                         style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
                                     }}
+                                    style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #555' }}
                                 />
                                 <Box position="relative">
                                     <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ marginLeft: '10px' }}>

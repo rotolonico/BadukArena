@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Link } from '@mui/material';
-import './styles.css'; // Assicurati di importare il file CSS
+import '../static/styles.css'; // Assicurati di importare il file CSS
 
 const Footer = () => {
     return (
