@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <div className="footer">
             <Typography variant="body2">
-                © 2024 Baduk Arena. All rights reserved.
+                © 2024 Baduk Arena.
             </Typography>
             
         </div>
