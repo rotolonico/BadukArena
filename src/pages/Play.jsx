@@ -95,7 +95,6 @@ const Play = () => {
         return () => {
             clearInterval(intervalId);
             socketRef.current.socketRemoveAllGameListeners();
-            socketRef.current.socketRemoveChatListener()
             socketRef.current.disconnect();
         };
     }, []);
