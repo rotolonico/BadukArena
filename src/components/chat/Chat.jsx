@@ -7,6 +7,7 @@ import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { getUsername } from "../../utils/api";
+import '../../static/styles.css';
 
 const Chat = ({ socketRef, gameStateRef }) => {
     const [messages, setMessages] = useState([]);
@@ -58,7 +59,7 @@ const Chat = ({ socketRef, gameStateRef }) => {
                 <Container maxWidth="sm">
                     <Box mt={2} textAlign="left" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="80vh">
                         <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
-                        <Box flex={1} overflow="auto" mb={2} style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #555' }}>
+                        <Box flex={1} overflow="auto" mb={2} className="scrollbar">
                             <List>
                                 {messages.map((message, index) => (
                                     <ListItem key={index}>
@@ -85,7 +86,7 @@ const Chat = ({ socketRef, gameStateRef }) => {
                                     InputProps={{
                                         style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
                                     }}
-                                    style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #555' }}
+                                    className="scrollbar"
                                 />
                                 <Box position="relative">
                                     <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ marginLeft: '10px' }}>
