@@ -84,8 +84,8 @@ const Play = () => {
         });
 
         socketRef.current.socketListenGameOver((rst) => {
-            setGameState(GameState.FINISHED);
             setResult(rst);
+            setGameState(GameState.FINISHED);
         });
 
         socketRef.current.socketListenGameAborted(() => {
