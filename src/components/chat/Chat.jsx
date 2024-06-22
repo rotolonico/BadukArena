@@ -30,14 +30,11 @@ const Chat = ({socketRef, gameStateRef}) => {
         socketRef.current.socketListenChat((message) => {
             setMessages((prevMessages) => [...prevMessages, message]);
         });
-
-        return () => {
-            socketRef.current.socketRemoveChatListener();
-        };
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (messageText === "") return;
         const message = {
             text: messageText,
             user: username || "Anonimo"
