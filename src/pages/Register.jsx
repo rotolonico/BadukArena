@@ -116,7 +116,7 @@ const Register = () => {
                         <Button variant="contained" color="secondary" onClick={handleRegister} style={{ marginLeft: '5px' }}>Register</Button>
                     </Box>
 
-                    {message && <Typography variant="body1" mt={2}>{message}</Typography>}
+                    {message && <Typography variant="body1" mt={2} color="white">{message}</Typography>}
                 </Box>
             </Container>
             </animated.div>

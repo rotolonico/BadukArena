@@ -23,12 +23,13 @@ const Login = () => {
             setMessage('Email and password are required');
             return;
         }
-
-        let loginResponse = await login(email, password);
+        const loginResponse = await login(email, password);
         if (loginResponse.success) {
             window.location.href = '/play';
+        } else if (loginResponse.status === 401) {
+            setMessage('Wrong email or password');
         } else {
-            setMessage(loginResponse.data || 'Server error');
+            setMessage('Server error');
         }
     };
 
@@ -98,7 +99,7 @@ const Login = () => {
                                     style={{marginLeft: '5px'}}>Login</Button>
                         </Box>
 
-                        {message && <Typography variant="body1" mt={2}>{message}</Typography>}
+                        {message && <Typography variant="body1" mt={2} color="white">{message}</Typography>}
                     </Box>
                 </Container>
             </animated.div>
