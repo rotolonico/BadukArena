@@ -4,7 +4,7 @@ import Room from "../components/play/Room";
 import withAuth from "../withAuth";
 import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
-import { AddCircle } from '@mui/icons-material';
+import {AddCircle} from '@mui/icons-material';
 import Chat from "../components/play/chat/Chat";
 import PlayerBox from "../components/play/game/PlayerBox";
 import {
@@ -20,7 +20,7 @@ import {
     InputLabel
 } from '@material-ui/core';
 import theme from "../utils/theme";
-import {Box, IconButton, ListItem, TextField} from "@mui/material";
+import {Box, IconButton, ListItem, TextField, Snackbar} from "@mui/material";
 import Message from "../components/play/chat/Message";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import Picker from "@emoji-mart/react";
@@ -222,16 +222,29 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} opponentUsername={opponentUsername} yourUsername={yourUsername}/>
+                    <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef}
+                          opponentUsername={opponentUsername} yourUsername={yourUsername}/>
                 }
                 {gameState === GameState.FINISHED &&
-                    <>
-                        {result.isQuit &&
-                            <Typography>{result.winner === "B" ? "Black" : "White"} won because the other player aborted
-                                the game</Typography>}
-                        {!result.isQuit && <Typography>{result.winner === "B" ? "Black" : "White"} won</Typography>}
-                        <Button type="button" onClick={handleNewGame}>New Game</Button>
-                    </>}
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        open={true}
+                        autoHideDuration={0}
+                        message={
+                            result.isQuit
+                                ? `${result.winner === "B" ? "Black" : "White"} won because the other player aborted the game`
+                                : `${result.winner === "B" ? "Black" : "White"} won`
+                        }
+                        action={
+                            <React.Fragment>
+                                <Button color="inherit" onClick={handleNewGame}>New Game</Button>
+                            </React.Fragment>
+                        }
+                    />
+                }
             </div>
         </ThemeProvider>
     );

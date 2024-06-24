@@ -60,10 +60,10 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsernam
                 <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'} />
             </div>
             <div className="turnbox">
-                <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} />
+                <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} gameStateRef={gameStateRef}/>
             </div>
             <div className="chat">
-                <Chat socketRef={socketRef} gameStateRef={gameStateRef} />
+                <Chat socketRef={socketRef} />
             </div>
         </main>
     );

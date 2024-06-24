@@ -9,7 +9,7 @@ import Picker from '@emoji-mart/react';
 import { getUsername } from "../../../utils/api";
 import '../../../static/styles.css';
 
-const Chat = ({ socketRef, gameStateRef }) => {
+const Chat = ({ socketRef}) => {
     const [messages, setMessages] = useState([]);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [username, setUsername] = useState("");
@@ -100,7 +100,7 @@ const Chat = ({ socketRef, gameStateRef }) => {
                                 </Box>
                             </Box>
                             <Box mt={2}>
-                                <Button type="submit" variant="contained" color="secondary" disabled={gameStateRef.current !== 1}>Invia</Button>
+                                <Button type="submit" variant="contained" color="secondary">Invia</Button>
                             </Box>
                         </form>
                     </Box>

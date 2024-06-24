@@ -41,7 +41,7 @@ function App() {
                         <Route path="register" element={<Register />} />
                         <Route path="play" element={<Play />} />
                         <Route path="user" element={<User />} />
-                        <Route path="*" element={<Navigate to='/play' replace />} />
+                        <Route path="*" element={<Navigate to='play' replace />} />
                     </Routes>
                 </Container>
                 <Footer />
