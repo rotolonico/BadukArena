@@ -57,7 +57,12 @@ const Login = () => {
                                 color="secondary"
                                 href="#register"
                                 startIcon={<PersonAdd />}
-                                sx={{ color: 'white' }}
+                                sx={{
+                                    color: 'white',
+                                    '&:hover': {
+                                        color: 'gold',
+                                    },
+                                }}
                             >
                                 Create an account
                             </Button>
