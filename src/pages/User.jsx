@@ -1,50 +1,85 @@
-import React, {useEffect, useState} from 'react';
-import {getGames} from "../utils/api";
+import React, { useEffect, useState } from 'react';
+import { getGames } from "../utils/api";
 import withAuth from "../withAuth";
 import moment from "moment";
 import {
-    Table, TableBody, TableCell, TableContainer, TableHead,
-    TableRow, Paper, Typography, CircularProgress, Box
+    Card, CardContent, Typography, CircularProgress, Box, Grid, Avatar, CardHeader
 } from '@mui/material';
-import {createTheme, CssBaseline, makeStyles, ThemeProvider} from "@material-ui/core";
+import { createTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
+import { SportsEsports, CheckCircle, Cancel } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         maxWidth: 1200,
-        backgroundColor: theme.palette.background.paper,
         margin: '0 auto',
         padding: '20px',
+        borderRadius: '10px',
     },
-    createButton: {
-        marginBottom: '20px',
+    card: {
+        backgroundColor: '#333333',
+        color: 'white',
+        borderRadius: '10px',
+        boxShadow: '3px 3px 15px rgba(0, 0, 0, 0.5)',
+        margin: '10px 0',
+        transition: 'transform 0.3s, box-shadow 0.3s',
+        '&:hover': {
+            transform: 'scale(1.05)',
+            boxShadow: '3px 3px 20px rgba(255, 255, 255, 0.5)',
+        },
     },
-    roomList: {
-        listStyle: 'none',
-        padding: 0,
+    winnerText: {
+        display: 'flex',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: '#76ff03', // Green color for winner
     },
-    roomItem: {
-        marginBottom: '10px',
+    loserText: {
+        display: 'flex',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        color: '#ff1744', // Red color for loser
     },
+    icon: {
+        marginRight: '8px',
+    },
+    noGamesText: {
+        fontSize: '1.2rem',
+        textAlign: 'center',
+        color: 'white',
+    },
+    loadingContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+    },
+    resultIcon: {
+        verticalAlign: 'middle',
+        marginLeft: '8px',
+    },
+    actions: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    dateText: {
+        color: 'white', // White color for date
+    }
 }));
 
 const theme = createTheme({
-    typography: {
-        fontFamily: [
-            'Roboto',
-            'Arial',
-            'sans-serif',
-        ].join(','),
-    },
     palette: {
         primary: {
             main: '#262424',
         },
+        background: {
+            default: '#121212',
+            paper: '#1e1e1e',
+        },
     },
 });
 
-const User = () => {
-
+const User = ({ currentUsername }) => {
     const classes = useStyles();
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -53,7 +88,7 @@ const User = () => {
         getGames().then((response) => {
             setGames(response.data);
             const gameList = response.data.map((g) => {
-                g.date=moment(g.date).format('DD-MM-YYYY');
+                g.date = moment(g.date).format('DD-MM-YYYY');
                 return g;
             });
             setGames(gameList);
@@ -64,61 +99,77 @@ const User = () => {
         });
     }, []);
 
+    const getResultText = (game) => {
+        const userIsWhite = game.white.username === currentUsername;
+        const userIsBlack = game.black.username === currentUsername;
+        const userWon = (game.result === "W" && userIsWhite) || (game.result === "B" && userIsBlack);
+        const winner = game.result === "W" ? game.white.username : game.black.username;
+
+        if (userWon) {
+            return (
+                <span>
+                    You Won!
+                    <CheckCircle className={classes.resultIcon} style={{ color: 'green' }} />
+                </span>
+            );
+        } else {
+            return (
+                <span>
+                    You Lost.
+                    <Cancel className={classes.resultIcon} style={{ color: 'red' }} />
+                </span>
+            );
+        }
+    };
+
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline/>
-
-            <Box sx={{p: 3, backgroundColor: '#f4f6f8', borderRadius: 2, boxShadow: 3}}>
-                <Typography variant="h4" gutterBottom sx={{mb: 2}}>
+            <CssBaseline />
+            <Box className={classes.root}>
+                <Typography variant="h4" gutterBottom sx={{ mb: 2, color: 'white' }}>
                     Games List
                 </Typography>
                 {loading ? (
-                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-                        <CircularProgress/>
+                    <Box className={classes.loadingContainer}>
+                        <CircularProgress />
                     </Box>
                 ) : (
                     games.length === 0 ? (
-                        <Typography variant="body1">
+                        <Typography className={classes.noGamesText}>
                             No games found
                         </Typography>
                     ) : (
-                        <TableContainer component={Paper}>
-                            <Table sx={{minWidth: 650}}>
-                                <TableHead sx={{backgroundColor: '#1976d2'}}>
-                                    <TableRow>
-                                        <TableCell align="center"
-                                                   sx={{color: 'white', fontWeight: 'bold'}}>Date</TableCell>
-                                        <TableCell align="center"
-                                                   sx={{color: 'white', fontWeight: 'bold'}}>Result</TableCell>
-                                        <TableCell align="center" sx={{color: 'white', fontWeight: 'bold'}}>White
-                                            Player</TableCell>
-                                        <TableCell align="center" sx={{color: 'white', fontWeight: 'bold'}}>Black
-                                            Player</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {games.map((game, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell align="center" sx={{fontSize: '1rem'}}>
-                                                {game.date}
-                                            </TableCell>
-                                            <TableCell align="center" sx={{
-                                                fontSize: '1rem',
-                                                color: game.result === "B" ? 'green' : 'red'
-                                            }}>
-                                                {game.result === "B" ? "Black Wins" : "White Wins"}
-                                            </TableCell>
-                                            <TableCell align="center" sx={{fontSize: '1rem'}}>
-                                                {game.white.username}
-                                            </TableCell>
-                                            <TableCell align="center" sx={{fontSize: '1rem'}}>
-                                                {game.black.username}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                        <Grid container spacing={3}>
+                            {games.map((game, index) => (
+                                <Grid item xs={12} sm={6} md={4} key={index}>
+                                    <Card className={classes.card}>
+                                        <CardHeader
+                                            avatar={
+                                                <Avatar aria-label="game" style={{ backgroundColor: '#000000' }}>
+                                                    <SportsEsports />
+                                                </Avatar>
+                                            }
+                                            title={`Game ${index + 1}`}
+                                            subheader={<Typography className={classes.dateText}>{game.date}</Typography>}
+                                        />
+                                        <CardContent>
+                                            <Typography variant="body2" className={game.result === "W" ? classes.winnerText : classes.loserText}>
+                                                {getResultText(game)}
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                                Winner: {game.result === "W" ? game.white.username : game.black.username}
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                                White Player: {game.white.username}
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                                Black Player: {game.black.username}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
                     )
                 )}
             </Box>
