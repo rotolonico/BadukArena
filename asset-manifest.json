@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/badukarena/static/css/main.f855e6bc.css",
-    "main.js": "/badukarena/static/js/main.6d209354.js",
-    "static/js/453.17489589.chunk.js": "/badukarena/static/js/453.17489589.chunk.js",
-    "static/media/logo.svg": "/badukarena/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/badukarena/static/css/main.3cdff75c.css",
+    "main.js": "/badukarena/static/js/main.ea5babaf.js",
+    "static/media/white-stone.png": "/badukarena/static/media/white-stone.52630ffcf833eadb3d15.png",
+    "static/media/black-white-stone.png": "/badukarena/static/media/black-white-stone.1a23010ff6cefd7de611.png",
+    "static/media/black-stone.png": "/badukarena/static/media/black-stone.43f9ff1aaadb30278f03.png",
     "index.html": "/badukarena/index.html",
-    "main.f855e6bc.css.map": "/badukarena/static/css/main.f855e6bc.css.map",
-    "main.6d209354.js.map": "/badukarena/static/js/main.6d209354.js.map",
-    "453.17489589.chunk.js.map": "/badukarena/static/js/453.17489589.chunk.js.map"
+    "main.3cdff75c.css.map": "/badukarena/static/css/main.3cdff75c.css.map",
+    "main.ea5babaf.js.map": "/badukarena/static/js/main.ea5babaf.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.6d209354.js"
+    "static/css/main.3cdff75c.css",
+    "static/js/main.ea5babaf.js"
   ]
 }
