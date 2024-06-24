@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export let isProd = true;
 
-const prodHost = '3.75.158.163:1234';
+const prodHost = 'https://badukarenabackend.onrender.com';
 const testHost = 'http://localhost:1234';
 
 const host = isProd ? prodHost : testHost;
