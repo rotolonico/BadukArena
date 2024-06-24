@@ -1,10 +1,11 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { register } from '../utils/api';
 import theme from '../utils/theme';
-import {TextField, Button, Typography, Box, Container, ThemeProvider} from "@mui/material";
+import { TextField, Button, Typography, Box, Container, ThemeProvider } from "@mui/material";
 import { IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff, PersonAdd } from '@mui/icons-material';
 import { useSpring, animated } from 'react-spring';
+
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,13 +19,12 @@ const Register = () => {
         config: { duration: 900 },
     });
 
-
     const handleRegister = async () => {
         if (!username || !email || !password) {
             setMessage('Username, email and password are required');
             return;
         }
-        
+
         let registerResponse = await register(username, email, password);
         if (registerResponse.success) {
             window.location.href = '#login';
@@ -32,96 +32,128 @@ const Register = () => {
             setMessage(registerResponse.data || 'Server error');
         }
     };
-    
-        return (
-            <ThemeProvider theme={theme}>
-            <animated.div style={springProps}>
-            <Container maxWidth="sm">
-                <Box mt={5} display="flex" flexDirection="column" alignItems="center" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid #ccc`} borderRadius={10}>
-                    <Typography variant="h4" component="h2" gutterBottom color="white">Register</Typography>
-                    <Box mt={2} style={{ alignContent: 'center' }}>
-                        <Button variant="text" color="secondary" href="#login">Already have an account?</Button>
-                    </Box>
-                    <TextField
-                        label="Username"
-                        value={username}
-                        fullWidth
-                        onChange={(e) => setUsername(e.target.value)}
-                        margin="normal"
-                        variant="outlined"
-                        InputLabelProps={{
-                            style: { color: 'white' },
-                        }}
-                        InputProps={{
-                            style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                            classes: {
-                                root: 'textfield-root',
-                                focused: 'textfield-focused',
-                            },
-                            className: 'chat-textfield',
-                        }}
-                    />
-                    <TextField
-                        label="Email"
-                        value={email}
-                        fullWidth
-                        onChange={(e) => setEmail(e.target.value)}
-                        margin="normal"
-                        variant="outlined"
-                        InputLabelProps={{
-                            style: { color: 'white' },
-                        }}
-                        InputProps={{
-                            style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                            classes: {
-                                root: 'textfield-root',
-                                focused: 'textfield-focused',
-                            },
-                            className: 'chat-textfield',
-                        }}
-                    />
-                    <TextField
-                        label="Password"
-                        value={password}
-                        type={showPassword ? 'text' : 'password'}
-                        fullWidth
-                        onChange={(e) => setPassword(e.target.value)}
-                        margin="normal"
-                        variant="outlined"
-                        InputLabelProps={{
-                            style: { color: 'white' },
-                        }}
-                        InputProps={{
-                            style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
-                            classes: {
-                                root: 'textfield-root',
-                                focused: 'textfield-focused',
-                            },
-                            className: 'chat-textfield',
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        onMouseDown={(e) => e.preventDefault()}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <Box mt={2}>
-                        <Button variant="contained" color="secondary" onClick={handleRegister} style={{ marginLeft: '5px' }}>Register</Button>
-                    </Box>
 
-                    {message && <Typography variant="body1" mt={2} color="white">{message}</Typography>}
-                </Box>
-            </Container>
+    return (
+        <ThemeProvider theme={theme}>
+            <animated.div style={springProps}>
+                <Container maxWidth="sm">
+                    <Box
+                        mt={5}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        p={3}
+                        bgcolor="#262424"
+                        boxShadow="3px 3px 15px rgba(255, 255, 255, 0.1)"
+                        borderRadius={8}
+                    >
+                        <Typography variant="h4" component="h2" gutterBottom color="white">
+                            Register
+                        </Typography>
+                        <Box mt={2} style={{ alignContent: 'center' }}>
+                            <Button
+                                variant="text"
+                                color="secondary"
+                                href="#login"
+                                sx={{
+                                    color: 'white',
+                                    '&:hover': {
+                                        color: 'gold',
+                                    },
+                                }}
+                            >
+                                Already have an account?
+                            </Button>
+                        </Box>
+                        <TextField
+                            label="Username"
+                            value={username}
+                            fullWidth
+                            onChange={(e) => setUsername(e.target.value)}
+                            margin="normal"
+                            variant="outlined"
+                            InputLabelProps={{
+                                style: { color: 'white' },
+                            }}
+                            InputProps={{
+                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)' },
+                                classes: {
+                                    root: 'textfield-root',
+                                    focused: 'textfield-focused',
+                                },
+                                className: 'chat-textfield',
+                            }}
+                        />
+                        <TextField
+                            label="Email"
+                            value={email}
+                            fullWidth
+                            onChange={(e) => setEmail(e.target.value)}
+                            margin="normal"
+                            variant="outlined"
+                            InputLabelProps={{
+                                style: { color: 'white' },
+                            }}
+                            InputProps={{
+                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)' },
+                                classes: {
+                                    root: 'textfield-root',
+                                    focused: 'textfield-focused',
+                                },
+                                className: 'chat-textfield',
+                            }}
+                        />
+                        <TextField
+                            label="Password"
+                            value={password}
+                            type={showPassword ? 'text' : 'password'}
+                            fullWidth
+                            onChange={(e) => setPassword(e.target.value)}
+                            margin="normal"
+                            variant="outlined"
+                            InputLabelProps={{
+                                style: { color: 'white' },
+                            }}
+                            InputProps={{
+                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)' },
+                                classes: {
+                                    root: 'textfield-root',
+                                    focused: 'textfield-focused',
+                                },
+                                className: 'chat-textfield',
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            onMouseDown={(e) => e.preventDefault()}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <Box mt={2}>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={handleRegister}
+                                startIcon={<PersonAdd />}
+                                sx={{ mt: 2, transition: 'all 0.3s', backgroundColor: '#757575', '&:hover': { backgroundColor: '#9e9e9e' } }}
+                                style={{ marginLeft: '5px', color: 'white' }}
+                            >
+                                Register
+                            </Button>
+                        </Box>
+
+                        {message && <Typography variant="body1" mt={2} color="white">{message}</Typography>}
+                    </Box>
+                </Container>
             </animated.div>
-            </ThemeProvider>
-        );
+        </ThemeProvider>
+    );
 };
 
 export default Register;
