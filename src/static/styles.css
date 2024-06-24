@@ -19,6 +19,38 @@ select {
 option {
     color: #000; /* Colore del testo delle opzioni */
 }
+
+.game-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+    "board playerboxOne playerboxTwo"
+    "board turnbox turnbox"
+    "board chat chat";
+    gap: 10px;
+}
+
+.board {
+    grid-area: board;
+}
+
+.playerboxOne {
+    grid-area: playerboxOne;
+}
+
+.playerboxTwo {
+    grid-area: playerboxTwo;
+}
+
+.turnbox {
+    grid-area: turnbox;
+}
+
+.chat {
+    grid-area: chat;
+}
+
 .footer {
     background-color: #262424;
     color: #ffffff;

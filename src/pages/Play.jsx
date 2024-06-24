@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
-import Room from "../components/Room";
+import Room from "../components/play/Room";
 import withAuth from "../withAuth";
-import Game from "../components/game/Game";
+import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
-import Chat from "../components/chat/Chat";
-import PlayerBox from "../components/PlayerBox";
+import Chat from "../components/play/chat/Chat";
+import PlayerBox from "../components/play/game/PlayerBox";
 import {
     Button,
     Typography,
@@ -20,7 +20,7 @@ import {
 } from '@material-ui/core';
 import theme from "../utils/theme";
 import {Box, IconButton, ListItem, TextField} from "@mui/material";
-import Message from "../components/chat/Message";
+import Message from "../components/play/chat/Message";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";

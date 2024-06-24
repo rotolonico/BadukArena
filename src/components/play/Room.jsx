@@ -4,9 +4,9 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 
-import randomStone from '../static/images/black-white-stone.png';
-import whiteStone from '../static/images/white-stone.png';
-import blackStone from '../static/images/black-stone.png';
+import randomStone from '../../static/images/black-white-stone.png';
+import whiteStone from '../../static/images/white-stone.png';
+import blackStone from '../../static/images/black-stone.png';
 
 
 const injectFont = () => {

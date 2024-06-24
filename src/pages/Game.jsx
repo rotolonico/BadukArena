@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useRef} from "react";
 import {Typography, Box, useTheme} from '@mui/material';
-import Board from './Board';
-import PlayerBox from "../PlayerBox";
-import Chat from "../chat/Chat";
-import TurnBox from "../TurnBox";
+import Board from '../components/play/game/Board';
+import PlayerBox from "../components/play/game/PlayerBox";
+import Chat from "../components/play/chat/Chat";
+import TurnBox from "../components/play/game/TurnBox";
 
 const Game = ({yourColor, socketRef, gameStateRef, opponentUsernameRef, yourUsernameRef}) => {
     const [board, setBoard] = useState(initialBoardState());
@@ -49,27 +49,25 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsernameRef, yourUser
     };
 
     return (
-        <Box display="flex" flexDirection="row" alignItems="center">
-            <Box mt={2} sx={{backgroundColor: 'white', padding: 2, borderRadius: 2}}>
-                <Board board={board} onCellClick={handleCellClick}/>
-            </Box>
-            <Box display="flex" flexDirection="column">
-                <Box mt={2} textAlign="left" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3}
-                     border={`3px solid  #ccc`} borderRadius={10} height="80vh" sx={{flex: 1, pl: 2, minWidth: '30%'}}>
-                    <Box display="flex" flexDirection="row" sx={{flex: 1, pl: 2}}>
-                        <PlayerBox username={yourUsernameRef.current} color={yourColor} marginRight={2}/>
-                        <PlayerBox username={opponentUsernameRef.current} color={yourColor === 'B' ? 'W' : 'B'}/>
-                    </Box>
-                    <Box display="flex" flexDirection="row" sx={{flex: 1, pl: 2}}>
-                        <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer}/>
-                    </Box>
-                    <Box sx={{flex: 1, pl: 2}}>
-                        <Chat socketRef={socketRef} gameStateRef={gameStateRef}/>
-                    </Box>
-                </Box>
-            </Box>
-        </Box>
+        <main className="game-container">
+            <div className="board">
+                <Board board={board} onCellClick={handleCellClick} />
+            </div>
+            <div className="playerboxOne">
+                <PlayerBox username={yourUsernameRef.current} color={yourColor} />
+            </div>
+            <div className="playerboxTwo">
+                <PlayerBox username={opponentUsernameRef.current} color={yourColor === 'B' ? 'W' : 'B'} />
+            </div>
+            <div className="turnbox">
+                <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} />
+            </div>
+            <div className="chat">
+                <Chat socketRef={socketRef} gameStateRef={gameStateRef} />
+            </div>
+        </main>
     );
+
 };
 
 function initialBoardState() {

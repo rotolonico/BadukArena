@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Box } from "@mui/material";
-import { timeAgoFromDate } from "../../utils/dateUtils";
+import { timeAgoFromDate } from "../../../utils/dateUtils";
 
 const Message = ({ msg }) => {
     const [timeAgo, setTimeAgo] = useState("just now");
