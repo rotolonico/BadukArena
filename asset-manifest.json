@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/BadukArena/static/css/main.3cdff75c.css",
-    "main.js": "/BadukArena/static/js/main.50b06c07.js",
+    "main.js": "/BadukArena/static/js/main.2a633614.js",
     "static/media/white-stone.png": "/BadukArena/static/media/white-stone.52630ffcf833eadb3d15.png",
     "static/media/black-white-stone.png": "/BadukArena/static/media/black-white-stone.1a23010ff6cefd7de611.png",
     "static/media/black-stone.png": "/BadukArena/static/media/black-stone.43f9ff1aaadb30278f03.png",
     "index.html": "/BadukArena/index.html",
     "main.3cdff75c.css.map": "/BadukArena/static/css/main.3cdff75c.css.map",
-    "main.50b06c07.js.map": "/BadukArena/static/js/main.50b06c07.js.map"
+    "main.2a633614.js.map": "/BadukArena/static/js/main.2a633614.js.map"
   },
   "entrypoints": [
     "static/css/main.3cdff75c.css",
-    "static/js/main.50b06c07.js"
+    "static/js/main.2a633614.js"
   ]
 }
