@@ -3,7 +3,7 @@ import { login } from '../utils/api';
 import theme from '../utils/theme';
 import { TextField, Button, Typography, Box, Container, ThemeProvider } from "@mui/material";
 import { IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff, Lock, LockOpen } from '@mui/icons-material';
+import { Visibility, VisibilityOff, Lock, LockOpen, PersonAdd } from '@mui/icons-material';
 import { useSpring, animated } from 'react-spring';
 
 const Login = () => {
@@ -38,11 +38,29 @@ const Login = () => {
         <ThemeProvider theme={theme}>
             <animated.div style={springProps}>
                 <Container maxWidth="sm">
-                    <Box mt={5} display="flex" flexDirection="column" alignItems="center" p={3} bgcolor="#262424"
-                         boxShadow={3} borderRadius={10}>
-                        <Typography variant="h4" component="h2" gutterBottom color="white">Login</Typography>
+                    <Box
+                        mt={5}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        p={3}
+                        bgcolor="#262424"
+                        boxShadow="3px 3px 15px rgba(255, 255, 255, 0.1)"
+                        borderRadius={8}
+                    >
+                        <Typography variant="h4" component="h2" gutterBottom color="white">
+                            Login
+                        </Typography>
                         <Box mt={2} style={{ alignContent: 'center' }}>
-                            <Button variant="text" color="secondary" href="#register">Create an account</Button>
+                            <Button
+                                variant="text"
+                                color="secondary"
+                                href="#register"
+                                startIcon={<PersonAdd />}
+                                sx={{ color: 'white' }}
+                            >
+                                Create an account
+                            </Button>
                         </Box>
                         <TextField
                             label="Email"
@@ -55,7 +73,7 @@ const Login = () => {
                                 style: { color: 'white' },
                             }}
                             InputProps={{
-                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)' },
                                 classes: {
                                     root: 'textfield-root',
                                     focused: 'textfield-focused',
@@ -75,7 +93,7 @@ const Login = () => {
                                 style: { color: 'white' },
                             }}
                             InputProps={{
-                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                                style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)' },
                                 classes: {
                                     root: 'textfield-root',
                                     focused: 'textfield-focused',
@@ -103,8 +121,8 @@ const Login = () => {
                                 onMouseEnter={() => setHover(true)}
                                 onMouseLeave={() => setHover(false)}
                                 onClick={handleLogin}
-                                sx={{ mt: 2, transition: 'all 0.3s' }}
-                                style={{ marginLeft: '5px' }}
+                                sx={{ mt: 2, transition: 'all 0.3s', backgroundColor: '#757575', '&:hover': { backgroundColor: '#9e9e9e' } }}
+                                style={{ marginLeft: '5px', color: 'white' }}
                             >
                                 Login
                             </Button>
