@@ -5,7 +5,7 @@ import PlayerBox from "../components/play/game/PlayerBox";
 import Chat from "../components/play/chat/Chat";
 import TurnBox from "../components/play/game/TurnBox";
 
-const Game = ({yourColor, socketRef, gameStateRef, opponentUsernameRef, yourUsernameRef}) => {
+const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsername}) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
     const theme = useTheme();
@@ -54,10 +54,10 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsernameRef, yourUser
                 <Board board={board} onCellClick={handleCellClick} />
             </div>
             <div className="playerboxOne">
-                <PlayerBox username={yourUsernameRef.current} color={yourColor} />
+                <PlayerBox username={yourUsername} color={yourColor} />
             </div>
             <div className="playerboxTwo">
-                <PlayerBox username={opponentUsernameRef.current} color={yourColor === 'B' ? 'W' : 'B'} />
+                <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'} />
             </div>
             <div className="turnbox">
                 <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} />

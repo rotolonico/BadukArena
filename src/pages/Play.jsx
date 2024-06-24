@@ -69,20 +69,10 @@ const Play = () => {
 
     const gameStateRef = useRef(gameState);
     const socketRef = useRef(null);
-    const opponentUsernameRef = useRef(opponentUsername);
-    const yourUsernameRef = useRef(yourUsername);
 
     useEffect(() => {
         gameStateRef.current = gameState;
     }, [gameState]);
-    
-    useEffect(() => {
-        opponentUsernameRef.current = opponentUsername;
-    }, [opponentUsername]);
-
-    useEffect(() => {
-        yourUsernameRef.current = yourUsername;
-    }, [yourUsername]);
 
     useEffect(() => {
         socketRef.current = new SocketClient();
@@ -232,7 +222,7 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} opponentUsernameRef={opponentUsernameRef} yourUsernameRef={yourUsernameRef}/>
+                    <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef} opponentUsername={opponentUsername} yourUsername={yourUsername}/>
                 }
                 {gameState === GameState.FINISHED &&
                     <>
