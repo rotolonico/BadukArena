@@ -1,10 +1,9 @@
 import { io } from "socket.io-client";
-import { isProd } from "./api.js";
 
 const prodHost = 'https://badukarenabackend.onrender.com';
 const testHost = 'http://localhost:1234';
 
-const host = isProd ? prodHost : testHost;
+const host = process.env.REACT_APP_ENV === 'production' ? prodHost : testHost;
 
 class SocketClient {
     constructor() {

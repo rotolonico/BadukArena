@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-export let isProd = true;
-
 const prodHost = 'https://badukarenabackend.onrender.com';
 const testHost = 'http://localhost:1234';
 
-const host = isProd ? prodHost : testHost;
+const host = process.env.REACT_APP_ENV === 'production' ? prodHost : testHost;
 
 const API = axios.create({
     baseURL: host,
