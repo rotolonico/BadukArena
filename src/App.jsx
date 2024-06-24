@@ -40,7 +40,7 @@ function App() {
                         <Route path="login" element={<Login setAuthStatus={setAuthStatus} />} />
                         <Route path="register" element={<Register />} />
                         <Route path="play" element={<Play />} />
-                        <Route path="user" element={<User />} />
+                        <Route path="user" element={<User currentUsername={username}/>} />
                         <Route path="*" element={<Navigate to='play' replace />} />
                     </Routes>
                 </Container>

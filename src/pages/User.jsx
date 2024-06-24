@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { getGames } from "../utils/api";
+import React, {useEffect, useState} from 'react';
+import {getGames} from "../utils/api";
 import withAuth from "../withAuth";
 import moment from "moment";
 import {
     Card, CardContent, Typography, CircularProgress, Box, Grid, Avatar, CardHeader
 } from '@mui/material';
-import { createTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
-import { SportsEsports, CheckCircle, Cancel } from '@mui/icons-material';
+import {createTheme, CssBaseline, makeStyles, ThemeProvider} from "@material-ui/core";
+import {SportsEsports, CheckCircle, Cancel} from '@mui/icons-material';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,7 +79,7 @@ const theme = createTheme({
     },
 });
 
-const User = ({ currentUsername }) => {
+const User = ({currentUsername}) => {
     const classes = useStyles();
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -102,36 +102,40 @@ const User = ({ currentUsername }) => {
     const getResultText = (game) => {
         const userIsWhite = game.white.username === currentUsername;
         const userIsBlack = game.black.username === currentUsername;
-        const userWon = (game.result === "W" && userIsWhite) || (game.result === "B" && userIsBlack);
-        const winner = game.result === "W" ? game.white.username : game.black.username;
+        const userWon = (game.result.winner === 'W' && userIsWhite) || (game.result.winner === "B" && userIsBlack);
+        const winner = game.result.winner === 'W' ? game.white.username : game.black.username;
 
         if (userWon) {
             return (
-                <span>
-                    You Won!
-                    <CheckCircle className={classes.resultIcon} style={{ color: 'green' }} />
-                </span>
+                <Typography variant="body2" className={classes.winnerText}>
+                    <span>
+                        You Won!
+                        <CheckCircle className={classes.resultIcon} style={{color: '#76ff03'}}/>
+                    </span>
+                </Typography>
             );
         } else {
             return (
+                <Typography variant="body2" className={classes.loserText}>
                 <span>
                     You Lost.
-                    <Cancel className={classes.resultIcon} style={{ color: 'red' }} />
+                    <Cancel className={classes.resultIcon} style={{color: '#ff1744'}}/>
                 </span>
+                </Typography>
             );
         }
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <Box className={classes.root}>
-                <Typography variant="h4" gutterBottom sx={{ mb: 2, color: 'white' }}>
+                <Typography variant="h4" gutterBottom sx={{mb: 2, color: 'white'}}>
                     Games List
                 </Typography>
                 {loading ? (
                     <Box className={classes.loadingContainer}>
-                        <CircularProgress />
+                        <CircularProgress/>
                     </Box>
                 ) : (
                     games.length === 0 ? (
@@ -145,24 +149,23 @@ const User = ({ currentUsername }) => {
                                     <Card className={classes.card}>
                                         <CardHeader
                                             avatar={
-                                                <Avatar aria-label="game" style={{ backgroundColor: '#000000' }}>
-                                                    <SportsEsports />
+                                                <Avatar aria-label="game" style={{backgroundColor: '#000000'}}>
+                                                    <SportsEsports/>
                                                 </Avatar>
                                             }
                                             title={`Game ${index + 1}`}
-                                            subheader={<Typography className={classes.dateText}>{game.date}</Typography>}
+                                            subheader={<Typography
+                                                className={classes.dateText}>{game.date}</Typography>}
                                         />
                                         <CardContent>
-                                            <Typography variant="body2" className={game.result === "W" ? classes.winnerText : classes.loserText}>
-                                                {getResultText(game)}
+                                            {getResultText(game)}
+                                            <Typography variant="body2" sx={{fontWeight: 'bold'}}>
+                                                Winner: {game.result.winner === "W" ? game.white.username : game.black.username}
                                             </Typography>
-                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                                Winner: {game.result === "W" ? game.white.username : game.black.username}
-                                            </Typography>
-                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                            <Typography variant="body2" sx={{fontWeight: 'bold'}}>
                                                 White Player: {game.white.username}
                                             </Typography>
-                                            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                            <Typography variant="body2" sx={{fontWeight: 'bold'}}>
                                                 Black Player: {game.black.username}
                                             </Typography>
                                         </CardContent>
