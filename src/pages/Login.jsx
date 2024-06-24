@@ -41,7 +41,7 @@ const Login = () => {
                          boxShadow={3} border={`3px solid #ccc`} borderRadius={10}>
                         <Typography variant="h4" component="h2" gutterBottom color="white">Login</Typography>
                         <Box mt={2} style={{alignContent: 'center'}}>
-                            <Button variant="text" color="secondary" href="/register">Create an account</Button>
+                            <Button variant="text" color="secondary" href="#register">Create an account</Button>
                         </Box>
                         <TextField
                             label="Email"
