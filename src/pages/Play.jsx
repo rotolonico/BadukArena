@@ -4,6 +4,7 @@ import Room from "../components/play/Room";
 import withAuth from "../withAuth";
 import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
+import { AddCircle } from '@mui/icons-material';
 import Chat from "../components/play/chat/Chat";
 import PlayerBox from "../components/play/game/PlayerBox";
 import {
@@ -32,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         margin: '0 auto',
         padding: '20px',
+        borderRadius: '10px',
+        boxShadow: '3px 3px 15px rgba(0, 0, 0, 0.5)',
     },
     createButton: {
         marginBottom: '20px',
@@ -198,6 +201,7 @@ const Play = () => {
                             onClick={handleCreate}
                             disabled={isCreateDisabled}
                             className={classes.createButton}
+                            startIcon={<AddCircle/>}
                         >
                             Create Room
                         </Button>

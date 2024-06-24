@@ -7,6 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import randomStone from '../../static/images/black-white-stone.png';
 import whiteStone from '../../static/images/white-stone.png';
 import blackStone from '../../static/images/black-stone.png';
+import {Delete} from "@mui/icons-material";
 
 
 const injectFont = () => {
@@ -94,7 +95,7 @@ const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabled
                         onClick={handleDelete}
                         disabled={disabledCondition}
                         className={classes.deleteButton}
-                    >
+                    startIcon={<Delete/>}>
                         Delete Room
                     </Button>
                 }
