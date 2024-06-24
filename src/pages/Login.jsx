@@ -25,7 +25,7 @@ const Login = () => {
         }
         const loginResponse = await login(email, password);
         if (loginResponse.success) {
-            window.location.href = '/play';
+            window.location.href = '#play';
         } else if (loginResponse.status === 401) {
             setMessage('Wrong email or password');
         } else {

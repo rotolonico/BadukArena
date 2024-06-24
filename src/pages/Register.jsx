@@ -27,7 +27,7 @@ const Register = () => {
         
         let registerResponse = await register(username, email, password);
         if (registerResponse.success) {
-            window.location.href = '/login';
+            window.location.href = '#login';
         } else {
             setMessage(registerResponse.data || 'Server error');
         }

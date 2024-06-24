@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
@@ -12,7 +12,7 @@ import { getUsername, isAuthenticated, logout } from "./utils/api";
 const handleLogout = async () => {
     try {
         await logout();
-        window.location.href = '/login';
+        window.location.href = '#login';
     } catch (error) {
         console.error(error);
     }
@@ -41,21 +41,21 @@ function App() {
     }, [authStatus]);
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div style={{ backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 <Navbar authStatus={authStatus} username={username} handleLogout={handleLogout} />
                 <Container sx={{ flexGrow: 1, marginTop: '64px'}}>
                     <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/play" element={<Play />} />
-                        <Route path="/user" element={<User />} />
+                        <Route path="login" element={<Login />} />
+                        <Route path="register" element={<Register />} />
+                        <Route path="play" element={<Play />} />
+                        <Route path="user" element={<User />} />
                         <Route path="*" element={<Navigate to='/play' replace />} />
                     </Routes>
                 </Container>
                 <Footer />
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

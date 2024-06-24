@@ -11,13 +11,13 @@ const withAuth = (Component) => {
             isAuthenticated()
                 .then(isAuthResponse => {
                     if (!isAuthResponse) {
-                        window.location.href = '/login';
+                        window.location.href = '#login';
                     }
                     setIsAuth(isAuthResponse);
                 })
                 .catch(err => {
                     console.error(err);
-                    window.location.href = '/login';
+                    window.location.href = '#login';
                 });
         },);
 
