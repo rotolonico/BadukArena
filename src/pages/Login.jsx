@@ -6,7 +6,7 @@ import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff, Lock, LockOpen, PersonAdd } from '@mui/icons-material';
 import { useSpring, animated } from 'react-spring';
 
-const Login = () => {
+const Login = ({setAuthStatus}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -26,6 +26,7 @@ const Login = () => {
         }
         const loginResponse = await login(email, password);
         if (loginResponse.success) {
+            setAuthStatus(true);
             window.location.href = '#play';
         } else if (loginResponse.status === 401) {
             setMessage('Wrong email or password');

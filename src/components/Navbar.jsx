@@ -3,8 +3,21 @@ import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import logo from '../static/images/logo.png';
 import { Link } from 'react-router-dom';
 import '../static/styles.css';
+import {logout} from "../utils/api";
 
-const Navbar = ({ authStatus, username, handleLogout }) => {
+const Navbar = ({ authStatus, username, setAuthStatus, setUsername }) => {
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            setAuthStatus(false);
+            setUsername('');
+            window.location.href = '#login';
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <AppBar position="static" color="primary">
             <Toolbar>
@@ -16,12 +29,12 @@ const Navbar = ({ authStatus, username, handleLogout }) => {
                     <Button color="inherit" component={Link} to="/login" className="nav-link">
                         Login
                     </Button>}
-                {authStatus && <>
+                {authStatus && username !== '' && <>
                     <Button color="inherit" component={Link} to="/play" className="nav-link">
                         Play
                     </Button>
                     <Button color="inherit" component={Link} to="/user" className="nav-link">
-                        {"Your profile (" + (username ? username : 'User') + ")"}
+                        Your profile ({username})
                     </Button>
                     <Button color="inherit" onClick={handleLogout} className="nav-link">
                         Logout

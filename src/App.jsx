@@ -7,16 +7,7 @@ import Play from "./pages/Play";
 import User from "./pages/User";
 import Footer from "./components/Footer";
 import { Container } from "@mui/material";
-import { getUsername, isAuthenticated, logout } from "./utils/api";
-
-const handleLogout = async () => {
-    try {
-        await logout();
-        window.location.href = '#login';
-    } catch (error) {
-        console.error(error);
-    }
-};
+import { getUsername, isAuthenticated } from "./utils/api";
 
 function App() {
     const [authStatus, setAuthStatus] = useState(false);
@@ -43,10 +34,10 @@ function App() {
     return (
         <HashRouter>
             <div style={{ backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-                <Navbar authStatus={authStatus} username={username} handleLogout={handleLogout} />
+                <Navbar authStatus={authStatus} username={username} setUsername={setUsername} setAuthStatus={setAuthStatus} />
                 <Container sx={{ flexGrow: 1, marginTop: '64px'}}>
                     <Routes>
-                        <Route path="login" element={<Login />} />
+                        <Route path="login" element={<Login setAuthStatus={setAuthStatus} />} />
                         <Route path="register" element={<Register />} />
                         <Route path="play" element={<Play />} />
                         <Route path="user" element={<User />} />
