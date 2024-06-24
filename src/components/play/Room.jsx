@@ -29,7 +29,7 @@ const theme = createTheme({
     },
     palette: {
         primary: {
-            main: 'dark green'
+            main: 'rgba(0,155,11,0.98)'
         },
     },
 });
