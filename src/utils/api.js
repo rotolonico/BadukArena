@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+export let isProd = true;
+
+const prodHost = '3.75.158.163:1234';
+const testHost = 'http://localhost:1234';
+
+const host = isProd ? prodHost : testHost;
+
 const API = axios.create({
-    baseURL: 'http://localhost:1234',
+    baseURL: host,
     withCredentials: true
 });
 

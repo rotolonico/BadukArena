@@ -1,8 +1,14 @@
 import { io } from "socket.io-client";
+import { isProd } from "api.js";
+
+const prodHost = '3.75.158.163:1234';
+const testHost = 'http://localhost:1234';
+
+const host = isProd ? prodHost : testHost;
 
 class SocketClient {
     constructor() {
-        this.socket = io("http://localhost:1234");
+        this.socket = io(host);
         this.currentRoom = "";
     }
 
