@@ -5,6 +5,9 @@ import {TextField, Button, Typography, Box, Container, ThemeProvider} from "@mui
 import { IconButton, InputAdornment } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useSpring, animated } from 'react-spring';
+import { PersonAdd } from '@mui/icons-material';
+
+
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -113,7 +116,7 @@ const Register = () => {
                         }}
                     />
                     <Box mt={2}>
-                        <Button variant="contained" color="secondary" onClick={handleRegister} style={{ marginLeft: '5px' }}>Register</Button>
+                        <Button variant="contained" color="secondary" onClick={handleRegister} startIcon={<PersonAdd/>} style={{ marginLeft: '5px' }}>Register</Button>
                     </Box>
 
                     {message && <Typography variant="body1" mt={2} color="white">{message}</Typography>}
