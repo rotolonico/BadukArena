@@ -7,7 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import randomStone from '../../static/images/black-white-stone.png';
 import whiteStone from '../../static/images/white-stone.png';
 import blackStone from '../../static/images/black-stone.png';
-import {Delete} from "@mui/icons-material";
+import {Delete, PlayArrow} from "@mui/icons-material";
 
 
 const injectFont = () => {
@@ -29,7 +29,7 @@ const theme = createTheme({
     },
     palette: {
         primary: {
-            main: '#1976d2',
+            main: 'dark green'
         },
     },
 });
@@ -106,6 +106,7 @@ const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabled
                         onClick={() => handleJoin(number)}
                         disabled={disabledCondition}
                         className={classes.joinButton}
+                        startIcon={<PlayArrow/>}
                     >
                         Join
                     </Button>
