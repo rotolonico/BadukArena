@@ -10,9 +10,9 @@ const Board = ({ board, onCellClick }) => {
     const labelStyle = {
         display: 'flex',
         justifyContent: 'center',
-        margin: '2vh ',
+        margin: '2vh 1vw',
         alignItems: 'center',
-        fontSize: '3vh',
+        fontSize: '1.4vw',
         fontWeight: 'bold',
         color: '#000',
     };
