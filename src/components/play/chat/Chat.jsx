@@ -3,13 +3,14 @@ import Message from "./Message";
 import theme from "../../../utils/theme";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import SendIcon from '@mui/icons-material/Send';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { getUsername } from "../../../utils/api";
 import '../../../static/styles.css';
 
-const Chat = ({ socketRef}) => {
+const Chat = ({ socketRef }) => {
     const [messages, setMessages] = useState([]);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [username, setUsername] = useState("");
@@ -57,8 +58,8 @@ const Chat = ({ socketRef}) => {
         <ThemeProvider theme={theme}>
             <animated.div style={springProps}>
                 <Container maxWidth="sm">
-                    <Box mt={2} textAlign="left" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} border={`3px solid  #ccc`} borderRadius={10} height="40vh">
-                        <Typography variant="h4" component="h2" gutterBottom color="secondary">Chat</Typography>
+                    <Box mt={2} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} borderRadius={10} height="60vh">
+                        <Typography variant="h4" component="h2" gutterBottom color="white">Chat</Typography>
                         <Box flex={1} overflow="auto" mb={2} className="scrollbar">
                             <List>
                                 {messages.map((message, index) => (
@@ -84,11 +85,12 @@ const Chat = ({ socketRef}) => {
                                         style: { color: 'white' },
                                     }}
                                     InputProps={{
-                                        style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                                        style: { color: 'white', backgroundColor: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.3)', borderRadius: '2px'
+                                        },
                                     }}
                                     className="scrollbar"
                                 />
-                                <Box position="relative">
+                                <Box position="relative" display="flex" alignItems="center">
                                     <IconButton onClick={() => setShowEmojiPicker(!showEmojiPicker)} style={{ marginLeft: '10px' }}>
                                         <InsertEmoticonIcon style={{ color: 'white' }} />
                                     </IconButton>
@@ -98,9 +100,9 @@ const Chat = ({ socketRef}) => {
                                         </Box>
                                     )}
                                 </Box>
-                            </Box>
-                            <Box mt={2}>
-                                <Button type="submit" variant="contained" color="secondary">Invia</Button>
+                                <IconButton type="submit" style={{ marginLeft: '10px', color:"white" }}>
+                                    <SendIcon />
+                                </IconButton>
                             </Box>
                         </form>
                     </Box>
