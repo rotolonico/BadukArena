@@ -10,23 +10,9 @@ import blackStone from '../../static/images/black-stone.png';
 import {Delete, PlayArrow} from "@mui/icons-material";
 
 
-const injectFont = () => {
-    const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-};
 
-injectFont();
 
 const theme = createTheme({
-    typography: {
-        fontFamily: [
-            'Roboto',
-            'Arial',
-            'sans-serif',
-        ].join(','),
-    },
     palette: {
         primary: {
             main: 'rgba(0,155,11,0.98)'
@@ -44,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#f9f9f9',
         marginBottom: '5px',
         borderRadius: '4px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+
     },
     joinButton: {
         marginLeft: theme.spacing(2),
@@ -111,7 +99,7 @@ const RoomComponent = ({ number, roomCreator, handleJoin, handleDelete, disabled
                         Join
                     </Button>
                 }
-                
+
             </ListItem>
         </ThemeProvider>
     );

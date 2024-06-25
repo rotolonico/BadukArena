@@ -1,10 +1,10 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
+import React, { useEffect, useState, useRef } from 'react';
+import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
 import Room from "../components/play/Room";
 import withAuth from "../withAuth";
 import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
-import {AddCircle} from '@mui/icons-material';
+import { AddCircle, Refresh } from '@mui/icons-material';
 import {
     Button,
     Typography,
@@ -15,10 +15,11 @@ import {
     Select,
     MenuItem,
     FormControl,
-    InputLabel
+    InputLabel,
+    Grid
 } from '@material-ui/core';
 import theme from "../utils/theme";
-import {Box, Snackbar} from "@mui/material";
+import { Box, Snackbar, CircularProgress } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,12 +34,47 @@ const useStyles = makeStyles((theme) => ({
     createButton: {
         marginBottom: '20px',
     },
+    refreshButton: {
+        marginBottom: '20px',
+        marginLeft: theme.spacing(2),
+    },
     roomList: {
         listStyle: 'none',
         padding: 0,
     },
     roomItem: {
         marginBottom: '10px',
+    },
+    select: {
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: 'black', // Contorno nero
+            },
+            '&:hover fieldset': {
+                borderColor: 'black', // Contorno nero al passaggio del mouse
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: 'black', // Contorno nero quando in focus
+            },
+        },
+    },
+    formControl: {
+        marginBottom: '16px',
+        minWidth: 120,
+    },
+    title: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        marginBottom: theme.spacing(2),
+    },
+    loading: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '50vh',
+    },
+    gridContainer: {
+        marginTop: theme.spacing(2),
     },
 }));
 
@@ -52,6 +88,7 @@ const Play = () => {
 
     const classes = useStyles();
     const [rooms, setRooms] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [isCreateDisabled, setIsCreateDisabled] = useState(false);
     const [createdRoom, setCreatedRoom] = useState(null);
     const [gameState, setGameState] = useState(GameState.NOT_STARTED);
@@ -70,16 +107,6 @@ const Play = () => {
 
     useEffect(() => {
         socketRef.current = new SocketClient();
-
-        function refreshRooms() {
-            getRooms()
-                .then(roomsList => {
-                    setRooms(roomsList.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
 
         refreshRooms();
 
@@ -111,6 +138,22 @@ const Play = () => {
         };
     }, []);
 
+    const refreshRooms = (showLoader = false) => {
+        if (showLoader) setIsLoading(true);
+        setTimeout(() => {
+            getRooms()
+                .then(roomsList => {
+                    setRooms(roomsList.data);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error(error);
+                    setIsLoading(false);
+                });
+        }, 500); // Ritardo di 500 ms
+    };
+
+
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
     };
@@ -132,7 +175,7 @@ const Play = () => {
         try {
             const res = await createRoom(selectedColor);
             if (res.status === 201) {
-                setCreatedRoom({number: res.data.roomNumber, username: res.data.username, color: selectedColor});
+                setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor });
                 socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                     console.log(msg);
                 });
@@ -160,13 +203,17 @@ const Play = () => {
         window.location.reload();
     }
 
+    const handleRefreshClick = () => {
+        refreshRooms(true);
+    };
+
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline/>
+            <CssBaseline />
             <div className={classes.root}>
                 {gameState === GameState.NOT_STARTED && <>
-                    <Box display="flex" justifyContent="right" alignItems="center" gap='20px'>
-                        <FormControl variant="outlined" style={{marginBottom: '16px', minWidth: 120}}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <FormControl variant="outlined" className={`${classes.formControl} ${classes.select}`}>
                             <InputLabel id="color-select-label">Color</InputLabel>
                             <Select
                                 labelId="color-select-label"
@@ -179,45 +226,65 @@ const Play = () => {
                                 <MenuItem value="W">White</MenuItem>
                             </Select>
                         </FormControl>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleCreate}
-                            disabled={isCreateDisabled}
-                            className={classes.createButton}
-                            startIcon={<AddCircle/>}
-                        >
-                            Create Room
-                        </Button>
+                        <Box display="flex" alignItems="center">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleCreate}
+                                disabled={isCreateDisabled}
+                                className={classes.createButton}
+                                startIcon={<AddCircle />}
+                            >
+                                Create Room
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleRefreshClick}
+                                className={classes.refreshButton}
+                                startIcon={<Refresh />}
+                            >
+                                Refresh
+                            </Button>
+                        </Box>
                     </Box>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom className={classes.title}>
                         Available Rooms
                     </Typography>
-                    <List className={classes.roomList}>
-                        {createdRoom && (
-                            <Room
-                                isOwn={true}
-                                roomCreator={createdRoom.username}
-                                handleDelete={handleDelete}
-                                disabledCondition={!isCreateDisabled}
-                                color={createdRoom.color}
-                            />
-                        )}
-                        {rooms?.map((r, i) => (
-                            <Room
-                                key={i}
-                                number={r.number}
-                                roomCreator={r.roomCreator.username}
-                                handleJoin={handleJoin}
-                                disabledCondition={isCreateDisabled}
-                                color={r.creatorWantedColor}
-                            />
-                        ))}
-                    </List>
+                    {isLoading ? (
+                        <Box className={classes.loading}>
+                            <CircularProgress />
+                        </Box>
+                    ) : (
+                        <Grid container spacing={2} className={classes.gridContainer}>
+                            {createdRoom && (
+                                <Grid item xs={12}>
+                                    <Room
+                                        isOwn={true}
+                                        roomCreator={createdRoom.username}
+                                        handleDelete={handleDelete}
+                                        disabledCondition={!isCreateDisabled}
+                                        color={createdRoom.color}
+                                    />
+                                </Grid>
+                            )}
+                            {rooms?.map((r, i) => (
+                                <Grid item xs={12} key={i}>
+                                    <Room
+                                        number={r.number}
+                                        roomCreator={r.roomCreator.username}
+                                        handleJoin={handleJoin}
+                                        disabledCondition={isCreateDisabled}
+                                        color={r.creatorWantedColor}
+                                    />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    )}
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
                     <Game yourColor={yourColor} socketRef={socketRef} gameState={gameState}
-                          opponentUsername={opponentUsername} yourUsername={yourUsername}/>
+                          opponentUsername={opponentUsername} yourUsername={yourUsername} />
                 }
                 {gameState === GameState.FINISHED &&
                     <Snackbar
