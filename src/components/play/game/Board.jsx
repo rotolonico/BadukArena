@@ -4,8 +4,8 @@ import woodBackground from '../../../static/images/wood-background.jpg';
 import { Typography } from '@mui/material';
 
 const Board = ({ board, onCellClick }) => {
-    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-    const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
+    const numbers = ['9', '8', '7', '6', '5', '4', '3', '2', '1'];
 
     const labelStyle = {
         display: 'flex',
@@ -14,7 +14,7 @@ const Board = ({ board, onCellClick }) => {
         alignItems: 'center',
         fontSize: '1.4vw',
         fontWeight: 'bold',
-        color: '#000',
+        color: '#000000',
     };
 
     return (
