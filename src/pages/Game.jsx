@@ -4,6 +4,8 @@ import Board from '../components/play/game/Board';
 import PlayerBox from "../components/play/game/PlayerBox";
 import Chat from "../components/play/chat/Chat";
 import TurnBox from "../components/play/game/TurnBox";
+import placeStone from "../static/sounds/place_stone.mp3"
+
 
 const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsername}) => {
     const [board, setBoard] = useState(initialBoardState());
@@ -34,6 +36,7 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsernam
             );
             setBoard(newBoard);
             setCurrentPlayer(currentPlayerRef.current === 'B' ? 'W' : 'B');
+            document.getElementById('gameMove').play();
         });
 
         socketRef.current.socketListenIllegalMove((error) => {
@@ -51,20 +54,23 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsernam
     return (
         <main className="game-container">
             <div className="board">
-                <Board board={board} onCellClick={handleCellClick} />
+                <Board board={board} onCellClick={handleCellClick}/>
             </div>
             <div className="playerboxOne">
-                <PlayerBox username={yourUsername} color={yourColor} />
+                <PlayerBox username={yourUsername} color={yourColor}/>
             </div>
             <div className="playerboxTwo">
-                <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'} />
+                <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'}/>
             </div>
             <div className="turnbox">
                 <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} gameStateRef={gameStateRef}/>
             </div>
             <div className="chat">
-                <Chat socketRef={socketRef} />
+                <Chat socketRef={socketRef}/>
             </div>
+            <audio id="gameMove">
+                <source src={placeStone} type="audio/mp3"/>
+            </audio>
         </main>
     );
 

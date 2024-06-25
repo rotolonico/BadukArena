@@ -26,6 +26,10 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 
+import gameStart from "../static/sounds/game_start.mp3"
+import gameWin from "../static/sounds/game_win.mp3"
+import gameLose from "../static/sounds/game_lose.mp3"
+
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -69,10 +73,15 @@ const Play = () => {
 
     const gameStateRef = useRef(gameState);
     const socketRef = useRef(null);
+    const yourColorRef = useRef(yourColor);
 
     useEffect(() => {
         gameStateRef.current = gameState;
     }, [gameState]);
+
+    useEffect(() => {
+        yourColorRef.current = yourColor;
+    }, [yourColor]);
 
     useEffect(() => {
         socketRef.current = new SocketClient();
@@ -99,11 +108,17 @@ const Play = () => {
             setYourColor(data.color);
             setOpponentUsername(data.opponentUsername);
             setYourUsername(data.playerUsername);
+            document.getElementById("gameStart").play();
         });
 
         socketRef.current.socketListenGameOver((rst) => {
             setResult(rst);
             setGameState(GameState.FINISHED);
+            if (rst.winner === yourColorRef.current) {
+                document.getElementById("gameWin").play();
+            } else {
+                document.getElementById("gameLose").play();
+            }
         });
 
         socketRef.current.socketListenGameAborted(() => {
@@ -246,6 +261,15 @@ const Play = () => {
                     />
                 }
             </div>
+            <audio id="gameStart">
+                <source src={gameStart} type="audio/mp3"/>
+            </audio>
+            <audio id="gameWin">
+                <source src={gameWin} type="audio/mp3"/>
+            </audio>
+            <audio id="gameLose">
+                <source src={gameLose} type="audio/mp3"/>
+            </audio>
         </ThemeProvider>
     );
 }
