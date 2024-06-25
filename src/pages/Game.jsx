@@ -24,13 +24,21 @@ const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername})
     }, [currentPlayer]);
 
     useEffect(() => {
-        socketRef.current.socketListenMove((move) => {
-            const [x, y] = move.split('-');
+        socketRef.current.socketListenMove((moveData) => {
+
+            const parsedMove = JSON.parse(moveData);
+            const {x, y, captures} = parsedMove;
             const newBoard = boardRef.current.map((row, i) =>
                 row.map((cell, j) => {
                     if (i === parseInt(x) && j === parseInt(y)) {
                         return currentPlayerRef.current;
                     }
+
+                    console.log(captures);
+                    if (captures.some((c) => {
+                        return c[0] === i && c[1] === j
+                    })) return ' ';
+                    
                     return cell;
                 })
             );
