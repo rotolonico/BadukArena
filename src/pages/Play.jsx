@@ -135,7 +135,6 @@ const Play = () => {
         socketRef.current.socketListenGameOver((rst) => {
             setResult(rst);
             setGameState(GameState.FINISHED);
-            console.log(rst.winner);
             if (rst.winner === yourColorRef.current) {
                 document.getElementById("gameWin").play();
             } else {
