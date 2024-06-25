@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {getGames} from "../utils/api";
 import withAuth from "../withAuth";
 import moment from "moment";
-import {
-    Card, CardContent, Typography, CircularProgress, Box, Grid, Avatar, CardHeader
-} from '@mui/material';
+import {Typography, CircularProgress, Box, Grid} from '@mui/material';
 import {createTheme, CssBaseline, makeStyles, ThemeProvider} from "@material-ui/core";
-import {SportsEsports, CheckCircle, Cancel} from '@mui/icons-material';
+import GameCard from "../components/user/GameCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
     },
     dateText: {
-        color: 'white', // White color for date
+        color: 'white',
     }
 }));
 
@@ -99,33 +97,6 @@ const User = ({currentUsername}) => {
         });
     }, []);
 
-    const getResultText = (game) => {
-        const userIsWhite = game.white.username === currentUsername;
-        const userIsBlack = game.black.username === currentUsername;
-        const userWon = (game.result.winner === 'W' && userIsWhite) || (game.result.winner === "B" && userIsBlack);
-        const winner = game.result.winner === 'W' ? game.white.username : game.black.username;
-
-        if (userWon) {
-            return (
-                <Typography variant="body2" className={classes.winnerText}>
-                    <span>
-                        You Won!
-                        <CheckCircle className={classes.resultIcon} style={{color: '#76ff03'}}/>
-                    </span>
-                </Typography>
-            );
-        } else {
-            return (
-                <Typography variant="body2" className={classes.loserText}>
-                <span>
-                    You Lost.
-                    <Cancel className={classes.resultIcon} style={{color: '#ff1744'}}/>
-                </span>
-                </Typography>
-            );
-        }
-    };
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
@@ -146,30 +117,7 @@ const User = ({currentUsername}) => {
                         <Grid container spacing={3}>
                             {games.map((game, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
-                                    <Card className={classes.card}>
-                                        <CardHeader
-                                            avatar={
-                                                <Avatar aria-label="game" style={{backgroundColor: '#000000'}}>
-                                                    <SportsEsports/>
-                                                </Avatar>
-                                            }
-                                            title={`Game ${index + 1}`}
-                                            subheader={<Typography
-                                                className={classes.dateText}>{game.date}</Typography>}
-                                        />
-                                        <CardContent>
-                                            {getResultText(game)}
-                                            <Typography variant="body2" sx={{fontWeight: 'bold'}}>
-                                                Winner: {game.result.winner === "W" ? game.white.username : game.black.username}
-                                            </Typography>
-                                            <Typography variant="body2" sx={{fontWeight: 'bold'}}>
-                                                White Player: {game.white.username}
-                                            </Typography>
-                                            <Typography variant="body2" sx={{fontWeight: 'bold'}}>
-                                                Black Player: {game.black.username}
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
+                                    <GameCard game={game} index={index} currentUsername={currentUsername} classes={classes}/>
                                 </Grid>
                             ))}
                         </Grid>

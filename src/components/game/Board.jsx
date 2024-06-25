@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
-import woodBackground from '../../../static/images/wood-background.jpg';
+import woodBackground from '../../static/images/wood-background.jpg';
 import { Typography } from '@mui/material';
 
 const Board = ({ board, onCellClick }) => {

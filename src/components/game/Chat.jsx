@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Message from "./Message";
-import theme from "../../../utils/theme";
+import theme from "../../utils/theme";
 import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import SendIcon from '@mui/icons-material/Send';
 import { animated, useSpring } from "react-spring";
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { getUsername } from "../../../utils/api";
-import '../../../static/styles.css';
+import { getUsername } from "../../utils/api";
+import '../../static/styles.css';
 
 const Chat = ({ socketRef }) => {
     const [messages, setMessages] = useState([]);

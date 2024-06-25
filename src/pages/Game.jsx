@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useRef} from "react";
 import {useTheme} from '@mui/material';
-import Board from '../components/play/game/Board';
-import PlayerBox from "../components/play/game/PlayerBox";
-import Chat from "../components/play/chat/Chat";
-import TurnBox from "../components/play/game/TurnBox";
+import Board from '../components/game/Board';
+import PlayerBox from "../components/game/PlayerBox";
+import Chat from "../components/game/Chat";
+import TurnBox from "../components/game/TurnBox";
 import placeStone from "../static/sounds/place_stone.mp3"
 
 
