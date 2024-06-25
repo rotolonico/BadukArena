@@ -4,7 +4,7 @@ import blackStone from '../../../static/images/black-stone.png';
 import whiteStone from '../../../static/images/white-stone.png';
 
 const StyledCell = styled('div')(({ theme, hasStone }) => ({
-    width: '102%',
+    width: '100%',
     aspectRatio: '1 / 1',
     cursor: hasStone ? 'default' : 'pointer',
     backgroundColor: 'transparent',
