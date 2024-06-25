@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Typography} from "@mui/material";
 
-const TurnBox = ({isYour, color, gameStateRef}) => {
+const TurnBox = ({isYour, color, gameState}) => {
     const backgroundColor = color === 'B' ? '#262424' : 'white';
     const textColor = color === 'B' ? 'white' : 'black';
 
@@ -17,7 +17,7 @@ const TurnBox = ({isYour, color, gameStateRef}) => {
             justifyContent: 'center'
         }}>
             <Typography variant='h6' color={textColor}>
-                {gameStateRef.current === 2 ? "Game Over!" : isYour ? "It's your turn!" : "It's your opponents turn."}</Typography>
+                {gameState === 2 ? "Game Over!" : isYour ? "It's your turn!" : "It's your opponents turn."}</Typography>
         </Box>
     );
 }

@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useRef} from "react";
-import {Typography, Box, useTheme} from '@mui/material';
+import {useTheme} from '@mui/material';
 import Board from '../components/play/game/Board';
 import PlayerBox from "../components/play/game/PlayerBox";
 import Chat from "../components/play/chat/Chat";
 import TurnBox from "../components/play/game/TurnBox";
 
-const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsername}) => {
+const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername}) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
     const theme = useTheme();
@@ -43,7 +43,7 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsernam
     }, []);
 
     const handleCellClick = (x, y) => {
-        if (gameStateRef.current !== 1) return;
+        if (gameState !== 1) return;
         const move = `${x}-${y}`;
         socketRef.current.socketGameMove(move);
     };
@@ -60,7 +60,7 @@ const Game = ({yourColor, socketRef, gameStateRef, opponentUsername, yourUsernam
                 <PlayerBox username={opponentUsername} color={yourColor === 'B' ? 'W' : 'B'} />
             </div>
             <div className="turnbox">
-                <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} gameStateRef={gameStateRef}/>
+                <TurnBox isYour={currentPlayer === yourColor} color={currentPlayer} gameState={gameState}/>
             </div>
             <div className="chat">
                 <Chat socketRef={socketRef} />

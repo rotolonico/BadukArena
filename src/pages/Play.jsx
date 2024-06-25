@@ -5,8 +5,6 @@ import withAuth from "../withAuth";
 import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
 import {AddCircle} from '@mui/icons-material';
-import Chat from "../components/play/chat/Chat";
-import PlayerBox from "../components/play/game/PlayerBox";
 import {
     Button,
     Typography,
@@ -20,11 +18,7 @@ import {
     InputLabel
 } from '@material-ui/core';
 import theme from "../utils/theme";
-import {Box, IconButton, ListItem, TextField, Snackbar} from "@mui/material";
-import Message from "../components/play/chat/Message";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
+import {Box, Snackbar} from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -222,7 +216,7 @@ const Play = () => {
                     </List>
                 </>}
                 {gameState !== GameState.NOT_STARTED &&
-                    <Game yourColor={yourColor} socketRef={socketRef} gameStateRef={gameStateRef}
+                    <Game yourColor={yourColor} socketRef={socketRef} gameState={gameState}
                           opponentUsername={opponentUsername} yourUsername={yourUsername}/>
                 }
                 {gameState === GameState.FINISHED &&
