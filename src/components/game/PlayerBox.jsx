@@ -1,7 +1,6 @@
 import React from 'react';
 import {Box, Typography} from "@mui/material";
 
-
 const PlayerBox = ({username, color}) => {
     const backgroundColor = color === 'B' ? '#262424' : 'white';
     const textColor = color === 'B' ? 'white' : 'black';

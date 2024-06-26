@@ -1,15 +1,14 @@
 import React from 'react';
-import { Typography, Link } from '@mui/material';
-import '../static/styles.css'; // Assicurati di importare il file CSS
+import { Typography } from '@mui/material';
+import '../static/styles.css';
 
 const Footer = () => {
     return (
-        <div className="footer">
+        <footer className="footer">
             <Typography variant="body2">
                 © 2024 Baduk Arena.
             </Typography>
-            
-        </div>
+        </footer>
     );
 };
 
