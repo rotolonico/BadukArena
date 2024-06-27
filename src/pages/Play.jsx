@@ -165,7 +165,7 @@ const Play = () => {
                     console.error(error);
                     setIsLoading(false);
                 });
-        }, 500); // Ritardo di 500 ms
+        }, 500);
     };
 
 
@@ -315,9 +315,7 @@ const Play = () => {
                                 : `${result.winner === "B" ? "Black" : "White"} won`
                         }
                         action={
-                            <React.Fragment>
-                                <Button color="inherit" onClick={handleNewGame}>New Game</Button>
-                            </React.Fragment>
+                            <Button color="inherit" onClick={handleNewGame}>New Game</Button>
                         }
                     />
                 }
