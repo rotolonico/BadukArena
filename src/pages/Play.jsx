@@ -168,7 +168,6 @@ const Play = () => {
         }, 500);
     };
 
-
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
     };
@@ -176,7 +175,7 @@ const Play = () => {
     const handleJoin = async (number) => {
         try {
             const res = await joinRoom(number);
-            if (res.status === 200) {
+            if (res.success) {
                 socketRef.current.socketJoinRoom(number, (msg) => {
                     console.log(msg);
                 });
@@ -189,7 +188,7 @@ const Play = () => {
     const handleCreate = async () => {
         try {
             const res = await createRoom(selectedColor);
-            if (res.status === 201) {
+            if (res.success) {
                 setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor });
                 socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                     console.log(msg);
@@ -204,7 +203,7 @@ const Play = () => {
     const handleDelete = async () => {
         try {
             const res = await deleteRoom(createdRoom.number);
-            if (res.status === 200) {
+            if (res.success) {
                 socketRef.current.socketLeaveRoom((msg) => console.log(msg));
                 setIsCreateDisabled(false);
                 setCreatedRoom(null);
