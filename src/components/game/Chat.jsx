@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Message from "./Message";
 import theme from "../../utils/theme";
-import { TextField, Button, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
+import { TextField, Container, List, ListItem, Box, Typography, ThemeProvider, IconButton } from "@mui/material";
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import SendIcon from '@mui/icons-material/Send';
 import { animated, useSpring } from "react-spring";

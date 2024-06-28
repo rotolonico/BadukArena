@@ -174,12 +174,10 @@ const Play = () => {
 
     const handleJoin = async (number) => {
         try {
-            const res = await joinRoom(number);
-            if (res.success) {
-                socketRef.current.socketJoinRoom(number, (msg) => {
-                    console.log(msg);
-                });
-            }
+            await joinRoom(number);
+            socketRef.current.socketJoinRoom(number, (msg) => {
+                console.log(msg);
+            });
         } catch (error) {
             console.log(`Error joining room: ${error.message}`);
         }
@@ -188,13 +186,11 @@ const Play = () => {
     const handleCreate = async () => {
         try {
             const res = await createRoom(selectedColor);
-            if (res.success) {
-                setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor });
-                socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
-                    console.log(msg);
-                });
-                setIsCreateDisabled(true);
-            }
+            setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor });
+            socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
+                console.log(msg);
+            });
+            setIsCreateDisabled(true);
         } catch (error) {
             console.log(`Error creating room: ${error.message}`);
         }
@@ -202,12 +198,10 @@ const Play = () => {
 
     const handleDelete = async () => {
         try {
-            const res = await deleteRoom(createdRoom.number);
-            if (res.success) {
-                socketRef.current.socketLeaveRoom((msg) => console.log(msg));
-                setIsCreateDisabled(false);
-                setCreatedRoom(null);
-            }
+            await deleteRoom(createdRoom.number);
+            socketRef.current.socketLeaveRoom((msg) => console.log(msg));
+            setIsCreateDisabled(false);
+            setCreatedRoom(null);
         } catch (error) {
             console.log(`Error deleting room: ${error.message}`);
         }
