@@ -12,7 +12,6 @@ const Navbar = ({ authStatus, username, setAuthStatus, setUsername }) => {
             await logout();
             setAuthStatus(false);
             setUsername('');
-            window.location.href = '#login';
         } catch (error) {
             console.error(error);
         }
@@ -36,7 +35,7 @@ const Navbar = ({ authStatus, username, setAuthStatus, setUsername }) => {
                     <Button color="inherit" component={Link} to="/user" className="nav-link">
                         Your profile ({username})
                     </Button>
-                    <Button color="inherit" onClick={handleLogout} className="nav-link">
+                    <Button color="inherit" onClick={handleLogout} component={Link} to="/login"  className="nav-link">
                         Logout
                     </Button>
                 </>}

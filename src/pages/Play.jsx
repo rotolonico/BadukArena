@@ -91,6 +91,7 @@ const Play = () => {
     }
 
     const classes = useStyles();
+
     const [rooms, setRooms] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isCreateDisabled, setIsCreateDisabled] = useState(false);
@@ -208,7 +209,10 @@ const Play = () => {
     }
 
     const handleNewGame = () => {
-        window.location.reload();
+        setGameState(GameState.NOT_STARTED);
+        setCreatedRoom(null);
+        setIsCreateDisabled(false);
+        refreshRooms(true);
     }
 
     const handleRefreshClick = () => {
