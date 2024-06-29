@@ -22,59 +22,14 @@ option {
 
 .game-container {
     display: grid;
-    background-color: #1a1a1a; /* Colore di sfondo leggermente più chiaro per contrasto */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Ombra più pronunciata */
-    border: 3px solid #333333; /* Bordo leggermente più chiaro */
-    border-radius: 10px; /* Aggiungi bordi arrotondati per un aspetto più moderno */
     grid-template-columns: 3fr 1fr 1fr;
     grid-template-rows: auto auto auto;
     grid-template-areas:
-        "board playerboxOne playerboxTwo"
-        "board turnbox turnbox"
-        "board chat chat";
-    gap: 20px; /* Aumenta lo spazio tra gli elementi */
-    padding: 20px; /* Aggiungi padding interno */
-    margin: 20px auto; /* Centra il container e aggiungi margin esterno */
-    max-width: 1200px; /* Limita la larghezza massima per una migliore leggibilità */
-    transition: all 0.3s ease; /* Transizione per hover e focus */
+    "board playerboxOne playerboxTwo"
+    "board turnbox turnbox"
+    "board chat chat";
+    gap: 10px;
 }
-
-/* Stile per l'effetto hover */
-.game-container:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    border-color: #444444;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .game-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto auto auto;
-        grid-template-areas:
-            "board"
-            "playerboxOne"
-            "playerboxTwo"
-            "turnbox"
-            "chat";
-    }
-}
-
-/* Stili aggiuntivi per i box */
-.playerboxOne, .playerboxTwo, .turnbox {
-    background-color: #262424;
-    border: 2px solid #333333;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.playerboxOne:hover, .playerboxTwo:hover, .turnbox:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    border-color: #444444;
-}
-
-
 
 .board {
     grid-area: board;
