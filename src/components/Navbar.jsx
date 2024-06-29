@@ -1,11 +1,11 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import {AppBar, Toolbar, Typography, Button} from "@mui/material";
 import logo from '../static/images/logo.png';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import '../static/styles.css';
 import {logout} from "../utils/api";
 
-const Navbar = ({ authStatus, username, setAuthStatus, setUsername }) => {
+const Navbar = ({authStatus, username, setAuthStatus, setUsername}) => {
 
     const handleLogout = async () => {
         try {
@@ -20,8 +20,10 @@ const Navbar = ({ authStatus, username, setAuthStatus, setUsername }) => {
     return (
         <AppBar position="static" color="primary">
             <Toolbar>
-                <img src={logo} alt="Logo" style={{ marginRight: '10px', width: '50px', height: '50px' }} />
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link to="/play">
+                    <img src={logo} alt="Logo" style={{marginRight: '10px', width: '50px', height: '50px'}}/>
+                </Link>
+                <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     Baduk Arena
                 </Typography>
                 {!authStatus &&
@@ -35,7 +37,7 @@ const Navbar = ({ authStatus, username, setAuthStatus, setUsername }) => {
                     <Button color="inherit" component={Link} to="/user" className="nav-link">
                         Your profile ({username})
                     </Button>
-                    <Button color="inherit" onClick={handleLogout} component={Link} to="/login"  className="nav-link">
+                    <Button color="inherit" onClick={handleLogout} component={Link} to="/login" className="nav-link">
                         Logout
                     </Button>
                 </>}

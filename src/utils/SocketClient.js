@@ -6,6 +6,7 @@ const testHost = 'http://localhost:1234';
 const host = process.env.REACT_APP_ENV === 'production' ? prodHost : testHost;
 
 class SocketClient {
+
     constructor() {
         this.socket = io(host);
         this.currentRoom = "";
@@ -58,12 +59,6 @@ class SocketClient {
         });
     }
 
-    socketListenGameAborted(onGameAborted) {
-        this.socket.on("game-aborted", () => {
-            onGameAborted();
-        });
-    }
-
     socketListenMove(onMove) {
         this.socket.on("game-move", (move) => {
             onMove(move);
@@ -75,7 +70,6 @@ class SocketClient {
         this.socket.removeAllListeners("game-invalid-move");
         this.socket.removeAllListeners("game-start");
         this.socket.removeAllListeners("game-over");
-        this.socket.removeAllListeners("game-aborted");
     }
 
     socketRemoveChatListener() {
