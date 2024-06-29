@@ -26,18 +26,28 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '10px',
-        borderBottom: '1px solid #ccc',
-        backgroundColor: '#f9f9f9',
-        marginBottom: '5px',
-        borderRadius: '4px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-
+        borderBottom: '1px solid #444',
+        backgroundColor: '#262424',
+        marginBottom: '10px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+        color: '#fff',
     },
     joinButton: {
         marginLeft: theme.spacing(2),
+        color: '#fff',
+        backgroundColor: theme.palette.primary.main,
+        '&:hover': {
+            backgroundColor: theme.palette.primary.dark,
+        },
     },
     deleteButton: {
         marginLeft: theme.spacing(2),
+        color: '#fff',
+        backgroundColor: theme.palette.error.main,
+        '&:hover': {
+            backgroundColor: theme.palette.error.dark,
+        },
     },
     roomInfo: {
         fontSize: '1.2rem',
@@ -46,10 +56,10 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         marginRight: theme.spacing(2),
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        color: '#fff',
     },
 }));
-
 const getImageFromColor = (color) => {
     switch (color) {
         case 'B':

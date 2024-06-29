@@ -8,7 +8,6 @@ import { AddCircle, Refresh } from '@mui/icons-material';
 import {
     Button,
     Typography,
-    List,
     makeStyles,
     ThemeProvider,
     CssBaseline,
@@ -29,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         maxWidth: 1200,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#000',
+        color: '#fff',
         margin: '0 auto',
         padding: '20px',
         borderRadius: '10px',
@@ -37,45 +37,57 @@ const useStyles = makeStyles((theme) => ({
     },
     createButton: {
         marginBottom: '20px',
+        color: '#fff',
     },
     refreshButton: {
         marginBottom: '20px',
         marginLeft: theme.spacing(2),
+        color: '#fff',
     },
     roomList: {
         listStyle: 'none',
         padding: 0,
+        color: '#000',
     },
     roomItem: {
         marginBottom: '10px',
+        color: '#000',
     },
     select: {
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
-                borderColor: 'black', // Contorno nero
+                borderColor: 'white', // Contorno bianco
             },
             '&:hover fieldset': {
-                borderColor: 'black', // Contorno nero al passaggio del mouse
+                borderColor: 'white', // Contorno bianco al passaggio del mouse
             },
             '&.Mui-focused fieldset': {
-                borderColor: 'black', // Contorno nero quando in focus
+                borderColor: 'white', // Contorno bianco quando in focus
             },
+            backgroundColor: '#262424',
+            color: '#fff'
+        },
+        '& .MuiInputLabel-root': {
+            color: '#fff'
         },
     },
     formControl: {
         marginBottom: '16px',
         minWidth: 120,
+        color: '#fff',
     },
     title: {
         textAlign: 'center',
         fontWeight: 'bold',
         marginBottom: theme.spacing(2),
+        color: '#fff',
     },
     loading: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         height: '50vh',
+        color: '#fff',
     },
     gridContainer: {
         marginTop: theme.spacing(2),
@@ -220,7 +232,7 @@ const Play = () => {
             <CssBaseline />
             <div className={classes.root}>
                 {gameState === GameState.NOT_STARTED && <>
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Box display="flex" justifyContent="space-between" alignItems="center" >
                         <FormControl variant="outlined" className={`${classes.formControl} ${classes.select}`}>
                             <InputLabel id="color-select-label">Color</InputLabel>
                             <Select
