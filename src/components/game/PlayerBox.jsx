@@ -7,7 +7,7 @@ const PlayerBox = ({username, color}) => {
 
     return (
         <Box sx={{
-            width: '100%',
+            width: '190px',
             height: 100,
             borderRadius: '10px',
             background: backgroundColor,
