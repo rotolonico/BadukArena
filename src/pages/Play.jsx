@@ -143,10 +143,6 @@ const Play = () => {
             }
         });
 
-        socketRef.current.socketListenGameAborted(() => {
-            window.location.reload();
-        });
-
         return () => {
             clearInterval(intervalId);
             socketRef.current.socketRemoveAllGameListeners();
