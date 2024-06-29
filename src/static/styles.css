@@ -82,16 +82,10 @@ option {
 
 .playerboxOne {
     grid-area: playerboxOne;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .playerboxTwo {
     grid-area: playerboxTwo;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .turnbox {
@@ -102,24 +96,11 @@ option {
     grid-area: chat;
 }
 
-@media (max-width: 600px) {
-    .game-container {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto;
-        grid-template-areas:
-        "board board"
-        "playerboxOne playerboxTwo"
-        "turnbox turnbox"
-        "chat chat";
-    }
-}
-
 .footer {
     background-color: #262424;
     color: #ffffff;
     text-align: center;
     padding: 20px;
-    margin-top: 10px;
     position: relative;
     width: 100%;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);

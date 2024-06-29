@@ -57,9 +57,9 @@ const Chat = ({ socketRef }) => {
     return (
         <ThemeProvider theme={theme}>
             <animated.div style={springProps}>
-                <Container maxWidth="sm" sx={{ width: '410px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
+                <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}
                 >
-                    <Box mt={2} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} borderRadius={10} height="450px">
+                    <Box mt={2} textAlign="center" display="flex" flexDirection="column" p={3} bgcolor="#262424" boxShadow={3} borderRadius={10} height="60vh">
                         <Typography variant="h4" component="h2" gutterBottom color="white">Chat</Typography>
                         <Box flex={1} overflow="auto" mb={2} className="scrollbar">
                             <List>

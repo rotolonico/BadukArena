@@ -35,7 +35,7 @@ function App() {
         <HashRouter>
             <div style={{ backgroundColor: '#000000', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 <Navbar authStatus={authStatus} username={username} setUsername={setUsername} setAuthStatus={setAuthStatus} />
-                <Container sx={{ flexGrow: 1, marginTop: '10px'}}>
+                <Container sx={{ flexGrow: 1, marginTop: '64px'}}>
                     <Routes>
                         <Route path="login" element={<Login setAuthStatus={setAuthStatus} />} />
                         <Route path="register" element={<Register />} />
