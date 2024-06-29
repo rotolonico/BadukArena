@@ -7,7 +7,7 @@ const PlayerBox = ({username, color}) => {
 
     return (
         <Box sx={{
-            width: '100%',
+            width: '190px',
             height: 100,
             borderRadius: '10px',
             background: backgroundColor,
@@ -18,7 +18,6 @@ const PlayerBox = ({username, color}) => {
             border: `2px solid ${textColor}`,
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             transition: 'all 0.3s ease-in-out',
-            margin: '20px 0',  // Margine sopra e sotto
             '&:hover': {
                 transform: 'scale(1.05)',
                 boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',

@@ -2,11 +2,13 @@ import React from 'react';
 import Cell from './Cell';
 import woodBackground from '../../static/images/wood-background.jpg';
 import { Typography } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Board = ({ board, onCellClick }) => {
     const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
     const numbers = ['9', '8', '7', '6', '5', '4', '3', '2', '1'];
 
+    const isSmallScreen = useMediaQuery('(max-width: 600px)');
     const labelStyle = {
         display: 'flex',
         justifyContent: 'center',
@@ -14,7 +16,7 @@ const Board = ({ board, onCellClick }) => {
         alignItems: 'center',
         fontSize: '1.4vw',
         fontWeight: 'bold',
-        color: '#000000',
+        color: isSmallScreen ? 'transparent' : '#000000',
     };
 
     return (

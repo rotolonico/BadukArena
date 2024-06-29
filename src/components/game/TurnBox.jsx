@@ -22,11 +22,9 @@ const TurnBox = ({ isYour, color, gameState }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            width: '100%',  // Estendi alla larghezza del contenitore
         }}>
             <Box sx={{
-                width: '80%',
-                maxWidth: 300,  // Limita la larghezza massima
+                width: '300px',
                 height: 80,
                 borderRadius: '10px',
                 background: backgroundColor,
@@ -37,7 +35,6 @@ const TurnBox = ({ isYour, color, gameState }) => {
                 border: `2px solid ${borderColor}`,
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                 transition: 'all 0.3s ease-in-out',
-                margin: '20px 0',  // Margine sopra e sotto
                 '&:hover': {
                     transform: 'scale(1.05)',
                     boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',
