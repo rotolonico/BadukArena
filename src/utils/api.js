@@ -68,7 +68,7 @@ export const isAuthenticated = async () => {
 export const getGames = () => handleRequest(() => API.get('/api/users/games'));
 export const getUsername = () => handleRequest(() => API.get('/api/users/username'));
 
-export const joinRoom = (roomNumber) => handleRequest(() => API.post('/api/rooms/joinRoom', { roomNumber }));
+export const joinRoom = (roomNumber) => handleRequest(() => API.put('/api/rooms/joinRoom', { roomNumber }));
 export const createRoom = (selectedColor) => handleRequest(() => API.post('/api/rooms/createRoom', { selectedColor }));
 export const getRooms = () => handleRequest(() => API.get('/api/rooms/getRooms'));
 export const deleteRoom = (roomNumber) => handleRequest(() => API.delete('/api/rooms/deleteRoom', { data: { roomNumber } }));
