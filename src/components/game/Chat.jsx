@@ -38,6 +38,13 @@ const Chat = ({ socketRef }) => {
         }
     }, []);
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleSubmit(event);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (messageText === "") return;
@@ -81,6 +88,7 @@ const Chat = ({ socketRef }) => {
                                     margin="normal"
                                     value={messageText}
                                     onChange={(e) => setMessageText(e.target.value)}
+                                    onKeyDown={handleKeyDown}
                                     InputLabelProps={{
                                         style: { color: 'white' },
                                     }}
