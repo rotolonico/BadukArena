@@ -273,7 +273,7 @@ const Play = () => {
                     </Typography>
                     {isLoading ? (
                         <Box className={classes.loading}>
-                            <CircularProgress />
+                            <CircularProgress style={{ color: '#FFFFFF' }}/>
                         </Box>
                     ) : (
                         <Grid container spacing={2} className={classes.gridContainer}>

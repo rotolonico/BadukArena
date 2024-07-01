@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {isAuthenticated} from './utils/api';
+import {Box, CircularProgress} from "@mui/material";
 
 const withAuth = (Component) => {
 
@@ -21,7 +22,14 @@ const withAuth = (Component) => {
                 });
         },);
 
-        return isAuth ? <Component {...props} /> : null;
+        return isAuth ? <Component {...props} /> : <Box sxx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh'
+        }}>
+            <CircularProgress style={{ color: '#FFFFFF' }}/>
+        </Box>;
     };
 };
 
