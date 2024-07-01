@@ -36,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
     joinButton: {
         marginLeft: theme.spacing(2),
         color: '#fff',
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: '#76b003',
         '&:hover': {
-            backgroundColor: theme.palette.primary.dark,
+            backgroundColor: '#47731a',
         },
     },
     deleteButton: {
