@@ -22,7 +22,7 @@ const withAuth = (Component) => {
                 });
         },);
 
-        return isAuth ? <Component {...props} /> : <Box sxx={{
+        return isAuth ? <Component {...props} /> : <Box sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
