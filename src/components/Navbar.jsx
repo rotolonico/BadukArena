@@ -19,7 +19,7 @@ const Navbar = ({authStatus, username, setAuthStatus, setUsername}) => {
 
     return (
         <AppBar position="static" color="primary">
-            <Toolbar>
+            <Toolbar sx={{alignItems: 'center', gap: '2px'}}>
                 <Link to="/play">
                     <img src={logo} alt="Logo" style={{marginRight: '10px', width: '50px', height: '50px'}}/>
                 </Link>

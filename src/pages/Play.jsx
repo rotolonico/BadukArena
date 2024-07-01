@@ -265,7 +265,7 @@ const Play = () => {
                                 className={classes.createButton}
                                 startIcon={<AddCircle />}
                             >
-                                New Room
+                                Create
                             </Button>
                             <Button
                                 variant="contained"
