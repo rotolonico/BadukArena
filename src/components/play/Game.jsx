@@ -33,8 +33,7 @@ const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername})
                     if (i === parseInt(x) && j === parseInt(y)) {
                         return currentPlayerRef.current;
                     }
-
-                    console.log(captures);
+                    
                     if (captures.some((c) => {
                         return c[0] === i && c[1] === j
                     })) return ' ';

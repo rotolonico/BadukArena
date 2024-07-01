@@ -26,10 +26,6 @@ const Navbar = ({authStatus, username, setAuthStatus, setUsername}) => {
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     Baduk Arena
                 </Typography>
-                {!authStatus &&
-                    <Button color="inherit" component={Link} to="/login" className="nav-link">
-                        Login
-                    </Button>}
                 {authStatus && username !== '' && <>
                     <Button color="inherit" component={Link} to="/play" className="nav-link">
                         Play
