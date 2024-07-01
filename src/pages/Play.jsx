@@ -23,78 +23,88 @@ import { Box, Snackbar, CircularProgress } from "@mui/material";
 import gameStart from "../static/sounds/game_start.mp3"
 import gameWin from "../static/sounds/game_win.mp3"
 import gameLose from "../static/sounds/game_lose.mp3"
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        maxWidth: 1200,
-        backgroundColor: '#000',
-        color: '#fff',
-        margin: '0 auto',
-        padding: '20px',
-        borderRadius: '10px',
-        boxShadow: '3px 3px 15px rgba(0, 0, 0, 0.5)',
-    },
-    createButton: {
-        marginBottom: '20px',
-        color: '#fff',
-    },
-    refreshButton: {
-        marginBottom: '20px',
-        marginLeft: theme.spacing(2),
-        color: '#fff',
-    },
-    roomList: {
-        listStyle: 'none',
-        padding: 0,
-        color: '#000',
-    },
-    roomItem: {
-        marginBottom: '10px',
-        color: '#000',
-    },
-    select: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: 'white', // Contorno bianco
-            },
-            '&:hover fieldset': {
-                borderColor: 'white', // Contorno bianco al passaggio del mouse
-            },
-            '&.Mui-focused fieldset': {
-                borderColor: 'white', // Contorno bianco quando in focus
-            },
-            backgroundColor: '#262424',
-            color: '#fff'
-        },
-        '& .MuiInputLabel-root': {
-            color: '#fff'
-        },
-    },
-    formControl: {
-        marginBottom: '16px',
-        minWidth: 120,
-        color: '#fff',
-    },
-    title: {
-        textAlign: 'center',
-        fontWeight: 'bold',
-        marginBottom: theme.spacing(2),
-        color: '#fff',
-    },
-    loading: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '50vh',
-        color: '#fff',
-    },
-    gridContainer: {
-        marginTop: theme.spacing(2),
-    },
-}));
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Play = () => {
+
+    const isSmallScreen = useMediaQuery('(max-width: 600px)');
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            width: '100%',
+            maxWidth: 1200,
+            backgroundColor: '#000',
+            color: '#fff',
+            margin: '0 auto',
+            paddingTop: '20px',
+            paddingBottom: '20px',
+            borderRadius: '10px',
+            boxShadow: '3px 3px 15px rgba(0, 0, 0, 0.5)',
+        },
+        createButton: {
+            marginBottom: '20px',
+            color: '#fff',
+        },
+        refreshButton: {
+            marginBottom: '20px',
+            marginLeft: theme.spacing(2),
+            color: '#fff',
+        },
+        refreshText: {
+            display: isSmallScreen ? "none" : "inline"
+        },
+        refreshIcon: {
+            marginRight: isSmallScreen ? "-8px" : "0px"
+        },
+        roomList: {
+            listStyle: 'none',
+            padding: 0,
+            color: '#000',
+        },
+        roomItem: {
+            marginBottom: '10px',
+            color: '#000',
+        },
+        select: {
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: 'white', // Contorno bianco
+                },
+                '&:hover fieldset': {
+                    borderColor: 'white', // Contorno bianco al passaggio del mouse
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: 'white', // Contorno bianco quando in focus
+                },
+                backgroundColor: '#262424',
+                color: '#fff'
+            },
+            '& .MuiInputLabel-root': {
+                color: '#fff'
+            },
+        },
+        formControl: {
+            padding: theme.spacing(2),
+            marginBottom: '16px',
+            minWidth: 120,
+            color: '#fff',
+        },
+        title: {
+            textAlign: 'center',
+            fontWeight: 'bold',
+            marginBottom: theme.spacing(2),
+            color: '#fff',
+        },
+        loading: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '50vh',
+            color: '#fff',
+        },
+        gridContainer: {
+            marginTop: theme.spacing(2),
+        }
+    }));
 
     const GameState = {
         NOT_STARTED: 0,
@@ -232,7 +242,7 @@ const Play = () => {
             <CssBaseline />
             <div className={classes.root}>
                 {gameState === GameState.NOT_STARTED && <>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" >
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
                         <FormControl variant="outlined" className={`${classes.formControl} ${classes.select}`}>
                             <InputLabel id="color-select-label">Color</InputLabel>
                             <Select
@@ -255,16 +265,16 @@ const Play = () => {
                                 className={classes.createButton}
                                 startIcon={<AddCircle />}
                             >
-                                Create Room
+                                New Room
                             </Button>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 onClick={handleRefreshClick}
                                 className={classes.refreshButton}
-                                startIcon={<Refresh />}
+                                startIcon={<Refresh className={classes.refreshIcon}/>}
                             >
-                                Refresh
+                                <span className={classes.refreshText}>Refresh</span>
                             </Button>
                         </Box>
                     </Box>

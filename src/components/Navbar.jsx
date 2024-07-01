@@ -35,7 +35,7 @@ const Navbar = ({authStatus, username, setAuthStatus, setUsername}) => {
                         Play
                     </Button>
                     <Button color="inherit" component={Link} to="/user" className="nav-link">
-                        Your profile ({username})
+                        {username}
                     </Button>
                     <Button color="inherit" onClick={handleLogout} component={Link} to="/login" className="nav-link">
                         Logout
