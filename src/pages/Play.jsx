@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
 import Room from "../components/play/Room";
 import withAuth from "../withAuth";
-import Game from "../components/game/Game";
+import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
 import { AddCircle, Refresh } from '@mui/icons-material';
 import {

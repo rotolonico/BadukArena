@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useRef} from "react";
 import {useTheme} from '@mui/material';
-import Board from './Board';
-import PlayerBox from "./PlayerBox";
-import Chat from "./Chat";
-import TurnBox from "./TurnBox";
-import placeStone from "../../static/sounds/place_stone.mp3"
+import Board from '../components/game/Board';
+import PlayerBox from "../components/game/PlayerBox";
+import Chat from "../components/game/Chat";
+import TurnBox from "../components/game/TurnBox";
+import placeStone from "../static/sounds/place_stone.mp3"
 
 
 const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername}) => {
