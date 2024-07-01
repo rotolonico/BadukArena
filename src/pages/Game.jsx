@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useTheme} from '@mui/material';
 import Board from '../components/game/Board';
 import PlayerBox from "../components/game/PlayerBox";
@@ -26,20 +26,27 @@ const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername})
     useEffect(() => {
         socketRef.current.socketListenMove((moveData) => {
 
-            const parsedMove = JSON.parse(moveData);
-            const {x, y, captures} = parsedMove;
+            const {x, y, captures} = moveData;
+
+
             const newBoard = boardRef.current.map((row, i) =>
                 row.map((cell, j) => {
+
+                    // If this is the move that was made, update the cell to the current player's color
                     if (i === parseInt(x) && j === parseInt(y)) {
                         return currentPlayerRef.current;
                     }
-                    
-                    if (captures.some((c) => {
-                        return c[0] === i && c[1] === j
-                    })) return ' ';
-                    
+
+                    // Else, keep the current cell value
                     return cell;
-                })
+                }));
+
+            // If a capture was made, update the board to remove the captured stones
+            captures.forEach((capture) => {
+                    const x = capture[0];
+                    const y = capture[1];
+                    newBoard[x][y] = ' ';
+                }
             );
             setBoard(newBoard);
             setCurrentPlayer(currentPlayerRef.current === 'B' ? 'W' : 'B');
