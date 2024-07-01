@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/BadukArena/static/css/main.ff89c40e.css",
-    "main.js": "/BadukArena/static/js/main.9ff59d25.js",
+    "main.js": "/BadukArena/static/js/main.bde5d8ec.js",
     "static/media/wood-background.jpg": "/BadukArena/static/media/wood-background.d3f119f949316bf1a757.jpg",
     "static/media/white-stone.png": "/BadukArena/static/media/white-stone.52630ffcf833eadb3d15.png",
     "static/media/black-white-stone.png": "/BadukArena/static/media/black-white-stone.1a23010ff6cefd7de611.png",
@@ -12,10 +12,10 @@
     "static/media/place_stone.mp3": "/BadukArena/static/media/place_stone.1283c2b30aa95ff72cd9.mp3",
     "index.html": "/BadukArena/index.html",
     "main.ff89c40e.css.map": "/BadukArena/static/css/main.ff89c40e.css.map",
-    "main.9ff59d25.js.map": "/BadukArena/static/js/main.9ff59d25.js.map"
+    "main.bde5d8ec.js.map": "/BadukArena/static/js/main.bde5d8ec.js.map"
   },
   "entrypoints": [
     "static/css/main.ff89c40e.css",
-    "static/js/main.9ff59d25.js"
+    "static/js/main.bde5d8ec.js"
   ]
 }
