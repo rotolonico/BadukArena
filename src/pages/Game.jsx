@@ -26,7 +26,6 @@ const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername})
 
             const {x, y, captures} = moveData;
 
-
             const newBoard = boardRef.current.map((row, i) =>
                 row.map((cell, j) => {
 
@@ -34,7 +33,6 @@ const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername})
                     if (i === parseInt(x) && j === parseInt(y)) {
                         return currentPlayerRef.current;
                     }
-
                     // Else, keep the current cell value
                     return cell;
                 }));

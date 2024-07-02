@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { getRooms, joinRoom, createRoom, deleteRoom } from "../utils/api";
+import React, {useEffect, useState, useRef} from 'react';
+import {getRooms, joinRoom, createRoom, deleteRoom} from "../utils/api";
 import Room from "../components/play/Room";
 import withAuth from "../withAuth";
 import Game from "./Game";
 import SocketClient from "../utils/SocketClient";
-import { AddCircle, Refresh } from '@mui/icons-material';
+import {AddCircle, Refresh} from '@mui/icons-material';
 import {
     Button,
     Typography,
@@ -18,7 +18,7 @@ import {
     Grid
 } from '@material-ui/core';
 import theme from "../utils/theme";
-import { Box, Snackbar, CircularProgress } from "@mui/material";
+import {Box, Snackbar, CircularProgress} from "@mui/material";
 
 import gameStart from "../static/sounds/game_start.mp3"
 import gameWin from "../static/sounds/game_win.mp3"
@@ -63,6 +63,12 @@ const Play = () => {
         roomItem: {
             marginBottom: '10px',
             color: '#000',
+        },
+        noRoomsText: {
+            fontSize: '1.2rem',
+            textAlign: 'center',
+            color: 'white',
+            marginTop: '18vh'
         },
         select: {
             '& .MuiOutlinedInput-root': {
@@ -140,11 +146,19 @@ const Play = () => {
     useEffect(() => {
         socketRef.current = new SocketClient();
 
-        refreshRooms();
+        handleRefreshRooms();
 
         const intervalId = setInterval(() => {
             if (gameStateRef.current !== GameState.NOT_STARTED) return;
-            refreshRooms();
+            getRooms()
+                .then(roomsList => {
+                    setRooms(roomsList.data);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error(error);
+                    setIsLoading(false);
+                });
         }, 5000);
 
         socketRef.current.socketListenGameStart((data) => {
@@ -172,20 +186,6 @@ const Play = () => {
         };
     }, []);
 
-    const refreshRooms = (showLoader = false) => {
-        if (showLoader) setIsLoading(true);
-        setTimeout(() => {
-            getRooms()
-                .then(roomsList => {
-                    setRooms(roomsList.data);
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    console.error(error);
-                    setIsLoading(false);
-                });
-        }, 500);
-    };
 
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
@@ -205,7 +205,7 @@ const Play = () => {
     const handleCreate = async () => {
         try {
             const res = await createRoom(selectedColor);
-            setCreatedRoom({ number: res.data.roomNumber, username: res.data.username, color: selectedColor });
+            setCreatedRoom({number: res.data.roomNumber, username: res.data.username, color: selectedColor});
             socketRef.current.socketJoinRoom(res.data.roomNumber, (msg) => {
                 console.log(msg);
             });
@@ -230,93 +230,119 @@ const Play = () => {
         setGameState(GameState.NOT_STARTED);
         setCreatedRoom(null);
         setIsCreateDisabled(false);
-        refreshRooms(true);
+        handleRefreshRooms();
     }
 
-    const handleRefreshClick = () => {
-        refreshRooms(true);
+    const handleRefreshRooms = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            getRooms()
+                .then(roomsList => {
+                    setRooms(roomsList.data);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error(error);
+                    setIsLoading(false);
+                });
+        }, 500);
     };
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <div className={classes.root}>
-                {gameState === GameState.NOT_STARTED && <>
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
-                        <FormControl variant="outlined" className={`${classes.formControl} ${classes.select}`}>
-                            <InputLabel id="color-select-label">Color</InputLabel>
-                            <Select
-                                labelId="color-select-label"
-                                value={selectedColor}
-                                onChange={handleColorChange}
-                                label="Color"
-                            >
-                                <MenuItem value=" ">Random</MenuItem>
-                                <MenuItem value="B">Black</MenuItem>
-                                <MenuItem value="W">White</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <Box display="flex" alignItems="center">
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleCreate}
-                                disabled={isCreateDisabled}
-                                className={classes.createButton}
-                                startIcon={<AddCircle />}
-                            >
-                                Create
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleRefreshClick}
-                                className={classes.refreshButton}
-                                startIcon={<Refresh className={classes.refreshIcon}/>}
-                            >
-                                <span className={classes.refreshText}>Refresh</span>
-                            </Button>
+                {gameState === GameState.NOT_STARTED && (
+                    <>
+                        <Box display="flex" justifyContent="space-between" alignItems="center">
+                            <FormControl variant="outlined" className={`${classes.formControl} ${classes.select}`}>
+                                <InputLabel id="color-select-label">Color</InputLabel>
+                                <Select
+                                    labelId="color-select-label"
+                                    value={selectedColor}
+                                    onChange={handleColorChange}
+                                    label="Color"
+                                >
+                                    <MenuItem value=" ">Random</MenuItem>
+                                    <MenuItem value="B">Black</MenuItem>
+                                    <MenuItem value="W">White</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <Box display="flex" alignItems="center">
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleCreate}
+                                    disabled={isCreateDisabled}
+                                    className={classes.createButton}
+                                    startIcon={<AddCircle/>}
+                                >
+                                    Create
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleRefreshRooms}
+                                    className={classes.refreshButton}
+                                    startIcon={<Refresh className={classes.refreshIcon}/>}
+                                >
+                                    <span className={classes.refreshText}>Refresh</span>
+                                </Button>
+                            </Box>
                         </Box>
-                    </Box>
-                    <Typography variant="h6" gutterBottom className={classes.title}>
-                        Available Rooms
-                    </Typography>
-                    {isLoading ? (
-                        <Box className={classes.loading}>
-                            <CircularProgress style={{ color: '#FFFFFF' }}/>
-                        </Box>
-                    ) : (
-                        <Grid container spacing={2} className={classes.gridContainer}>
-                            {createdRoom && (
-                                <Grid item xs={12}>
-                                    <Room
-                                        isOwn={true}
-                                        roomCreator={createdRoom.username}
-                                        handleDelete={handleDelete}
-                                        disabledCondition={!isCreateDisabled}
-                                        color={createdRoom.color}
-                                    />
-                                </Grid>
-                            )}
-                            {rooms?.map((r, i) => (
-                                <Grid item xs={12} key={i}>
-                                    <Room
-                                        number={r.number}
-                                        roomCreator={r.roomCreator.username}
-                                        handleJoin={handleJoin}
-                                        disabledCondition={isCreateDisabled}
-                                        color={r.creatorWantedColor}
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
-                    )}
-                </>}
-                {gameState !== GameState.NOT_STARTED &&
-                    <Game yourColor={yourColor} socketRef={socketRef} gameState={gameState}
-                          opponentUsername={opponentUsername} yourUsername={yourUsername} />
-                }
-                {gameState === GameState.FINISHED &&
+                        {isLoading ? (
+                            <Box className={classes.loading}>
+                                <CircularProgress style={{color: '#FFFFFF'}}/>
+                            </Box>
+                        ) : (
+                            <>
+                                <Typography variant="h6" gutterBottom className={classes.title}>
+                                    Available Rooms
+                                </Typography>
+                                {!createdRoom && rooms.length === 0 ? (
+                                    <Typography className={classes.noRoomsText}>
+                                        No Rooms Available
+                                    </Typography>
+                                ) : (
+                                    <Grid container spacing={2} className={classes.gridContainer}>
+                                        {createdRoom && (
+                                            <Grid item xs={12}>
+                                                <Room
+                                                    isOwn={true}
+                                                    roomCreator={createdRoom.username}
+                                                    handleDelete={handleDelete}
+                                                    disabledCondition={!isCreateDisabled}
+                                                    color={createdRoom.color}
+                                                />
+                                            </Grid>
+                                        )}
+                                        {rooms?.map((r, i) => (
+                                            <Grid item xs={12} key={i}>
+                                                <Room
+                                                    number={r.number}
+                                                    roomCreator={r.roomCreator.username}
+                                                    handleJoin={handleJoin}
+                                                    disabledCondition={isCreateDisabled}
+                                                    color={r.creatorWantedColor}
+                                                />
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                )}
+                            </>
+                        )}
+                    </>
+                )}
+                {gameState !== GameState.NOT_STARTED && (
+                    <Game
+                        yourColor={yourColor}
+                        socketRef={socketRef}
+                        gameState={gameState}
+                        opponentUsername={opponentUsername}
+                        yourUsername={yourUsername}
+                    />
+                )}
+                {gameState === GameState.FINISHED && (
                     <Snackbar
                         anchorOrigin={{
                             vertical: 'bottom',
@@ -333,7 +359,7 @@ const Play = () => {
                             <Button color="inherit" onClick={handleNewGame}>New Game</Button>
                         }
                     />
-                }
+                )}
             </div>
             <audio id="gameStart">
                 <source src={gameStart} type="audio/mp3"/>
