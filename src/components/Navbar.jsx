@@ -21,7 +21,7 @@ const Navbar = ({authStatus, username, setAuthStatus, setUsername}) => {
         <AppBar position="static" color="primary">
             <Toolbar sx={{alignItems: 'center', gap: '2px'}}>
                 <Link to="/play">
-                    <img src={logo} alt="Logo" style={{marginRight: '10px', width: '50px', height: '50px'}}/>
+                    <img src={logo} alt="Logo" id="logo"/>
                 </Link>
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                     Baduk Arena

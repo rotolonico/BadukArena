@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useTheme} from '@mui/material';
 import Board from '../components/game/Board';
 import PlayerBox from "../components/game/PlayerBox";
 import Chat from "../components/game/Chat";
@@ -10,7 +9,6 @@ import placeStone from "../static/sounds/place_stone.mp3"
 const Game = ({yourColor, socketRef, gameState, opponentUsername, yourUsername}) => {
     const [board, setBoard] = useState(initialBoardState());
     const [currentPlayer, setCurrentPlayer] = useState('B');
-    const theme = useTheme();
 
     const boardRef = useRef(board);
     const currentPlayerRef = useRef(currentPlayer);
