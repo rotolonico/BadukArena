@@ -153,11 +153,9 @@ const Play = () => {
             getRooms()
                 .then(roomsList => {
                     setRooms(roomsList.data);
-                    setIsLoading(false);
                 })
                 .catch(error => {
                     console.error(error);
-                    setIsLoading(false);
                 });
         }, 5000);
 
